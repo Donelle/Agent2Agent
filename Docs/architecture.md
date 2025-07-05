@@ -23,12 +23,13 @@ This document provides a high-level overview of the Agent2Agent proof-of-concept
   - Invokes AgentB and AgentD via A2AClient to enrich responses on vehicle registration topics.  
   - Restricts replies to vehicle registration and related queries.
 
-- **Agent2Agent.AgentB (ChatResponderAgent)**  
-  The conversational LLM agent.  
-  - Exposes `POST /chat/respond`.  
-  - Accepts user text and context.  
-  - Calls AgentC for facts and, on miss, calls AgentD.  
-  - Returns enriched chat replies to the orchestrator.
+- **Agent2Agent.AgentB (ChatResponderAgent)**
+  The A2A server hosting vehicle registration assistant logic.
+  - Configured via `builder.Services.AddA2AServer` with AgentCard settings and `builder.Services.AddA2AClient` for KnowledgeGraphAgent.
+  - Registers `ChatResponderAgentLogic` as `IAgentLogicInvoker` and `KnowledgeGraphAgentPlugin` in dependency injection.
+  - Hosts a Semantic Kernel `ChatCompletionAgent` named **VehicleRegistrationAssistant**.
+  - Maps A2A endpoints using `app.MapA2AWellKnown()` and `app.MapA2AEndpoint()`.
+  - Uses A2A client to invoke KnowledgeGraphAgent for factual enrichment.
 
 - **Agent2Agent.AgentC (KnowledgeGraphAgent)**  
   The facts and relationships store.  

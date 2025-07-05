@@ -1,9 +1,11 @@
 using A2Adotnet.Client;
-using Agent2Agent.AgentA.Plugins;
+
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
+
+using Agent2Agent.AgentA.Plugins;
 
 var builder = WebApplication.CreateBuilder(args);
 

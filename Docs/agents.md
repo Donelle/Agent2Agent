@@ -15,12 +15,12 @@ This architecture features four agents, each with a distinct responsibility. The
 - Invokes AgentB (ChatResponderAgent) and AgentD (InternetSearchAgent) via A2AClient to enrich responses on vehicle registration topics.
 - Restricts replies strictly to vehicle registration and vehicles-related queries.
 
-### Agent B: ChatResponderAgent
-- Endpoint: POST `/chat/respond`
-- Accepts user text and optional context.
-- Calls Agent C (KnowledgeGraphAgent) for domain facts.
-- On a 204 No Content from C, calls Agent D (InternetSearchAgent).
-- Uses an LLM API to generate conversational replies enriched with KG or search results.
+### Agent B: ChatResponderAgent (A2A Server)
+- Configured via `builder.Services.AddA2AServer` with AgentCard settings and `builder.Services.AddA2AClient` pointing at KnowledgeGraphAgent.
+- Registers `ChatResponderAgentLogic` as `IAgentLogicInvoker` and `KnowledgeGraphAgentPlugin` for kernel functions.
+- Hosts a Semantic Kernel `ChatCompletionAgent` named **VehicleRegistrationAssistant**.
+- Maps A2A endpoints using `app.MapA2AWellKnown()` and `app.MapA2AEndpoint()`.
+- Uses A2AClient to invoke KnowledgeGraphAgent for factual data enrichment.
 
 ### Agent C: KnowledgeGraphAgent
 - Endpoint: POST `/kg/query`
