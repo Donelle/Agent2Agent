@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.3.1" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>c5986033-9c93-4dfa-8e0d-303d08dec0ae</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Agent2Agent.Web\Agent2Agent.Web.csproj" />
+    <ProjectReference Include="..\Agent2Agent.AgentA\Agent2Agent.AgentA.csproj" />
+    <ProjectReference Include="..\Agent2Agent.AgentB\Agent2Agent.AgentB.csproj" />
+    <ProjectReference Include="..\Agent2Agent.AgentC\Agent2Agent.AgentC.csproj" />
+    <ProjectReference Include="..\Agent2Agent.AgentD\Agent2Agent.AgentD.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.1" />
+  </ItemGroup>
+
+</Project>

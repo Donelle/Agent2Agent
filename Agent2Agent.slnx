@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="Agent2Agent.AgentA/Agent2Agent.AgentA.csproj" />
+  <Project Path="Agent2Agent.AgentB/Agent2Agent.AgentB.csproj" />
+  <Project Path="Agent2Agent.AgentC/Agent2Agent.AgentC.csproj" />
+  <Project Path="Agent2Agent.AgentD/Agent2Agent.AgentD.csproj" />
+  <Project Path="Agent2Agent.AppHost/Agent2Agent.AppHost.csproj" />
+  <Project Path="Agent2Agent.ServiceDefaults/Agent2Agent.ServiceDefaults.csproj" />
+  <Project Path="Agent2Agent.Web/Agent2Agent.Web.csproj" />
+</Solution>
