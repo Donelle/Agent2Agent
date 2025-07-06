@@ -8,6 +8,7 @@ builder.Services.AddAgentDependencies(builder.Configuration);
 var app = builder.Build();
 
 app.MapOpenApi();
+app.UseRouting();
 app.UseHttpsRedirection();
 app.MapDefaultEndpoints();
 

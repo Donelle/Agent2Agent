@@ -15,6 +15,7 @@ public static class Dependencies
         services.AddOpenApi();
         services.AddLogging(o => o.AddDebug().SetMinimumLevel(LogLevel.Trace));
         services.AddHttpClient();
+        services.AddControllers();
         services.AddOpenAIChatCompletion(
             modelId: configuration["OpenAI:ModelId"] ?? string.Empty,
             apiKey: configuration["OpenAI:ApiKey"] ?? string.Empty

@@ -1,5 +1,6 @@
 using Agent2Agent.Web;
 using Agent2Agent.Web.Components;
+using Agent2Agent.Web.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,17 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder.Services
+    .AddRazorComponents()
     .AddInteractiveServerComponents();
+
+
 
 builder.Services.AddOutputCache();
 
-builder.Services.AddHttpClient<WeatherApiClient>(client =>
-    {
-        // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
-        // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
-        client.BaseAddress = new("https+http://apiservice");
-    });
+// Add SignalR services
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -40,5 +40,8 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapDefaultEndpoints();
+
+// Map SignalR hub
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();

@@ -42,5 +42,40 @@ namespace Agent2Agent.AgentA.Controllers
             
             return Ok(response);
         }
+
+        [HttpPost("send-message")]
+        public IActionResult SendMessage([FromBody] ChatMessage message)
+        {
+            // Forward the message to the chat logic
+            // Example: ChatLogic.HandleMessage(message);
+            return Ok(new { Status = "Message received" });
+        }
+
+        [HttpPost("upload-file")]
+        public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            var filePath = Path.Combine("UploadedFiles", file.FileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Notify chat participants about the uploaded file
+            // Example: ChatLogic.NotifyFileUpload(file.FileName);
+
+            return Ok(new { Status = "File uploaded successfully", FileName = file.FileName });
+        }
+
+        public class ChatMessage
+        {
+            public string User { get; set; }
+            public string Content { get; set; }
+        }
     }
 }
