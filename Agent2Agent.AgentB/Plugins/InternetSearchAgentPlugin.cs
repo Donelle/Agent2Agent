@@ -4,7 +4,7 @@ using A2Adotnet.Client;
 using A2Adotnet.Common.Models;
 using Microsoft.SemanticKernel;
 
-namespace Agent2Agent.AgentA.Plugins;
+namespace Agent2Agent.AgentB.Plugins;
 
 internal class InternetSearchAgentPlugin
 {
@@ -17,7 +17,7 @@ internal class InternetSearchAgentPlugin
 		_a2aClient = a2aClient;
 	}
 
-	[KernelFunction("ask_web_agent")]
+	[KernelFunction("ask_internet_search_agent")]
 	[Description("Asks the Internet Search Agent (AgentD) to search the web for information related to the user's query.")]
 	public async Task<string?> AskWebAgent(string query, CancellationToken cancellationToken = default)
 	{

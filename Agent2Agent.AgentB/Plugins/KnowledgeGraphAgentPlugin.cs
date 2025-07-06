@@ -21,7 +21,7 @@ public class KnowledgeGraphAgentPlugin
         _logger = logger;
     }
 
-    [KernelFunction("query_knowledgebase")]
+    [KernelFunction("ask_knowledge_graph_agent")]
     [Description("Queries the Knowledge Graph for vehicle information based on the provided query string.")]
     public async Task<string> QueryKnowledgeGraphAsync(string query, CancellationToken cancellationToken = default)
     {

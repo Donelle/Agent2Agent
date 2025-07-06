@@ -22,16 +22,15 @@ This architecture features four agents, each with a distinct responsibility. The
 - Maps A2A endpoints using `app.MapA2AWellKnown()` and `app.MapA2AEndpoint()`.
 - Uses A2AClient to invoke KnowledgeGraphAgent for factual data enrichment.
 
-### Agent C: KnowledgeGraphAgent
-- Endpoint: POST `/kg/query`
-- Maintains an in-memory or persisted knowledge graph of domain facts.
-- Returns 200 OK with matching facts or 204 No Content if no relevant data is found.
+### Agent C: KnowledgeGraphAgent (Placeholder)
+- Endpoint: GET `/`
+- Currently returns "Hello World!" placeholder.
+- Implementation of `/kg/query` and knowledge graph storage is pending.
 
-### Agent D: InternetSearchAgent
-- Endpoint: POST `/search/query`
-- Uses Redis (`StackExchange.Redis`) for caching search results.
-- On cache miss, calls an external search API (e.g., Bing Web Search).
-- Caches results with a TTL and returns them for fallback enrichment.
+### Agent D: InternetSearchAgent (Placeholder)
+- Endpoint: GET `/`
+- Currently returns "Hello World!" placeholder.
+- Implementation of `/search/query`, Redis caching, and web search integration is pending.
 
 ---
 
