@@ -22,15 +22,21 @@ This architecture features four agents, each with a distinct responsibility. The
 - Maps A2A endpoints using `app.MapA2AWellKnown()` and `app.MapA2AEndpoint()`.
 - Uses A2AClient to invoke KnowledgeGraphAgent for factual data enrichment.
 
-### Agent C: KnowledgeGraphAgent (Placeholder)
-- Endpoint: GET `/`
-- Currently returns "Hello World!" placeholder.
-- Implementation of `/kg/query` and knowledge graph storage is pending.
+### Agent C: KnowledgeGraphAgent (A2A Server)
+- Configured via `builder.AddServiceDefaults()` and `builder.Services.AddDependencies()`.
+- Registers `KnowledgeGraphAgentLogic` as `IAgentLogicInvoker` and `FactStorePlugin` in DI.
+- Hosts a Semantic Kernel `ChatCompletionAgent` named **KnowledgeGraphAgent** with the `search_knowledgebase` function.
+- Maps A2A discovery and invocation endpoints via `app.MapA2AWellKnown()` and `app.MapA2AEndpoint()`.
+- Uses Redis-based `RedisVectorStoreProvider` for embedding management and persistence.
 
-### Agent D: InternetSearchAgent (Placeholder)
-- Endpoint: GET `/`
-- Currently returns "Hello World!" placeholder.
-- Implementation of `/search/query`, Redis caching, and web search integration is pending.
+### Agent D: InternetSearchAgent (A2A Server)
+- Configured via `builder.Services.AddAgentDependencies()` and `AddA2AServer` with AgentCard settings.
+- Registers `InternetSearchAgentLogic` as `IAgentLogicInvoker` and `SearchPlugin` for kernel functions.
+- Hosts a Semantic Kernel `ChatCompletionAgent` named **InternetSearchAgent** with the `search_internet` function.
+- Maps A2A endpoints using `app.MapA2AWellKnown()` and `app.MapA2AEndpoint()`.
+- Future enhancements:
+  - Integrate Redis caching for search results
+  - Connect to external search APIs for live data
 
 ---
 

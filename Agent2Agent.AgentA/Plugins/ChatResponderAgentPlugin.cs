@@ -18,7 +18,7 @@ internal class ChatResponderAgentPlugin
     private readonly IA2AClient _a2aClient;
     private readonly ILogger<ChatResponderAgentPlugin> _logger;
 
-    public ChatResponderAgentPlugin([FromKeyedServices("ChatResponderAgent")] IA2AClient a2aClient, ILogger<ChatResponderAgentPlugin> logger)
+    public ChatResponderAgentPlugin(IA2AClient a2aClient, ILogger<ChatResponderAgentPlugin> logger)
     {
         _logger = logger;
         _a2aClient = a2aClient;

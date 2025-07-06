@@ -4,5 +4,6 @@ global using System.Linq;
 global using System.Threading;
 global using System.Threading.Tasks;
 global using System.Text;
-global using Agent2Agent.AgentB;
+global using Agent2Agent.AgentB.Extensions;
 global using Agent2Agent.AgentB.Plugins;
+global using Agent2Agent.AgentB.Services;

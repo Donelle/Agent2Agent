@@ -6,4 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Agent2Agent.ServiceDefaults\Agent2Agent.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\ThirdParty\a2adotnet\src\A2Adotnet.Server\A2Adotnet.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.59.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.59.0" />
+  </ItemGroup>
+
 </Project>

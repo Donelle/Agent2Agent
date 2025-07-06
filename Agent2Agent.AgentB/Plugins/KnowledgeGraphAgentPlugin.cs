@@ -3,6 +3,7 @@ using System.ComponentModel;
 using A2Adotnet.Client;
 using A2Adotnet.Common.Models;
 using Microsoft.SemanticKernel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Agent2Agent.AgentB.Plugins;
 
@@ -15,7 +16,7 @@ public class KnowledgeGraphAgentPlugin
     private readonly IA2AClient _client;
     private readonly ILogger<KnowledgeGraphAgentPlugin> _logger;
 
-    public KnowledgeGraphAgentPlugin(IA2AClient client, ILogger<KnowledgeGraphAgentPlugin> logger)
+    public KnowledgeGraphAgentPlugin([FromKeyedServices("KnowledgeGraphAgent")] IA2AClient client, ILogger<KnowledgeGraphAgentPlugin> logger)
     {
         _client = client;
         _logger = logger;

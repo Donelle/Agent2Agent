@@ -5,7 +5,7 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.ChatCompletion;
 
-namespace Agent2Agent.AgentB;
+namespace Agent2Agent.AgentB.Services;
 
 internal class ChatResponderAgentLogic : IAgentLogicInvoker
 {

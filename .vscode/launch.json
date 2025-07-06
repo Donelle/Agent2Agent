@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Launch",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Agent2Agent.AppHost/bin/Debug/net9.0/Agent2Agent.AppHost.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:17229;http://localhost:15220",
+                "DOTNET_ENVIRONMENT": "Development",
+                "ASPIRE_ALLOW_UNSECURED_TRANSPORT": "true",
+                "ASPIRE_DASHBOARD_OTLP_ENDPOINT_URL": "https://localhost:21208",
+                "ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL": "https://localhost:22151"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        }
+    ]
+}
