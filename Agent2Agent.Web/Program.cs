@@ -1,6 +1,6 @@
 using Agent2Agent.Web;
 using Agent2Agent.Web.Components;
-using Agent2Agent.Web.Hubs;
+using Agent2Agent.Web.Hubs; // Add namespace for ChatHub
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,16 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 // Add services to the container.
-builder.Services
-    .AddRazorComponents()
+builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-
-
 builder.Services.AddOutputCache();
-
-// Add SignalR services
-builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -41,7 +35,6 @@ app.MapRazorComponents<App>()
 
 app.MapDefaultEndpoints();
 
-// Map SignalR hub
-app.MapHub<ChatHub>("/chathub");
+app.MapHub<ChatHub>("/chathub"); // Map SignalR hub
 
 app.Run();

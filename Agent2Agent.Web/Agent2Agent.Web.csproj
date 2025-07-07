@@ -14,6 +14,50 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.6" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.8.3">
+    <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Include="**\*.scss" />
+    <Watch Include="**\*.ts" />
+  </ItemGroup>
+
+  <Target Name="CleanJSFiles" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <ComponentsFiles Include="Components\*.js*" />
+    </ItemGroup>
+    <Delete Files="@(ComponentsFiles)" />
+  </Target>
+
+  <Target Name="CheckForNpm" BeforeTargets="RunNpmInstall">
+	<Exec Command="npm --version" ContinueOnError="true">
+		<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+	</Exec>
+	<Error Condition="'$(ErrorCode)' != '0'" Text="NPM is required to build this project" />
+</Target>
+
+<Target Name="RunNpmInstall" BeforeTargets="CompileScopedScss, CompileTypescript" Inputs="package.json" Outputs="$(NpmLastInstall)">
+	<Exec Command="npm install" />
+	<Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
+</Target>
+
+<Target Name="CompileScopedScss" BeforeTargets="CompileTypescript, Compile">
+	<ItemGroup>
+		<ScopedScssFiles Include="**/*.razor.scss" />
+	</ItemGroup>
+	<Exec Command="npm run sass -- %(ScopedScssFiles.Identity) %(relativedir)%(filename).css" />
+</Target>
+
+<Target Name="CompileTypescript" AfterTargets="Compile">
+	<Exec Command="tsc" />
+</Target>
 
 </Project>
