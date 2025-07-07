@@ -1,0 +1,26 @@
+{
+    "name": "Agent2Agent.Web",
+    "version": "1.0.0",
+    "description": "Packages needed for Agent2Agent App",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "sass": "sass"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Donelle/Agent2Agent.git"
+    },
+    "author": "Donelle Sanders Jr",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/Donelle/Agent2Agent/issues"
+    },
+    "homepage": "https://github.com/Donelle/Agent2Agent#readme",
+    "devDependencies": {
+      "@types/node-sass": "^4.11.8",
+      "@types/sass": "^1.45.0",
+      "@typescript-eslint/eslint-plugin": "^8.14.0",
+      "@typescript-eslint/parser": "^8.14.0",
+      "eslint": "^9.15.0"
+    }
+  }

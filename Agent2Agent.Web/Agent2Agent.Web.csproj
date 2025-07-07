@@ -10,7 +10,11 @@
     <ProjectReference Include="..\Agent2Agent.ServiceDefaults\Agent2Agent.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+ <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+
   <ItemGroup>
+    <PackageReference Include="AspNetCore.SassCompiler" Version="1.56.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.6" />
@@ -30,6 +34,7 @@
     <Watch Include="**\*.ts" />
   </ItemGroup>
 
+
   <Target Name="CleanJSFiles" BeforeTargets="BeforeBuild">
     <ItemGroup>
       <ComponentsFiles Include="Components\*.js*" />
@@ -37,7 +42,7 @@
     <Delete Files="@(ComponentsFiles)" />
   </Target>
 
-  <Target Name="CheckForNpm" BeforeTargets="RunNpmInstall">
+ <Target Name="CheckForNpm" BeforeTargets="RunNpmInstall">
 	<Exec Command="npm --version" ContinueOnError="true">
 		<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
 	</Exec>
@@ -50,10 +55,13 @@
 </Target>
 
 <Target Name="CompileScopedScss" BeforeTargets="CompileTypescript, Compile">
-	<ItemGroup>
-		<ScopedScssFiles Include="**/*.razor.scss" />
-	</ItemGroup>
-	<Exec Command="npm run sass -- %(ScopedScssFiles.Identity) %(relativedir)%(filename).css" />
+   <ItemGroup>
+    <SassCompile Include="**\*.scss">
+    <ScopedCssEnabled>false</ScopedCssEnabled>
+      <TargetPath>wwwroot/css/%(RecursiveDir)%(Filename).css</TargetPath>
+      <TargetPathWithFileName>wwwroot/css/%(RecursiveDir)%(Filename).css</TargetPathWithFileName>
+    </SassCompile>
+  </ItemGroup>
 </Target>
 
 <Target Name="CompileTypescript" AfterTargets="Compile">
