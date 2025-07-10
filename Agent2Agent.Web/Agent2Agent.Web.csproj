@@ -4,6 +4,9 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+    <NpmLastInstall>node_modules/.last-install</NpmLastInstall>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +14,10 @@
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
- <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <PropertyGroup>
+    <StaticWebAssetBasePath>_content/$(PackageId)</StaticWebAssetBasePath>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.SassCompiler" Version="1.56.1" />
@@ -23,6 +29,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
+    <PackageReference Include="Blazor.Bootstrap" Version="3.3.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,12 +63,9 @@
 
 <Target Name="CompileScopedScss" BeforeTargets="CompileTypescript, Compile">
    <ItemGroup>
-    <SassCompile Include="**\*.scss">
-    <ScopedCssEnabled>false</ScopedCssEnabled>
-      <TargetPath>wwwroot/css/%(RecursiveDir)%(Filename).css</TargetPath>
-      <TargetPathWithFileName>wwwroot/css/%(RecursiveDir)%(Filename).css</TargetPathWithFileName>
-    </SassCompile>
+    <ScopedScssFiles Include="**/*.razor.scss" />
   </ItemGroup>
+  <Exec Command="npm run sass -- %(ScopedScssFiles.Identity) %(relativedir)%(filename).css" />
 </Target>
 
 <Target Name="CompileTypescript" AfterTargets="Compile">
