@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/ThirdParty/">
+    <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Client/A2Adotnet.Client.csproj" />
+    <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Common/A2Adotnet.Common.csproj" />
+    <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Server/A2Adotnet.Server.csproj" />
+  </Folder>
   <Project Path="Agent2Agent.AgentA/Agent2Agent.AgentA.csproj" />
   <Project Path="Agent2Agent.AgentB/Agent2Agent.AgentB.csproj" />
   <Project Path="Agent2Agent.AgentC/Agent2Agent.AgentC.csproj" />
