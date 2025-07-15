@@ -231,10 +231,6 @@ xcuserdata/
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
 CMakefile*
-
-#
-# SampleZoomApp 
-#
 obj/
 bin/
 node_modules/
@@ -248,5 +244,5 @@ Shared/**/*.css
 Migrations/
 *.map
 *.db*
-ThirdParty/
 .vscode/
+*.user
