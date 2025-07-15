@@ -1,7 +1,5 @@
 using Agent2Agent.Web.Hubs;
 
-using Microsoft.Extensions.FileProviders; // Add namespace for ChatHub
-
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseStaticWebAssets();
 

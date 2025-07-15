@@ -55,3 +55,66 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+.h-full {
+  height: 100%;
+}
+
+.w-full {
+  width: 100%;
+}
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.start-2\.5 {
+  inset-inline-start: calc(.25rem *2.5)
+}
+
+.end-0 {
+    inset-inline-end: 0;
+}
+
+.end-2\.5 {
+  inset-inline-end: calc(.25rem *2.5)
+}
+
+.bottom-0 {
+  bottom: 0
+}
+
+.bottom-2\.5 {
+  bottom: calc(.25rem *2.5)
+}
+
+.px-2\.5 {
+  padding-inline: calc(.25rem *2.5)
+}
+
+.py-2\.5 {
+  padding-block: calc(.25rem *2.5)
+}
+
+.mx-2\.5 {
+  margin-inline: calc(.25rem *2.5)
+}
+
+.px-3 {
+  padding-inline: calc(.25rem *3)
+}
+
+.pe-3 {
+  padding-inline-end: calc(.25rem *3)
+}

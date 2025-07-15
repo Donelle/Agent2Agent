@@ -28,7 +28,7 @@
             }
         },
         {
-            "name": "Web App Launch",
+            "name": "Web App (Hot Reload)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -37,6 +37,32 @@
                 "watch",
                 "--project",
                 "${workspaceFolder}/Agent2Agent.Web/Agent2Agent.Web.csproj",
+                "--verbose"
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:7077;http://localhost:5095",
+                "DOTNET_ENVIRONMENT": "Development",
+                "DOTNET_USE_POLLING_FILE_WATCHER": "1"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Web App Launch",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "dotnet",
+            "args": [
+                "${workspaceFolder}/Agent2Agent.Web/bin/Debug/net9.0/Agent2Agent.Web.dll",
                 "--verbose"
             ],
             "cwd": "${workspaceFolder}",

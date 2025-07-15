@@ -1,7 +1,7 @@
 using BlazorBootstrap;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.SignalR.Client;
+
 
 namespace Agent2Agent.Web.Pages;
 
@@ -9,45 +9,29 @@ public partial class Chat
 {
     [Inject] NavigationManager NavigationManager { get; set; } = default!;
 
-    private HubConnection hubConnection = default!;
     private List<string> messages = new List<string>();
     private string currentMessage = string.Empty;
-    private bool isTyping;
+    private bool isProcessing = false;
+
 
     protected override async Task OnInitializedAsync()
     {
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
-            .Build();
-
-        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
-        {
-            messages.Add($"{user}: {message}");
-            StateHasChanged();
-        });
-
-        hubConnection.On<string>("UserTyping", (user) =>
-        {
-            isTyping = true;
-            StateHasChanged();
-            Task.Delay(2000).ContinueWith(_ => { isTyping = false; StateHasChanged(); });
-        });
-
-        await hubConnection.StartAsync();
     }
 
     private async Task SendMessage()
     {
         if (!string.IsNullOrEmpty(currentMessage))
         {
-            await hubConnection.SendAsync("SendMessage", "User", currentMessage);
             currentMessage = string.Empty;
-        }
-    }
+            isProcessing = true; // Start "thinking"
+            StateHasChanged();
 
-    private async Task NotifyTyping()
-    {
-        await hubConnection.SendAsync("NotifyTyping", "User");
+            // Simulate server call
+            await Task.Delay(2000); // Replace with actual server call
+
+            isProcessing = false; // Stop "thinking"
+            StateHasChanged();
+        }
     }
 
     private async Task UploadFiles(InputFileChangeEventArgs e)
@@ -56,8 +40,7 @@ public partial class Chat
         {
             using var stream = file.OpenReadStream();
             var buffer = new byte[file.Size];
-            await stream.ReadAsync(buffer);
-            await hubConnection.SendAsync("UploadFile", "User", file.Name, buffer);
+            await stream.ReadAsync(buffer);           
         }
     }
 }
