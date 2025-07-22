@@ -1,36 +1,69 @@
 using BlazorBootstrap;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using System.Text;
+using System.Text.Json;
 
 
 namespace Agent2Agent.Web.Pages;
 
 public partial class Chat
 {
-    [Inject] NavigationManager NavigationManager { get; set; } = default!;
+    enum MesageType
+    {
+        User,
+        Agent
+	  }
+   
+	  [Inject] NavigationManager NavigationManager { get; set; } = default!;
+    [Inject] IHttpClientFactory HttpClientFactory { get; set; } = default!;
 
-    private List<string> messages = new List<string>();
+    private Dictionary<MesageType, string> messages = new ();
     private string currentMessage = string.Empty;
     private bool isProcessing = false;
-
-
-    protected override async Task OnInitializedAsync()
-    {
-    }
 
     private async Task SendMessage()
     {
         if (!string.IsNullOrEmpty(currentMessage))
         {
+            var messageToSend = currentMessage;
+            messages.Add(MesageType.User, messageToSend);
             currentMessage = string.Empty;
             isProcessing = true; // Start "thinking"
             StateHasChanged();
 
-            // Simulate server call
-            await Task.Delay(2000); // Replace with actual server call
+            try
+            {
+                // Call AgentA's chat endpoint
+                var httpClient = HttpClientFactory.CreateClient("AgentA");
+                var jsonContent = new StringContent(
+                    JsonSerializer.Serialize(messageToSend),
+                    Encoding.UTF8,
+                    "application/json"
+                );
 
-            isProcessing = false; // Stop "thinking"
-            StateHasChanged();
+                var response = await httpClient.PostAsync("api/agent/chat", jsonContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    // Remove quotes from the response if it's a JSON string
+                    var cleanResponse = JsonSerializer.Deserialize<string>(responseContent);
+                    messages.Add(MesageType.Agent, cleanResponse ?? string.Empty);
+                }
+                else
+                {
+                    messages.Add(MesageType.Agent, $"Error: Failed to get response from agent. Status: {response.StatusCode} Message: {response.RequestMessage}");
+                }
+            }
+            catch (Exception ex)
+            {
+                messages.Add(MesageType.Agent, $"Error: {ex.Message}");
+            }
+            finally
+            {
+                isProcessing = false; // Stop "thinking"
+                StateHasChanged();
+            }
         }
     }
 

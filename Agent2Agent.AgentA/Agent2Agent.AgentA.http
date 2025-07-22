@@ -1,6 +1,6 @@
 @Agent2Agent.AgentA_HostAddress = http://localhost:5144
 
-GET {{Agent2Agent.AgentA_HostAddress}}/weatherforecast/
+POST {{Agent2Agent.AgentA_HostAddress}}/api/agent/chat
 Accept: application/json
 
 ###

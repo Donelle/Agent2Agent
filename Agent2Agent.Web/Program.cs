@@ -11,6 +11,13 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddSignalR();
 
+// Add HttpClient for AgentA service
+builder.Services.AddHttpClient("AgentA",(provider, client )=>
+{
+    var config = provider.GetRequiredService<IConfiguration>();
+    client.BaseAddress = new Uri(config["AgentA"]);
+});
+
 builder.Services.AddOutputCache();
 
 var app = builder.Build();

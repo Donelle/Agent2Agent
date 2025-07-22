@@ -10,6 +10,7 @@ var app = builder.Build();
 app.MapOpenApi();
 app.UseRouting();
 app.UseHttpsRedirection();
+app.MapControllers();
 app.MapDefaultEndpoints();
 
 await app.RunAsync();
