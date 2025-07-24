@@ -40,7 +40,7 @@ namespace Agent2Agent.AgentA.Controllers
                 }
             }
             
-            return Ok(response);
+            return Ok(response.ToString());
         }
 
         [HttpPost("send-message")]
@@ -72,10 +72,6 @@ namespace Agent2Agent.AgentA.Controllers
             return Ok(new { Status = "File uploaded successfully", FileName = file.FileName });
         }
 
-        public class ChatMessage
-        {
-            public string User { get; set; }
-            public string Content { get; set; }
-        }
+        public record ChatMessage(string User, string Content);
     }
 }

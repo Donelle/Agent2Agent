@@ -43,6 +43,7 @@
                                     <div class="col-8">
                                         <textarea class="bg-transparent"
                                                   @bind="currentMessage"
+                                                  @onkeypress="HandleKeyPress"
                                                   placeholder="Type a message..."
                                                   rows="2"></textarea>
                                     </div>
