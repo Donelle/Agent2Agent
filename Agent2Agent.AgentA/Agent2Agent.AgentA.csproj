@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<NoWarn>$(NoWarn);EXTEXP0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,5 +19,9 @@
     <PackageReference Include="Microsoft.SemanticKernel.Agents.Runtime.InProcess" Version="1.59.0-preview" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.59.0" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Item Include =".editorconfig"/>
+	</ItemGroup>
 
 </Project>

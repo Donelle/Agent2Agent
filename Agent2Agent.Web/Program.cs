@@ -1,8 +1,6 @@
 using Agent2Agent.Web.Service;
-
 using Microsoft.Extensions.Http.Resilience;
 
-using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseStaticWebAssets();
@@ -13,8 +11,7 @@ builder.AddServiceDefaults();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazorBootstrap();
-
-// Configure SignalR with enhanced options for long connections
+builder.Services.AddOutputCache();
 builder.Services.AddSignalR(o =>
 {
   o.ClientTimeoutInterval = TimeSpan.FromSeconds(120); 
@@ -22,13 +19,13 @@ builder.Services.AddSignalR(o =>
 });
 
 // Add HttpClient for AgentA service
-#pragma warning disable EXTEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-builder.Services.AddHttpClient<IChatAgentService, ChatAgentService>((provider, client) =>
-{
-	var config = provider.GetRequiredService<IConfiguration>();
-	client.BaseAddress = new Uri(config["AgentA"]);
-	client.Timeout = TimeSpan.FromSeconds(120);
-})
+#pragma warning disable EXTEXP0001 
+	builder.Services.AddHttpClient<IChatAgentService, ChatAgentService>((provider, client) =>
+	{
+		var config = provider.GetRequiredService<IConfiguration>();
+		client.BaseAddress = new Uri(config["AgentA"]);
+		client.Timeout = TimeSpan.FromSeconds(120);
+	})
 	.RemoveAllResilienceHandlers()
 	.AddStandardResilienceHandler(options =>
 	{
@@ -54,16 +51,13 @@ builder.Services.AddHttpClient<IChatAgentService, ChatAgentService>((provider, c
 			Name = "WebAppRetry",
 		};
 	});
-#pragma warning restore EXTEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore EXTEXP0001 
 
-builder.Services.AddOutputCache();
 
 var app = builder.Build();
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
     app.UseResponseCompression();
 }

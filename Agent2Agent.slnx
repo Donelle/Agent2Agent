@@ -1,4 +1,5 @@
 <Solution>
+  <Folder Name="/Solution Items/" />
   <Folder Name="/ThirdParty/">
     <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Client/A2Adotnet.Client.csproj" />
     <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Common/A2Adotnet.Common.csproj" />

@@ -4,6 +4,7 @@ using A2Adotnet.Server.Implementations;
 
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
 
 namespace Agent2Agent.AgentD.Extensions;
 
@@ -20,7 +21,7 @@ public static class Dependencies
         );
 
         // Override the singleton ITaskManager registration with scoped to fix DI issue
-        services.AddScoped<A2Adotnet.Server.Abstractions.ITaskManager, A2Adotnet.Server.Implementations.InMemoryTaskManager>();
+        services.AddScoped<ITaskManager, InMemoryTaskManager>();
 
         services.AddA2AServer(options =>
         {
@@ -28,14 +29,7 @@ public static class Dependencies
         });
 
         services.AddScoped<IAgentLogicInvoker, InternetSearchAgentLogic>();
-        services.AddSingleton<SearchPlugin>();
-        services.AddSingleton((serviceProvider) =>
-            new KernelPluginCollection
-            {
-                KernelPluginFactory.CreateFromObject(serviceProvider.GetRequiredService<SearchPlugin>())
-            }
-        );
-
+  
         services.AddTransient(sp =>
             new ChatCompletionAgent
             {
@@ -43,12 +37,9 @@ public static class Dependencies
                 Instructions = """
                     You are Internet Search Agent, a helpful internet search assistant.
                     You can find information on the internet based on the user's input.
-                    You will use the `search_internet` function first to search for relevant information.
-                    After you receive a result from the `search_internet` function, perform any necessary
-                    instructions returned by the function (if applicable).
                 """,
-                Kernel = new Kernel(sp, sp.GetRequiredService<KernelPluginCollection>()),
-                Arguments = new KernelArguments (new PromptExecutionSettings { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto() }),
+                Kernel = new Kernel(sp),
+                Arguments = new KernelArguments (new OpenAIPromptExecutionSettings { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto() }),
             }
         );
 

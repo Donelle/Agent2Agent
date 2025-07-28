@@ -9,49 +9,54 @@ namespace Agent2Agent.AgentD.Services;
 
 public class InternetSearchAgentLogic : IAgentLogicInvoker
 {
-    private readonly ILogger<InternetSearchAgentLogic> _logger;
-    private readonly ITaskManager _taskManager;
-    private readonly ChatCompletionAgent _agent;
+	private readonly ILogger<InternetSearchAgentLogic> _logger;
+	private readonly ITaskManager _taskManager;
+	private readonly ChatCompletionAgent _agent;
 
-    public InternetSearchAgentLogic(ILogger<InternetSearchAgentLogic> logger, ITaskManager taskManager, ChatCompletionAgent agent)
-    {
-        _logger = logger;
-        _taskManager = taskManager;
-        _agent = agent;
-    }
+	public InternetSearchAgentLogic(ILogger<InternetSearchAgentLogic> logger, ITaskManager taskManager, ChatCompletionAgent agent)
+	{
+		_logger = logger;
+		_taskManager = taskManager;
+		_agent = agent;
+	}
 
-    public async System.Threading.Tasks.Task ProcessTaskAsync(A2Adotnet.Common.Models.Task task, Message triggeringMessage, CancellationToken cancellationToken)
-    {
-        _logger.LogInformation("Processing task: {TaskId}", task.Id);
+	public async System.Threading.Tasks.Task ProcessTaskAsync(A2Adotnet.Common.Models.Task task, Message triggeringMessage, CancellationToken cancellationToken)
+	{
+		_logger.LogInformation("Processing task: {TaskId}", task.Id);
 
-        await _taskManager.UpdateTaskStatusAsync(task.Id, TaskState.Working, null, cancellationToken);
-        var userInput = triggeringMessage.Parts.OfType<TextPart>().FirstOrDefault()?.Text;
+		await _taskManager.UpdateTaskStatusAsync(task.Id, TaskState.Working, null, cancellationToken);
+		var userInput = triggeringMessage.Parts.OfType<TextPart>().FirstOrDefault()?.Text;
+		var response = new StringBuilder();
 
-        if (userInput != null)
-        {
-            var response = new StringBuilder();
-            await foreach (var result in _agent.InvokeAsync(new ChatMessageContent(AuthorRole.User, userInput), cancellationToken: cancellationToken))
-            {
-                if (result.Message is ChatMessageContent chatResponse)
-                {
-                    response.Append(chatResponse.Content);
-                }
-                else
-                {
-                    // Handle other types of results if necessary
-                    _logger.LogWarning("Received unexpected message type: {MessageType}", result.Message.GetType());
-                }
-            }
-            
-            if(response.Length > 0)
-            {
-              var resultArtifact = new Artifact() { Parts = new List<Part> { new TextPart(response.ToString()) } };
-              await _taskManager.AddArtifactAsync(task.Id, resultArtifact, cancellationToken);
-            }
-        }
+		try
+		{
+			await foreach (var result in _agent.InvokeAsync(new ChatMessageContent(AuthorRole.User, userInput), cancellationToken: cancellationToken))
+			{
+				if (result.Message is ChatMessageContent chatResponse)
+				{
+					response.Append(chatResponse.Content);
+				}
+				else
+				{
+					// Handle other types of results if necessary
+					_logger.LogWarning("Received unexpected message type: {MessageType}", result.Message.GetType());
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Error occurred while processing task: {TaskId}", task.Id);
+			response.Append("An error occurred while processing your request. Please try again later.");
+		}
 
-        _logger.LogInformation("Task {TaskId} completed.", task.Id);
-        await _taskManager.UpdateTaskStatusAsync(task.Id, TaskState.Completed, null, cancellationToken);
-    }
+		if (response.Length == 0)
+			response.Append("Sorry, I couldn't find any information related to your query.");
+
+		var resultArtifact = new Artifact() { Parts = new List<Part> { new TextPart(response.ToString()) } };
+		await _taskManager.AddArtifactAsync(task.Id, resultArtifact, cancellationToken);
+
+		_logger.LogInformation("Task {TaskId} completed.", task.Id);
+		await _taskManager.UpdateTaskStatusAsync(task.Id, TaskState.Completed, null, cancellationToken);
+	}
 
 }

@@ -4,22 +4,23 @@ using A2Adotnet.Client;
 using A2Adotnet.Common.Models;
 using Microsoft.SemanticKernel;
 
-namespace Agent2Agent.AgentB.Plugins;
+namespace Agent2Agent.AgentB.Agents;
 
-internal class InternetSearchAgentPlugin
+internal class InternetSearchAgent
 {
   	private readonly IA2AClient _a2aClient;
-  	private readonly ILogger<InternetSearchAgentPlugin> _logger;
+  	private readonly ILogger<InternetSearchAgent> _logger;
 
-	public InternetSearchAgentPlugin([FromKeyedServices("InternetSearchAgent")] IA2AClient a2aClient, ILogger<InternetSearchAgentPlugin> logger)
+	public InternetSearchAgent([FromKeyedServices(Agent2AgentManager.InternetAgentName)] IA2AClient a2aClient, ILogger<InternetSearchAgent> logger)
 	{
 		_logger = logger;
 		_a2aClient = a2aClient;
 	}
 
-	[KernelFunction("ask_internet_search_agent")]
-	[Description("Asks the Internet Search Agent (AgentD) to search the web for information related to the user's query.")]
-	public async Task<string?> AskWebAgent(string query, CancellationToken cancellationToken = default)
+	[KernelFunction("search_internet")]
+	[Description("Search the internet for vehicle registration information.")]
+	public async Task<string?> AskWebAgent(
+		[Description("The question to search the internet for vehicle registration information")] string query, CancellationToken cancellationToken = default)
 	{
 		if (string.IsNullOrWhiteSpace(query))
 		{

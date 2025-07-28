@@ -1,6 +1,3 @@
-using System.ComponentModel;
-using Microsoft.SemanticKernel;
-
 namespace Agent2Agent.AgentC.Plugins;
 
 internal class FactStorePlugin
@@ -16,12 +13,7 @@ internal class FactStorePlugin
         _vectorStoreProvider = vectorStoreProvider;
     }   
     
-
-    [KernelFunction("search_knowledgebase")]
-    [Description("Searches the knowledge base for relevant information based on the provided query.")]
-    public async Task<IReadOnlyList<string>> SearchKnowledgeBaseAsync(
-        [Description("The query to search for in the knowledge base.")] string query,
-        CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<string>> SearchKnowledgeBaseAsync(string query, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Searching knowledge base for query: {Query}", query);
 
