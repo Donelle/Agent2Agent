@@ -19,7 +19,7 @@ public static class Dependencies
 		services.AddScoped<IAgentLogicInvoker, KnowledgeGraphAgentLogic>();
 		services.AddSingleton<IEmbeddingProvider, OpenAIEmbeddingProvider>();
 		services.AddSingleton<IVectorStoreProvider, RedisVectorStoreProvider>();
-		services.AddTransient<FactStorePlugin>();
+		services.AddTransient<FactStoreService>();
 		services.AddSingleton(sp =>
 		{
 			var redisConnectionString = configuration["Redis:ConnectionString"];

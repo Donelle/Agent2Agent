@@ -7,13 +7,13 @@ internal class KnowledgeGraphAgentLogic : IAgentLogicInvoker
 {
 	private readonly ILogger<KnowledgeGraphAgentLogic> _logger;
 	private readonly ITaskManager _taskManager;
-	private readonly FactStorePlugin _plugin;
+	private readonly FactStoreService _factStore;
 
-	public KnowledgeGraphAgentLogic(ILogger<KnowledgeGraphAgentLogic> logger, ITaskManager taskManager, FactStorePlugin plugin)
+	public KnowledgeGraphAgentLogic(ILogger<KnowledgeGraphAgentLogic> logger, ITaskManager taskManager, FactStoreService factStore)
 	{
 		_logger = logger;
 		_taskManager = taskManager;
-		_plugin = plugin;
+		_factStore = factStore;
 	}
 
 	public async System.Threading.Tasks.Task ProcessTaskAsync(A2Adotnet.Common.Models.Task task, Message triggeringMessage, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ internal class KnowledgeGraphAgentLogic : IAgentLogicInvoker
 
 		try
 		{
-			var result = await _plugin.SearchKnowledgeBaseAsync(userInput ?? string.Empty, cancellationToken);
+			var result = await _factStore.SearchKnowledgeBaseAsync(userInput ?? string.Empty, cancellationToken);
 			if (result.Count > 0)
 			{
 				response.AppendLine("Here are some relevant pieces of information I found:");

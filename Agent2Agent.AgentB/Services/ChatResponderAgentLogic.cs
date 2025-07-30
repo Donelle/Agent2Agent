@@ -1,8 +1,7 @@
 using A2Adotnet.Common.Models;
 using A2Adotnet.Server.Abstractions;
 
-using Microsoft.SemanticKernel.Agents.Orchestration.GroupChat;
-using Microsoft.SemanticKernel.Agents.Runtime.InProcess;
+using Agent2Agent.AgentB.Agents;
 
 namespace Agent2Agent.AgentB.Services;
 
@@ -10,14 +9,12 @@ internal class ChatResponderAgentLogic : IAgentLogicInvoker
 {
 	private readonly ITaskManager _taskManager;
 	private readonly ILogger<ChatResponderAgentLogic> _logger;
-	private readonly InProcessRuntime _kernelRuntime;
-	private readonly GroupChatOrchestration _orchestration;
+	private readonly Agent2AgentManager _orchestration;
 
-	public ChatResponderAgentLogic(ITaskManager taskManager, GroupChatOrchestration orchestration, InProcessRuntime runtime, ILogger<ChatResponderAgentLogic> logger)
+	public ChatResponderAgentLogic(ITaskManager taskManager, Agent2AgentManager orchestration, ILogger<ChatResponderAgentLogic> logger)
 	{
 		_taskManager = taskManager;
 		_logger = logger;
-		_kernelRuntime = runtime;
 		_orchestration = orchestration;
 	}
 
@@ -30,10 +27,9 @@ internal class ChatResponderAgentLogic : IAgentLogicInvoker
 
 		if (userInput != null)
 		{
-			var response = await _orchestration.InvokeAsync(userInput, _kernelRuntime, cancellationToken);
-			var result = await response.GetValueAsync(cancellationToken: cancellationToken);
-			
-			var resultArtifact = new Artifact() { Parts = new List<Part> { new TextPart(result ?? "No response") } };
+			var response = await _orchestration.InvokeAsync(userInput, cancellationToken);
+			var resultArtifact = new Artifact() { Parts = new List<Part> { new TextPart(response ?? "No response") } };
+
 			await _taskManager.AddArtifactAsync(task.Id, resultArtifact, cancellationToken);
 		}
 

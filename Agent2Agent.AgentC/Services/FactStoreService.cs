@@ -1,12 +1,12 @@
 namespace Agent2Agent.AgentC.Plugins;
 
-internal class FactStorePlugin
+internal class FactStoreService
 {
-    private readonly ILogger<FactStorePlugin> _logger;
+    private readonly ILogger<FactStoreService> _logger;
     private readonly IVectorStoreProvider _vectorStoreProvider;
     private readonly IEmbeddingProvider _embeddingProvider;
 
-    public FactStorePlugin(ILogger<FactStorePlugin> logger, IVectorStoreProvider vectorStoreProvider, IEmbeddingProvider embeddingProvider)
+    public FactStoreService(ILogger<FactStoreService> logger, IVectorStoreProvider vectorStoreProvider, IEmbeddingProvider embeddingProvider)
     {
         _embeddingProvider = embeddingProvider;
         _logger = logger;

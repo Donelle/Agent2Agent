@@ -1,4 +1,4 @@
-﻿using Microsoft.SemanticKernel.Agents.Orchestration.GroupChat;
+﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace Agent2Agent.AgentB.Agents;
@@ -10,67 +10,96 @@ namespace Agent2Agent.AgentB.Agents;
 /// </summary>
 /// <remarks>
 /// The group chat manager's methods are called in a specific order for each round of the conversation:
-///		1. ShouldRequestUserInput: Checks if user (human) input is required before the next agent speaks. 
-///		   If true, the orchestration pauses for user input. The user input is then added to the chat history 
-///		   of the manager and sent to all agents.
-///		2. ShouldTerminate: Determines if the group chat should end (for example, if a maximum number of rounds 
-///		   is reached or a custom condition is met). If true, the orchestration proceeds to result filtering.
-///		3. FilterResults: Called only if the chat is terminating, to summarize or process the final results of the conversation.
-///		4. SelectNextAgent: If the chat is not terminating, selects the next agent to respond in the conversation.
+///		1. ShouldTerminate: Determines if the group chat should end based on the following conditions:
+///		- If the last message is from the user, the chat continues.
+///		- If the last message is from the Internet Agent, the chat can terminate.
+///		- If the last message indicates that the Knowledge Graph Agent did find information, the chat can terminate.
+///		- If the last message indicates that the Knowledge Graph Agent did not find any information, the chat continues.
+///		2. FilterResults: Called only if the chat is terminating, to summarize or process the final results of the conversation.
+///		3. SelectNextAgent: If the chat is not terminating, selects the next agent to respond in the conversation by the following logic:
+///		- If the last message was from the user, the Knowledge Graph Agent is selected to respond.
+///		- If the last message was from the Knowledge Graph Agent, the Internet Search Agent is selected to respond.
 /// </remarks>
-internal class Agent2AgentManager : GroupChatManager
+internal class Agent2AgentManager
 {
 	public const string KnowledgeAgentName = "KnowledgeGraphAgent";
 	public const string InternetAgentName = "InternetSearchAgent";
 
-	public override ValueTask<GroupChatManagerResult<string>> FilterResults(ChatHistory history, CancellationToken cancellationToken = default)
+	private readonly ILogger<Agent2AgentManager> _logger;
+	private readonly Dictionary<string, IAgent> _agents; 
+
+	public Agent2AgentManager(KnowledgeBaseAgent knowledgeBaseAgent, InternetSearchAgent internetSearchAgent, ILogger<Agent2AgentManager> logger)
+	{
+		_logger = logger;
+		_agents = new Dictionary<string, IAgent>
+		{
+			{ KnowledgeAgentName, knowledgeBaseAgent },
+			{ InternetAgentName, internetSearchAgent }
+		};
+	}
+
+	public async Task<string> InvokeAsync(string userInput, CancellationToken cancellationToken)
+	{
+		ChatHistory history = new ChatHistory(userInput, AuthorRole.User);
+
+		for (int i = 0; i <= 2; i++)
+		{
+			if (cancellationToken.IsCancellationRequested)
+			{
+				_logger.LogInformation("Operation cancelled by user.");
+				return string.Empty;
+			}
+
+			if (ShouldTerminate(history))
+			{
+				_logger.LogInformation("Terminating chat as per logic.");
+				return FilterResults(history);
+			}
+
+			var nextAgentName = SelectNextAgent(history);
+			var result = await _agents[nextAgentName].InvokeAsync(userInput, cancellationToken);
+			history.Add(new ChatMessageContent(AuthorRole.Assistant, result) { AuthorName = nextAgentName });
+		}
+
+		return "No response was found from the assistant";
+	}
+
+	public string FilterResults(ChatHistory history)
 	{
 		var summary = "No response was found from the assistant";
 		var lastMessage = history.LastOrDefault(a => a.Role == AuthorRole.Assistant);
-
-		return lastMessage != null
-			? ValueTask.FromResult(new GroupChatManagerResult<string>(lastMessage.Content ?? summary))
-			: ValueTask.FromResult(new GroupChatManagerResult<string>(summary));
+		return lastMessage?.Content ?? summary;
 	}
 
-	public override ValueTask<GroupChatManagerResult<string>> SelectNextAgent(ChatHistory history, GroupChatTeam team, CancellationToken cancellationToken = default)
+	public string SelectNextAgent(ChatHistory history)
 	{
 		var lastMessage = history.Last();
 		if (lastMessage.Role == AuthorRole.User)
 		{
 			// If the last message was from the user, select the Knowledge Graph Agent to respond.
-			return ValueTask.FromResult(new GroupChatManagerResult<string>(KnowledgeAgentName)
-			{
-				Reason = "Selecting Knowledge Graph Agent to provide vehicle registration information."
-			});
+			return KnowledgeAgentName;
 		}
 
-		var nextAgent = lastMessage.AuthorName == KnowledgeAgentName
+		return lastMessage.AuthorName == KnowledgeAgentName
 			? InternetAgentName
 			: KnowledgeAgentName;
-
-		return ValueTask.FromResult(new GroupChatManagerResult<string>(nextAgent)
-		{
-			Reason = $"Selecting {nextAgent} to respond."
-		});
 	}
 
-	public override ValueTask<GroupChatManagerResult<bool>> ShouldRequestUserInput(ChatHistory history, CancellationToken cancellationToken = default) =>
-		ValueTask.FromResult(new GroupChatManagerResult<bool>(false) { Reason = "No user input required." });
-
-	public override ValueTask<GroupChatManagerResult<bool>> ShouldTerminate(ChatHistory history, CancellationToken cancellationToken = default)
+	public bool ShouldTerminate(ChatHistory history)
 	{
+		// If the last message is from the user, we do not terminate yet we 
+		// wait for the next agent's response.
 		var lastMessage = history.Last();
 		if (lastMessage.Role == AuthorRole.User)
-			return ValueTask.FromResult(new GroupChatManagerResult<bool>(false));
+			return false;
 
+		// if the last message is from the Internet Agent we can terminate the chat
 		if (lastMessage.AuthorName == InternetAgentName)
-			return ValueTask.FromResult(new GroupChatManagerResult<bool>(true));
+			return true;
 
-		var terminate = lastMessage.Content != null &&
-			(lastMessage.Content.Length == 0 || lastMessage.Content.Contains("couldn't find", StringComparison.OrdinalIgnoreCase));
-
-		return ValueTask.FromResult(new GroupChatManagerResult<bool>(terminate));
+		// Check to see if the last message indicates that the Knowledge Graph Agent did not find any information.
+		var notFoundMessage = "I couldn't find any relevant information in the knowledge base.";
+		return !lastMessage.Content?.Contains(notFoundMessage, StringComparison.OrdinalIgnoreCase) ?? false;
 	}
 }
 

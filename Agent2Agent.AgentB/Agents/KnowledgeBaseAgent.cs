@@ -3,8 +3,6 @@ using System.ComponentModel;
 using A2Adotnet.Client;
 using A2Adotnet.Common.Models;
 
-using Microsoft.SemanticKernel;
-
 using Agent2Agent.AgentB.Agents;
 
 namespace Agent2Agent.AgentB.Plugins;
@@ -13,27 +11,24 @@ namespace Agent2Agent.AgentB.Plugins;
 /// KnowledgeGraphAgentPlugin is a plugin for querying the Knowledge Graph Agent (AgentC).
 /// It uses the A2AClient to send queries to the Knowledge Graph Agent and receive responses
 /// </summary>
-public class KnowledgeGraphAgent
+public class KnowledgeBaseAgent : IAgent
 {
 	private readonly IA2AClient _client;
-	private readonly ILogger<KnowledgeGraphAgent> _logger;
+	private readonly ILogger<KnowledgeBaseAgent> _logger;
 
-	public KnowledgeGraphAgent([FromKeyedServices(Agent2AgentManager.KnowledgeAgentName)] IA2AClient client, ILogger<KnowledgeGraphAgent> logger)
+	public KnowledgeBaseAgent([FromKeyedServices(Agent2AgentManager.KnowledgeAgentName)] IA2AClient client, ILogger<KnowledgeBaseAgent> logger)
 	{
 		_client = client;
 		_logger = logger;
 	}
 
-	[KernelFunction("search_knowledge_base")]
 	[Description("Search the knowledge base for vehicle registration information.")]
-	public async Task<string> QueryKnowledgeGraphAsync(
-		[Description("The question to search the knowledge base for vehicle registration information")] string query,
-		CancellationToken cancellationToken = default)
+	public async Task<string> InvokeAsync(string userInput, CancellationToken cancellationToken)
 	{
 		var content = "Sorry, I couldn't find any information related to your query.";
 		try
 		{
-			var searchMessage = new Message { Role = "User", Parts = new List<Part> { new TextPart(query) } };
+			var searchMessage = new Message { Role = "User", Parts = new List<Part> { new TextPart(userInput) } };
 			_logger.LogInformation("Asking knowledg graph agent with query: {@Query}", searchMessage);
 
 			var result = await _client.SendTaskAsync(Guid.NewGuid().ToString(), searchMessage, cancellationToken: cancellationToken);
