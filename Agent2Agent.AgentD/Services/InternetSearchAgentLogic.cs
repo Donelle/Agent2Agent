@@ -52,11 +52,10 @@ public class InternetSearchAgentLogic : IAgentLogicInvoker
 		if (response.Length == 0)
 			response.Append("Sorry, I couldn't find any information related to your query.");
 
-		var resultArtifact = new Artifact() { Parts = new List<Part> { new TextPart(response.ToString()) } };
-		await _taskManager.AddArtifactAsync(task.Id, resultArtifact, cancellationToken);
+		var message = new Message { Role = "Assistant",  Parts = new List<Part> { new TextPart(response.ToString()) } };
 
 		_logger.LogInformation("Task {TaskId} completed.", task.Id);
-		await _taskManager.UpdateTaskStatusAsync(task.Id, TaskState.Completed, null, cancellationToken);
+		await _taskManager.UpdateTaskStatusAsync(task.Id, TaskState.Completed, message, cancellationToken);
 	}
 
 }

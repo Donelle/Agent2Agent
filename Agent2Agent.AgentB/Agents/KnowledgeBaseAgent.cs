@@ -35,11 +35,7 @@ public class KnowledgeBaseAgent : IAgent
 			if (result.Status.State == TaskState.Completed)
 			{
 				_logger.LogInformation("knowledge graph agent task completed successfully. Result: {Result}", content);
-				content = result.Artifacts?
-					.SelectMany(a => a.Parts)
-					.OfType<TextPart>()
-					.Select(p => p.Text)
-					.FirstOrDefault() ?? content;
+				content = result.Status.Message?.Parts.OfType<TextPart>().Select(p => p.Text).FirstOrDefault() ?? content;
 			}
 			else
 			{

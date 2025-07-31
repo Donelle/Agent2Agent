@@ -33,7 +33,7 @@ internal class InternetSearchAgent : IAgent
 			var result = await _a2aClient.SendTaskAsync(Guid.NewGuid().ToString(), searchMessage, cancellationToken: cancellationToken);
 			if (result.Status.State == TaskState.Completed)
 			{
-				var content = result.Artifacts?.FirstOrDefault()?.Parts?.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)";
+				var content = result.Status.Message?.Parts?.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)";
 				_logger.LogInformation("Web agent task completed successfully. Result: {Result}", content);
 
 				return content;

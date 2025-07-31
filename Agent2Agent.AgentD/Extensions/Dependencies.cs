@@ -4,7 +4,6 @@ using A2Adotnet.Server.Implementations;
 
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
-using Microsoft.SemanticKernel.Connectors.OpenAI;
 
 namespace Agent2Agent.AgentD.Extensions;
 

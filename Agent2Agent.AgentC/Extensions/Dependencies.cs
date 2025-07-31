@@ -4,6 +4,9 @@ using A2Adotnet.Server.Implementations;
 
 using StackExchange.Redis;
 
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Agents;
+
 namespace Agent2Agent.AgentC.Extensions;
 
 public static class Dependencies
@@ -48,5 +51,19 @@ public static class Dependencies
 		{
 			vectorStoreProvider.EnsureIndexExistsAsync().GetAwaiter().GetResult();
 		}
+
+		services.AddTransient(sp =>
+				new ChatCompletionAgent
+				{
+					Name = "KnowledgebaseAgent",
+					Instructions = """
+                You are Knowledgebase Agent, a helpful knowledge base assistant.
+                You will find information in the knowledge base based on the user's input.
+            """,
+					Kernel = Kernel.CreateBuilder()
+						.AddOpenAIChatCompletion(configuration["OpenAI:ModelId"] ?? string.Empty, configuration["OpenAI:ApiKey"] ?? string.Empty)
+						.Build()
+				}
+		);
 	}
 }

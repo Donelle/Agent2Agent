@@ -36,14 +36,14 @@ namespace Agent2Agent.AgentA.Controllers
 
 
 				var result = await _a2aClient.SendTaskAsync(Guid.NewGuid().ToString(), chatMessage, cancellationToken: HttpContext.RequestAborted);
+				response = result.Status.Message?.Parts?.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)";
+
 				if (result.Status.State == TaskState.Completed)
 				{
-					response = result.Artifacts?.FirstOrDefault()?.Parts.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)";
 					_logger.LogInformation("Task completed successfully. Result: {Result}", response);
 				}
 				else
-				{
-					response = result.Status.Message?.Parts?.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)";
+				{ 
 					_logger.LogWarning("Task did not complete successfully. State: {State}, Message: {Message}", result.Status.State, response);
 				}
 			}

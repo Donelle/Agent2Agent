@@ -25,15 +25,10 @@ internal class ChatResponderAgentLogic : IAgentLogicInvoker
 		await _taskManager.UpdateTaskStatusAsync(task.Id, TaskState.Working, null, cancellationToken);
 		var userInput = triggeringMessage.Parts.OfType<TextPart>().FirstOrDefault()?.Text;
 
-		if (userInput != null)
-		{
-			var response = await _orchestration.InvokeAsync(userInput, cancellationToken);
-			var resultArtifact = new Artifact() { Parts = new List<Part> { new TextPart(response ?? "No response") } };
-
-			await _taskManager.AddArtifactAsync(task.Id, resultArtifact, cancellationToken);
-		}
+		var response = await _orchestration.InvokeAsync(userInput ?? string.Empty, cancellationToken);
+		var result = new Message { Role = "Assistant", Parts = new List<Part> { new TextPart(response ?? "No response") } };
 
 		_logger.LogInformation("Task {TaskId} completed.", task.Id);
-		await _taskManager.UpdateTaskStatusAsync(task.Id, TaskState.Completed, null, cancellationToken);
+		await _taskManager.UpdateTaskStatusAsync(task.Id, TaskState.Completed, result, cancellationToken);
 	}
 }
