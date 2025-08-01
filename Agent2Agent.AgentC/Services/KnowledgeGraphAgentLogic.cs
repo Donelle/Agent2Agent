@@ -36,7 +36,7 @@ internal class KnowledgeGraphAgentLogic : IAgentLogicInvoker
 			{
 				response.AppendLine("Here are some relevant pieces of information I found:");
 
-				var prompt = new StringBuilder(userInput);
+				var prompt = new StringBuilder($"{userInput}\n\nUse the following information as reference for this inquiry:\n\n");
 				foreach (var item in result)
 					prompt.Append(item);
 

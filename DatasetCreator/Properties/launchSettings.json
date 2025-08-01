@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DatasetCreator": {
+      "commandName": "Project",
+      "commandLineArgs": "--input c:\\Tmp --verbose"
+    }
+  }
+}
