@@ -58,14 +58,14 @@ internal class RedisVectorStoreProvider : IVectorStoreProvider, IDisposable
 
 	public async Task UpsertChunkAsync(string id, string text, float[] embedding, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
 	{
-		// Implementation for upserting a chunk into Redis
 		var hash = new HashEntry[]
 		{
 			new HashEntry("text", text),
-      // serialize float[] to byte[] for the embedding field
       new HashEntry("embedding", SerializeFloatArray(embedding)),
-			new HashEntry("state", metadata["state"]),
-			new HashEntry("sourceUrl", metadata["sourceUrl"])
+			new HashEntry("state", metadata.ContainsKey("state") ? metadata["state"] : "unknown"),
+			new HashEntry("sourceUrl", metadata.ContainsKey("sourceUrl") ? metadata["sourceUrl"] : "unknown"),
+			new HashEntry("documentType",  metadata.ContainsKey("documentType") ? metadata["documentType"] : "unknown"),
+			new HashEntry("title", metadata.ContainsKey("title") ? metadata["title"] : "No Title")
 		};
 
 		await _database.HashSetAsync(new RedisKey($"doc:{id}"), hash);
@@ -76,17 +76,19 @@ internal class RedisVectorStoreProvider : IVectorStoreProvider, IDisposable
 		var knnArgs = new Dictionary<string, object> { ["vec"] = SerializeFloatArray(queryEmbedding) };
         var query = new Query($"*=>[KNN {topK} @embedding $vec]")
 				.Params(knnArgs)
-				.ReturnFields("text", "state", "sourceUrl");
+				.ReturnFields("content", "title", "sourceUrl", "state", "documentType");
 		try
 		{
 			var res = await _database.FT().SearchAsync("vehicle_docs_idx", query);
 			return res.Documents
 				.Select(doc => new Chunk(
-						doc["text"]!,
+						doc["content"]!,
 						new Dictionary<string, string>
 						{
 							["state"] = doc["state"]!,
-							["sourceUrl"] = doc["sourceUrl"]!
+							["sourceUrl"] = doc["sourceUrl"]!,
+							["documentType"] = doc["documentType"]!,
+							["title"] = doc["title"]!
 						}
 				))
 				.Where((_, i) => res.Documents[i].Score >= threshold)
@@ -115,9 +117,11 @@ internal class RedisVectorStoreProvider : IVectorStoreProvider, IDisposable
 					["DISTANCE_METRIC"] = "COSINE"
 				});
 
-				schema.AddTextField("text");
-				schema.AddTagField("state");
-				schema.AddTagField("sourceUrl");
+				schema.AddTextField("title", 2);
+				schema.AddTextField("content");
+				schema.AddTextField("state");
+				schema.AddTextField("sourceUrl");
+				schema.AddTextField("documentType");
 
 				await ft.CreateAsync("vehicle_docs_idx", schema);
 			}

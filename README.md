@@ -34,6 +34,10 @@ This repository demonstrates a multi-agent proof-of-concept using Microsoft Sema
   Shared library for OpenAPI, error handling, caching, and default endpoint mapping.
   All agents and services reference this for consistent middleware and integrations.
 
+- **DatasetCreator**_
+  Imports CSV and PDF datasets into Redis for the KnowledgeGraphAgent containing sample data about
+  vehicle registration information.
+
 ## Prerequisites
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)  

@@ -32,6 +32,7 @@ public static class Dependencies
                 Instructions = """
                     You are Internet Search Agent, a helpful internet search assistant.
                     You will find information on the internet based on the user's input.
+                    Include relevant details and sources in your response.
                 """,
                 Kernel = Kernel.CreateBuilder()
 						    .AddOpenAIChatCompletion(configuration["OpenAI:ModelId"] ?? string.Empty, configuration["OpenAI:ApiKey"] ?? string.Empty)

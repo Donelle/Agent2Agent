@@ -28,7 +28,7 @@ internal class FactStoreService
             var qVecs = await _embeddingProvider.GetEmbeddingAsync(query, cancellationToken);
             var chunks = await _vectorStoreProvider.QuerySimilarAsync(
                 qVecs,
-                topK: 5,
+                topK: 25,
                 threshold: 0.78,
                 cancellationToken: cancellationToken);
             return chunks.Select(c => c.Text).ToList().AsReadOnly();

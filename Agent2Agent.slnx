@@ -1,5 +1,7 @@
 <Solution>
-  <Folder Name="/Solution Items/" />
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/ThirdParty/">
     <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Client/A2Adotnet.Client.csproj" />
     <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Common/A2Adotnet.Common.csproj" />
@@ -12,4 +14,5 @@
   <Project Path="Agent2Agent.AppHost/Agent2Agent.AppHost.csproj" />
   <Project Path="Agent2Agent.ServiceDefaults/Agent2Agent.ServiceDefaults.csproj" />
   <Project Path="Agent2Agent.Web/Agent2Agent.Web.csproj" />
+  <Project Path="DatasetCreator/DatasetCreator.csproj" Id="aeecb605-3a90-4d3a-b489-13e14b40b886" />
 </Solution>
