@@ -92,6 +92,86 @@ public class DatasetImporter
 		}
 	}
 
+	public async Task ImportSingleFileAsync(string filePath, string state, int chunkSize, int chunkOverlap, bool clearExisting)
+	{
+		var startTime = DateTime.UtcNow;
+		var result = new ProcessingResult();
+
+		try
+		{
+			_logger.LogInformation("Starting single file import: {FilePath} with state: {State}", filePath, state);
+
+			// Validate OpenAI API key
+			var apiKey = _configuration["OpenAI:ApiKey"];
+			if (string.IsNullOrWhiteSpace(apiKey))
+			{
+				_logger.LogError("OpenAI API key is required. Please set it in appsettings.json or environment variables.");
+				return;
+			}
+
+			// Ensure Redis index exists
+			if (!await _redisService.EnsureIndexExistsAsync())
+			{
+				_logger.LogError("Failed to ensure Redis index exists");
+				return;
+			}
+
+			// Clear existing data if requested
+			if (clearExisting)
+			{
+				if (!await _redisService.ClearExistingDataAsync())
+				{
+					_logger.LogError("Failed to clear existing data");
+					return;
+				}
+			}
+
+			// Process the single file with custom parameters
+			_logger.LogDebug("Processing file: {File}", filePath);
+
+			var chunks = await _fileProcessor.ProcessFileAsync(filePath, state, chunkSize, chunkOverlap);
+			if (chunks.Count == 0)
+			{
+				_logger.LogWarning("No content extracted from file: {File}", filePath);
+				return;
+			}
+
+			foreach (var chunk in chunks)
+			{
+				// Generate embedding
+				var embedding = await _embeddingService.GetEmbeddingAsync(chunk.Text);
+				if (embedding.Length == 0)
+				{
+					_logger.LogWarning("Failed to generate embedding for chunk: {Id}", chunk.Id);
+					result.Errors++;
+					continue;
+				}
+
+				// Store in Redis
+				if (await _redisService.UpsertDocumentAsync(chunk.Id, chunk.Text, embedding, chunk.Metadata))
+				{
+					result.TotalEmbeddings++;
+					result.PdfChunks++;
+				}
+				else
+				{
+					_logger.LogWarning("Failed to store chunk in Redis: {Id}", chunk.Id);
+					result.Errors++;
+				}
+			}
+
+			result.FilesProcessed = 1;
+			_logger.LogInformation("Completed processing file: {File} ({Chunks} chunks)", filePath, chunks.Count);
+
+			result.ProcessingTime = DateTime.UtcNow - startTime;
+			PrintProcessingReport(result);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Error during single file import: {File}", filePath);
+		}
+	}
+
 	private async Task ProcessBatch(string[] files, ProcessingResult result)
 	{
 		var tasks = files.Select(async file =>
@@ -100,7 +180,7 @@ public class DatasetImporter
 			{
 				_logger.LogDebug("Processing file: {File}", file);
 
-				var chunks = await _fileProcessor.ProcessFileAsync(file);
+				var chunks = await _fileProcessor.ProcessFileAsync(file, string.Empty, 0, 0);
 				if (chunks.Count == 0)
 				{
 					_logger.LogWarning("No content extracted from file: {File}", file);

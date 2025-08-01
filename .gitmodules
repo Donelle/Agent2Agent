@@ -1,6 +1,6 @@
 [submodule "a2adotnet"]
 	path = ThirdParty/a2adotnet
 	url = https://github.com/azixaka/a2adotnet.git
-[submodule "Ada2Dotnet"]
+[submodule "ThirdParty/a2adotnet"]
 	path = ThirdParty/a2adotnet
 	url = https://github.com/azixaka/a2adotnet.git

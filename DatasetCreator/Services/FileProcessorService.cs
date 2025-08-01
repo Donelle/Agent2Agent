@@ -6,14 +6,13 @@ using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using DatasetCreator.Models;
 
 namespace DatasetCreator.Services;
 
 public interface IFileProcessorService
 {
-    Task<List<DocumentChunk>> ProcessFileAsync(string filePath, CancellationToken cancellationToken = default);
-    Task<List<DocumentChunk>> ProcessCsvAsync(string filePath, CancellationToken cancellationToken = default);
-    Task<List<DocumentChunk>> ProcessPdfAsync(string filePath, CancellationToken cancellationToken = default);
+    Task<List<DocumentChunk>> ProcessFileAsync(string filePath, string state, int chunkSize, int chunkOverlap, CancellationToken cancellationToken = default);
 }
 
 public class FileProcessorService : IFileProcessorService
@@ -27,19 +26,19 @@ public class FileProcessorService : IFileProcessorService
         _configuration = configuration;
     }
 
-    public async Task<List<DocumentChunk>> ProcessFileAsync(string filePath, CancellationToken cancellationToken = default)
+    public async Task<List<DocumentChunk>> ProcessFileAsync(string filePath, string state, int chunkSize, int chunkOverlap, CancellationToken cancellationToken = default)
     {
         var extension = Path.GetExtension(filePath).ToLowerInvariant();
         
         return extension switch
         {
             ".csv" => await ProcessCsvAsync(filePath, cancellationToken),
-            ".pdf" => await ProcessPdfAsync(filePath, cancellationToken),
+            ".pdf" => ProcessPdf(filePath, state, chunkSize, chunkOverlap),
             _ => throw new NotSupportedException($"File format {extension} is not supported")
         };
     }
 
-    public async Task<List<DocumentChunk>> ProcessCsvAsync(string filePath, CancellationToken cancellationToken = default)
+    private async Task<List<DocumentChunk>> ProcessCsvAsync(string filePath, CancellationToken cancellationToken = default)
     {
         var chunks = new List<DocumentChunk>();
         
@@ -92,13 +91,14 @@ public class FileProcessorService : IFileProcessorService
         return chunks;
     }
 
-    public async Task<List<DocumentChunk>> ProcessPdfAsync(string filePath, CancellationToken cancellationToken = default)
+    private List<DocumentChunk> ProcessPdf(string filePath, string state, int chunkSize, int chunkOverlap)
     {
         var chunks = new List<DocumentChunk>();
         
         try
         {
-            _logger.LogInformation("Processing PDF file: {FilePath}", filePath);
+            _logger.LogInformation("Processing PDF file: {FilePath} with state: {State}, chunk size: {ChunkSize}, overlap: {ChunkOverlap}", 
+                filePath, state, chunkSize, chunkOverlap);
             
             using var pdfReader = new PdfReader(filePath);
             using var pdfDocument = new PdfDocument(pdfReader);
@@ -120,10 +120,8 @@ public class FileProcessorService : IFileProcessorService
                 return chunks;
             }
 
-            // Chunk the text
-            var textChunks = ChunkText(text, 
-                _configuration.GetValue<int>("Processing:ChunkSize", 1000),
-                _configuration.GetValue<int>("Processing:ChunkOverlap", 200));
+            // Chunk the text with custom parameters
+            var textChunks = ChunkText(text, chunkSize, chunkOverlap);
 
             for (int i = 0; i < textChunks.Count; i++)
             {
@@ -133,7 +131,7 @@ public class FileProcessorService : IFileProcessorService
                     Text = textChunks[i],
                     Metadata = new Dictionary<string, string>
                     {
-                        ["state"] = "unknown", // PDF files don't have state info by default
+                        ["state"] = state, // Use the provided state
                         ["documentType"] = "PDF Document",
                         ["title"] = Path.GetFileNameWithoutExtension(filePath),
                         ["sourceUrl"] = filePath,
@@ -145,7 +143,8 @@ public class FileProcessorService : IFileProcessorService
                 chunks.Add(chunk);
             }
 
-            _logger.LogInformation("Processed PDF file: {FilePath}, Created {Count} chunks", filePath, chunks.Count);
+            _logger.LogInformation("Processed PDF file: {FilePath}, Created {Count} chunks with state: {State}", 
+                filePath, chunks.Count, state);
         }
         catch (Exception ex)
         {
@@ -215,22 +214,4 @@ public class FileProcessorService : IFileProcessorService
         
         return text[startIndex..].Trim();
     }
-}
-
-// Data model classes
-public class DocumentChunk
-{
-    public string Id { get; set; } = string.Empty;
-    public string Text { get; set; } = string.Empty;
-    public Dictionary<string, string> Metadata { get; set; } = new();
-    public float[]? Embedding { get; set; }
-}
-
-public class VehicleRegistrationRecord
-{
-    public string State { get; set; } = string.Empty;
-    public string DocumentType { get; set; } = string.Empty;
-    public string Title { get; set; } = string.Empty;
-    public string Content { get; set; } = string.Empty;
-    public string SourceUrl { get; set; } = string.Empty;
 }
