@@ -14,7 +14,6 @@ public partial class Chat
 		Agent
 	}
 
-	[Inject] NavigationManager NavigationManager { get; set; } = default!;
 	[Inject] IChatAgentService ChatAgentService { get; set; } = default!;
 
 	private List<KeyValuePair<MesageType, string>> messages = new();

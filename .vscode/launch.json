@@ -2,12 +2,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Host Launch",
+            "name": "Host Launch (Hot Reload)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Agent2Agent.AppHost/bin/Debug/net9.0/Agent2Agent.AppHost.dll",
-            "args": [],
+            "program": "dotnet",
+            "args": [
+                "watch",
+                "--project",
+                "${workspaceFolder}/Agent2Agent.AppHost/Agent2Agent.AppHost.csproj",
+                "--verbose"
+            ],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "serverReadyAction": {

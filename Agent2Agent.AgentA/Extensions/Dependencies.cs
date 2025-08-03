@@ -10,7 +10,6 @@ public static class Dependencies
 	public static void AddAgentDependencies(this IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddProblemDetails();
-		services.AddOpenApi();
 		services.AddLogging(o => o.AddDebug().SetMinimumLevel(LogLevel.Trace));
 		services.AddHttpClient();
 		services.AddControllers();

@@ -246,3 +246,4 @@ Migrations/
 *.db*
 .vscode/
 *.user
+tmp/

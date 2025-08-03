@@ -1,6 +1,7 @@
 ---
-description: 'Description of the custom chat mode.'
+description: 'Architect chatmode for planning and documentation generation'
 tools: [ 'filesystem', 'json-mcp-server', 'mcp-mermaid' , 'memory', 'sequential-thinking', 'fetch', 'codebase']
+model: 'GPT-4o'
 ---
 
 # Planning mode instructions

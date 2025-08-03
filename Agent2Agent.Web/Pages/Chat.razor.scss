@@ -3,6 +3,8 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
+    background-color: #1e1e1e;
+    padding: 20px;
 
     &-top {
 
@@ -30,7 +32,6 @@
         font-size: 1rem;
         line-height: 1.5;
         color: #fff;
-        
         border-color: #ffffff0d;
         background-color: #303030;
         border-radius: 28px;
@@ -64,6 +65,13 @@
         align-items: flex-start;
         gap: 10px;
         margin-bottom: 10px;
+
+        &-header {
+            font-size: 14px;
+            font-weight: bold;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
 
         &-content {
             max-width: 100%;
