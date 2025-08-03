@@ -34,8 +34,8 @@ public class KnowledgeBaseAgent : IAgent
 			var result = await _client.SendTaskAsync(Guid.NewGuid().ToString(), searchMessage, cancellationToken: cancellationToken);
 			if (result.Status.State == TaskState.Completed)
 			{
-				_logger.LogInformation("knowledge graph agent task completed successfully. Result: {Result}", content);
 				content = result.Status.Message?.Parts.OfType<TextPart>().Select(p => p.Text).FirstOrDefault() ?? content;
+				_logger.LogInformation("knowledge graph agent task completed successfully. Result: {Result}", content);
 			}
 			else
 			{

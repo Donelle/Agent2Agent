@@ -34,8 +34,6 @@ internal class KnowledgeGraphAgentLogic : IAgentLogicInvoker
 			var result = await _factStore.SearchKnowledgeBaseAsync(userInput ?? string.Empty, cancellationToken);
 			if (result.Count > 0)
 			{
-				response.AppendLine("Here are some relevant pieces of information I found:");
-
 				var prompt = new StringBuilder($"{userInput}\n\nUse the following information as reference for this inquiry:\n\n");
 				foreach (var item in result)
 					prompt.Append(item);
