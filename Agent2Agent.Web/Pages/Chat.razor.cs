@@ -1,8 +1,11 @@
 using Agent2Agent.Web.Service;
 
+using Markdig;
+
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 
 namespace Agent2Agent.Web.Pages;
 
@@ -16,9 +19,16 @@ public partial class Chat
 
 	[Inject] IChatAgentService ChatAgentService { get; set; } = default!;
 
+	private IJSObjectReference? _module;
 	private List<KeyValuePair<MesageType, string>> messages = new();
 	private string currentMessage = string.Empty;
-	private bool isProcessing = false;
+	private bool isProcessing;
+
+	protected override async Task OnInitializedAsync()
+	{
+		_module = await JS.InvokeAsync<IJSObjectReference>("import", $"./Pages/{nameof(Chat)}.razor.js");
+		await base.OnInitializedAsync();
+	}
 
 	private async Task HandleKeyPress(KeyboardEventArgs e)
 	{
@@ -35,13 +45,16 @@ public partial class Chat
 			var messageToSend = currentMessage;
 			messages.Add(new(MesageType.User, messageToSend));
 			currentMessage = string.Empty;
-			isProcessing = true; // Start "thinking"
+			isProcessing = true; 
 			StateHasChanged();
+
+			// Scroll to the latest message
+			await _module!.InvokeVoidAsync("ScrollToBottom", "thinkingindicator");
 
 			try
 			{
-				var response = await ChatAgentService.SendMessageAsync(messageToSend);
-				messages.Add(new(MesageType.Agent, response ?? string.Empty));
+				var response = await ChatAgentService.SendMessageAsync(messageToSend);	
+				messages.Add(new(MesageType.Agent, response));
 			}
 			catch (Exception ex)
 			{
@@ -49,19 +62,18 @@ public partial class Chat
 			}
 			finally
 			{
-				isProcessing = false; // Stop "thinking"
+				isProcessing = false; 
 				StateHasChanged();
 			}
 		}
 	}
 
-	private async Task UploadFiles(InputFileChangeEventArgs e)
+	public RenderFragment MarkdownFragment(string input)
 	{
-		foreach (var file in e.GetMultipleFiles())
+		var pipeline = new MarkdownPipelineBuilder().DisableHtml().UseAdvancedExtensions().Build();
+		return (RenderTreeBuilder b) =>
 		{
-			using var stream = file.OpenReadStream();
-			var buffer = new byte[file.Size];
-			await stream.ReadAsync(buffer);
-		}
+			Markdig.Blazor.Markdown.RenderToFragment(input, b, pipeline);
+		};
 	}
 }

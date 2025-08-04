@@ -4,3 +4,6 @@
 [submodule "ThirdParty/a2adotnet"]
 	path = ThirdParty/a2adotnet
 	url = https://github.com/azixaka/a2adotnet.git
+[submodule "ThirdParty/Markdig.Blazor"]
+	path = ThirdParty/Markdig.Blazor
+	url = https://github.com/Valour-Software/Markdig.Blazor.git

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Agent2Agent.ServiceDefaults\Agent2Agent.ServiceDefaults.csproj" />
+	<ProjectReference Include="..\ThirdParty\Markdig.Blazor\Markdig.Blazor.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
@@ -18,7 +19,6 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.SassCompiler" Version="1.56.1" />
-    <PackageReference Include="Markdig" Version="0.41.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.6" />

@@ -1,76 +1,58 @@
 @page "/"
+@inject IJSRuntime JS
 
 <Preload />
-<div class="overflow-y-auto flex-col w-full h-full flex overflow-hidden">
+<div class="overflow-y-auto flex-col w-full h-full flex">
     <div class="thread">
         <div class="thread-top-container">
-            <div class="container items-center overflow-hidden">
+            <div class="container items-center">
                 <div class="row gy-1">
                     @if (messages.Count > 0)
                     {
                         foreach (var message in messages)
                         {
-                            <div class="thread-message">
-                                <div class="thread-message-content">
-                                    @message.Value
+                            var messageClass = message.Key == MesageType.User ? "thread-user-message" : "thread-agent-message";
+                            <div class="thread-message @messageClass">
+                                <div class=@(messageClass + "-content")>
+                                    @if (message.Key == MesageType.User)
+                                    {
+                                        @message.Value
+                                    }
+                                    else
+                                    {
+                                        @MarkdownFragment(message.Value);
+                                    }
                                 </div>
                             </div>
                         }
                     }
-                    else
-                    {
-                        <h1 class="thread-top-header">
-                            Ready when you are.
-                        </h1>
-                    }
-
-                    <div class="flex flex-col items-center">
-                        <div class="thinking-indicator" style="display: @(isProcessing ? "flex" : "none")">
-                            <span></span><span></span><span></span>
-                        </div>
+                    <div id="thinkingindicator" class="thinking-indicator" style="display: @(isProcessing ? "flex" : "none")">
+                        <span></span><span></span><span></span> <span></span><h6>Thinking</h6>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="thread-bottom-container">
+        <div class="thread-bottom">
             <div class="container">
-                <div class="row gy-5">
-                    <div class="col-9 thread-bottom">
-                        <div class="row justify-content-center">
-                            <!-- Text area  -->
-                            <div class="col-9">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <textarea class="bg-transparent"
-                                                  @bind="currentMessage"
-                                                  @onkeypress="HandleKeyPress"
-                                                  placeholder="Type a message..."
-                                                  rows="2"></textarea>
-                                    </div>
-                                    <div class="col-1">
-                                        <Button Size="ButtonSize.ExtraLarge" @onclick="SendMessage">
-                                            <Icon Name="IconName.ArrowUpCircleFill" Size="IconSize.x2" Color="IconColor.White" />
-                                        </Button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Tools  -->
-                            <div class="col-9">
-                                <div class="flex items-center absolute start-2.5 bottom-2.5 w-full end-0">
-                                    <div class="w-full">
-                                        <div class="flex items-center" style="margin-inline-end: 102px;">
-                                            &nbsp;
-                                            <label class="file-upload">
-                                                <InputFile style="display: none" OnChange="UploadFiles" Multiple="true" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="thread-bottom-container justify-content-center">
+                    <div class="thread-bottom-input-container">
+                        <div class="thread-bottom-input-content">
+                            <input class="thread-bottom-placeholder-input"
+                                   @bind="currentMessage"
+                                   @onkeypress="HandleKeyPress"
+                                   placeholder="Type a message..." />
                         </div>
                     </div>
                 </div>
+                <!-- div  class="row">
+                    <div class="input-icons">
+                        <button class="icon-button">
+                            <Icon Name="IconName.Plus" Size="IconSize.x2" Color="IconColor.White" />
+                        </button>
+                    </div>
+                </div-->
             </div>
         </div>
     </div>
 </div>
+
