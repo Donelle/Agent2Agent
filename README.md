@@ -34,37 +34,16 @@ This repository demonstrates a multi-agent proof-of-concept using Microsoft Sema
   Shared library for OpenAPI, error handling, caching, and default endpoint mapping.
   All agents and services reference this for consistent middleware and integrations.
 
-- **DatasetCreator**_
+- **DatasetCreator**
   Imports CSV and PDF datasets into Redis for the KnowledgeGraphAgent containing sample data about
   vehicle registration information.
 
 ## Prerequisites
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)  
-- Redis instance running (default connection: `localhost:6379`)  
+- [.NET 9 SDK](https://dotnet.microsoft.com/download)
+- Redis instance running (default connection: `localhost:6379`)
 - OpenAI API key configured in each agent’s `appsettings.json`
 
-## Configuration
-
-Each agent’s `appsettings.json` supports the following settings:
-
-```json
-{
-  "Redis": {
-    "ConnectionString": "localhost:6379"
-  },
-  "OpenAI": {
-    "ModelId": "<model-id>",
-    "ApiKey": "<your-api-key>"
-  },
-  "AgentCard": {
-    "Name": "<agent-name>",
-    "Description": "<agent-description>"
-  }
-}
-```
-
-Adjust ports and URLs as needed in each agent’s `launchSettings.json`.
 
 ## Getting Started
 
@@ -86,28 +65,6 @@ Adjust ports and URLs as needed in each agent’s `launchSettings.json`.
 
 - [`Docs/architecture.md`](Docs/architecture.md): System architecture, diagrams, and startup sequence.
 - [`Docs/agents.md`](Docs/agents.md): Agent roles, endpoints, and sequence diagrams.
-
-## Agent Launch Settings
-
-Each agent exposes HTTP and HTTPS endpoints. Default ports:
-
-- [`Agent2Agent.AgentA/Properties/launchSettings.json`](Agent2Agent.AgentA/Properties/launchSettings.json:1)
-  - HTTP: http://localhost:5144
-  - HTTPS: https://localhost:7179
-
-- [`Agent2Agent.AgentB/Properties/launchSettings.json`](Agent2Agent.AgentB/Properties/launchSettings.json:1)
-  - HTTP: http://localhost:5129
-  - HTTPS: https://localhost:7118
-
-- [`Agent2Agent.AgentC/Properties/launchSettings.json`](Agent2Agent.AgentC/Properties/launchSettings.json:1)
-  - HTTP: http://localhost:5012
-  - HTTPS: https://localhost:7288
-
-- [`Agent2Agent.AgentD/Properties/launchSettings.json`](Agent2Agent.AgentD/Properties/launchSettings.json:1)
-  - HTTP: http://localhost:5228
-  - HTTPS: https://localhost:7131
-
-All agents use `ASPNETCORE_ENVIRONMENT=Development` by default. Adjust ports as needed in each agent's launch settings.
 
 ## Contributing
 
