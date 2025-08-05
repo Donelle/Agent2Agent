@@ -2,12 +2,6 @@
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
   </Folder>
-  <Folder Name="/ThirdParty/" />
-  <Folder Name="/ThirdParty/A2Adotnet/">
-    <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Client/A2Adotnet.Client.csproj" />
-    <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Common/A2Adotnet.Common.csproj" />
-    <Project Path="ThirdParty/a2adotnet/src/A2Adotnet.Server/A2Adotnet.Server.csproj" />
-  </Folder>
   <Folder Name="/ThirdParty/Markdig.Blazor/">
     <Project Path="ThirdParty/Markdig.Blazor/Markdig.Blazor.csproj" />
   </Folder>

@@ -117,8 +117,10 @@
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   position: absolute;
-  bottom: 5vh;
+  position: fixed;
+  bottom: 20px;
   width: 60%;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 .thread-bottom-container {
   font-size: 1rem;
@@ -129,6 +131,7 @@
   border-radius: 28px;
   cursor: text;
   width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 .thread-bottom-placeholder-input {
   flex-grow: 1;
@@ -205,6 +208,37 @@
   color: #fff;
 }
 
+.fab-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.fab-button {
+  width: 60px;
+  height: 60px;
+  background-color: #424242; /* Dark gray to match the theme */
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.fab-button:hover {
+  transform: scale(1.1);
+  background-color: #555; /* Slightly lighter gray on hover */
+}
+.fab-button.spin {
+  animation: spin 0.5s ease-in-out;
+}
+.fab-button.spin-back {
+  animation: spin-back 0.5s ease-in-out;
+}
+
 @keyframes blink {
   0% {
     opacity: 0.2;
@@ -217,6 +251,22 @@
   100% {
     opacity: 0.2;
     transform: translateY(0);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin-back {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
   }
 }
 

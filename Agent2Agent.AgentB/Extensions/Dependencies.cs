@@ -32,7 +32,7 @@ public static class Dependencies
 			});
 		}
 
-		services.AddSingleton<IAgentLogicInvoker, ChatResponderAgentLogic>();
+		services.AddSingleton<IAgentLogicInvoker, OrchestrationAgentLogic>();
 		services.AddSingleton<ITaskManager>(sp =>
 		{
 			var taskManager = new TaskManager();

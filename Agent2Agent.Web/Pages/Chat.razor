@@ -32,7 +32,16 @@
                 </div>
             </div>
         </div>
-        <div class="thread-bottom">
+
+         <!-- Floating Action Button -->
+        <div class="fab-container">
+            <button class="fab-button @(isMessageAreaVisible ? "spin-back" : "spin")" @onclick="ToggleMessageArea">
+                <Icon Name="IconName.KeyboardFill" Size="IconSize.x2" Color="IconColor.White" />
+            </button>
+        </div>
+
+         <!-- Message Area -->
+        <div class="thread-bottom" style="display: @(isMessageAreaVisible ? "block" : "none")">
             <div class="container">
                 <div class="thread-bottom-container justify-content-center">
                     <div class="thread-bottom-input-container">

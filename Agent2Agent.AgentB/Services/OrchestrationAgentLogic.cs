@@ -12,17 +12,17 @@ public interface IAgentLogicInvoker
 	void Attach(ITaskManager taskManager);
 }
 
-internal class ChatResponderAgentLogic : IAgentLogicInvoker
+internal class OrchestrationAgentLogic : IAgentLogicInvoker
 {
-	private readonly ILogger<ChatResponderAgentLogic> _logger;
+	private readonly ILogger<OrchestrationAgentLogic> _logger;
 	private readonly Agent2AgentManager _orchestration;
 	private readonly A2AClientOptions _clientOptions;
 	private ITaskManager _taskManager = null!;
 
-	public ChatResponderAgentLogic(
+	public OrchestrationAgentLogic(
 		IOptions<A2AClientOptions> options, 
 		Agent2AgentManager orchestration, 
-		ILogger<ChatResponderAgentLogic> logger)
+		ILogger<OrchestrationAgentLogic> logger)
 	{
 		_logger = logger;
 		_orchestration = orchestration;

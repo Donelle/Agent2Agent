@@ -23,12 +23,18 @@ public partial class Chat
 	private List<KeyValuePair<MesageType, string>> messages = new();
 	private string currentMessage = string.Empty;
 	private bool isProcessing;
+	private bool isMessageAreaVisible;
 
 	protected override async Task OnInitializedAsync()
 	{
 		_module = await JS.InvokeAsync<IJSObjectReference>("import", $"./Pages/{nameof(Chat)}.razor.js");
 		await base.OnInitializedAsync();
 	}
+
+	private void ToggleMessageArea()
+    {
+        isMessageAreaVisible = !isMessageAreaVisible;
+    }
 
 	private async Task HandleKeyPress(KeyboardEventArgs e)
 	{
