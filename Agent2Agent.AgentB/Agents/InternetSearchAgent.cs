@@ -1,7 +1,4 @@
-using System.ComponentModel;
-
-using A2Adotnet.Client;
-using A2Adotnet.Common.Models;
+using A2A;
 
 namespace Agent2Agent.AgentB.Agents;
 
@@ -16,7 +13,12 @@ internal class InternetSearchAgent : IAgent
 		_a2aClient = a2aClient;
 	}
 
-	[Description("Search the internet for vehicle registration information.")]
+	/// <summary>
+	/// "Search the internet for vehicle registration information."
+	/// </summary>
+	/// <param name="userInput">The user's query.</param>
+	/// <param name="cancellationToken">The cancellation token.</param>
+	/// <returns> The search results as a string.</returns>
 	public async Task<string> InvokeAsync(string userInput, CancellationToken cancellationToken)
 	{
 		if (string.IsNullOrWhiteSpace(userInput))
@@ -27,10 +29,14 @@ internal class InternetSearchAgent : IAgent
 
 		try
 		{
-			var searchMessage = new Message { Role = "user", Parts = new List<Part> { new TextPart(userInput) } };
-			_logger.LogInformation("Asking web agent with query: {Query}", searchMessage);
+			var searchMessage = new Message { 
+				MessageId = Guid.NewGuid().ToString(),
+				Role = MessageRole.User, 
+				Parts = [new TextPart {  Text = userInput } ] 
+			};
+			_logger.LogInformation("Asking web agent with query: {@Query}", searchMessage);
 
-			var result = await _a2aClient.SendTaskAsync(Guid.NewGuid().ToString(), searchMessage, cancellationToken: cancellationToken);
+			var result = (AgentTask)await _a2aClient.SendMessageAsync(new() { Message = searchMessage }, cancellationToken);
 			if (result.Status.State == TaskState.Completed)
 			{
 				var content = result.Status.Message?.Parts?.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)";
@@ -45,7 +51,7 @@ internal class InternetSearchAgent : IAgent
 					result.Status.Message?.Parts?.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)");
 			}
 		}
-		catch (A2AClientException ex)
+		catch (A2AException ex)
 		{
 			_logger.LogError(ex, "Error while asking web agent: {Message}", ex.Message);
 		}

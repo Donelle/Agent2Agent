@@ -1,7 +1,6 @@
-using A2Adotnet.Client;
+using A2A;
 
 using Microsoft.Extensions.Http.Resilience;
-using Microsoft.Extensions.Options;
 
 namespace Agent2Agent.AgentA.Extensions;
 
@@ -43,12 +42,8 @@ public static class Dependencies
 		services.AddSingleton<IA2AClient>(sp =>
 		{
 			var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-			var options = Options.Create(new A2AClientOptions
-			{
-				BaseAddress = new Uri(configuration["Agents:ChatResponderAgent"] ?? string.Empty)
-			});
-
-			return new A2AClient(httpClientFactory.CreateClient("A2AClient"), options);
+			return new A2AClient(new Uri(configuration["Agents:ChatResponderAgent"] ?? string.Empty), 
+				httpClientFactory.CreateClient("A2AClient"));
 		});
 	}
 }

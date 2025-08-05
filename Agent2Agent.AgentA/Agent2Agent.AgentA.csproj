@@ -1,20 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-	<NoWarn>$(NoWarn);EXTEXP0001</NoWarn>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<NoWarn>$(NoWarn);EXTEXP0001</NoWarn>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Agent2Agent.ServiceDefaults\Agent2Agent.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\ThirdParty\a2adotnet\src\A2Adotnet.Client\A2Adotnet.Client.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Agent2Agent.ServiceDefaults\Agent2Agent.ServiceDefaults.csproj" />
+	</ItemGroup>
 
 
 	<ItemGroup>
 		<Item Include=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="A2A.AspNetCore" Version="0.1.0-preview.2" />
 	</ItemGroup>
 
 </Project>

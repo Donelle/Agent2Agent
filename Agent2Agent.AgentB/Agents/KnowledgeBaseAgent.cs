@@ -1,7 +1,4 @@
-using System.ComponentModel;
-
-using A2Adotnet.Client;
-using A2Adotnet.Common.Models;
+using A2A;
 
 using Agent2Agent.AgentB.Agents;
 
@@ -22,16 +19,26 @@ public class KnowledgeBaseAgent : IAgent
 		_logger = logger;
 	}
 
-	[Description("Search the knowledge base for vehicle registration information.")]
+	/// <summary>
+	/// Search the knowledge base for vehicle registration information.
+	/// </summary>
+	/// <param name="userInput">The user's query.</param>
+	/// <param name="cancellationToken">The cancellation token.</param>
+	/// <returns>The search results as a string.</returns>
 	public async Task<string> InvokeAsync(string userInput, CancellationToken cancellationToken)
 	{
 		var content = "Sorry, I couldn't find any information related to your query.";
 		try
 		{
-			var searchMessage = new Message { Role = "User", Parts = new List<Part> { new TextPart(userInput) } };
-			_logger.LogInformation("Asking knowledg graph agent with query: {@Query}", searchMessage);
+			var searchMessage = new Message {
+				MessageId = Guid.NewGuid().ToString(),
+				Role = MessageRole.User, 
+				Parts = [new TextPart { Text = userInput }] 
+			};
 
-			var result = await _client.SendTaskAsync(Guid.NewGuid().ToString(), searchMessage, cancellationToken: cancellationToken);
+			_logger.LogInformation("Asking knowledge graph agent with query: {@Query}", searchMessage);
+
+			var result = (AgentTask)await _client.SendMessageAsync(new() { Message = searchMessage }, cancellationToken);
 			if (result.Status.State == TaskState.Completed)
 			{
 				content = result.Status.Message?.Parts.OfType<TextPart>().Select(p => p.Text).FirstOrDefault() ?? content;
@@ -43,7 +50,7 @@ public class KnowledgeBaseAgent : IAgent
 						result.Status.State, content);
 			}
 		}
-		catch (A2AClientException ex)
+		catch (A2AException ex)
 		{
 			_logger.LogError(ex, "Error while asking knowledge graph agent: {Message}", ex.Message);
 		}

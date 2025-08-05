@@ -1,6 +1,7 @@
-using A2Adotnet.Server;
-using A2Adotnet.Server.Abstractions;
-using A2Adotnet.Server.Implementations;
+
+using A2A;
+
+using Agent2Agent.AgentD.Configurations;
 
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
@@ -15,16 +16,20 @@ public static class Dependencies
         services.AddLogging(o => o.AddDebug().SetMinimumLevel(LogLevel.Trace));
         services.AddHttpClient();
 
-        // Override the singleton ITaskManager registration with scoped to fix DI issue
-        services.AddScoped<ITaskManager, InMemoryTaskManager>();
+		    services.Configure<A2AClientOptions>(options =>
+		    {
+			    configuration.GetSection("AgentCard").Bind(options);
+		    });
 
-        services.AddA2AServer(options =>
-        {
-            configuration.GetSection("AgentCard").Bind(options);
-        });
+		    services.AddSingleton<IAgentLogicInvoker, InternetSearchAgentLogic>();
+		    services.AddSingleton<ITaskManager>(sp =>
+		    {
+			    var taskManager = new TaskManager();
+			    var agent = sp.GetRequiredService<IAgentLogicInvoker>();
+			    agent.Attach(taskManager);
+			    return taskManager;
+		    });
 
-        services.AddScoped<IAgentLogicInvoker, InternetSearchAgentLogic>();
-        
 		    services.AddTransient(sp =>
             new ChatCompletionAgent
             {

@@ -1,5 +1,4 @@
-using A2Adotnet.Client;
-using A2Adotnet.Common.Models;
+using A2A;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,23 +30,27 @@ namespace Agent2Agent.AgentA.Controllers
 
 			try
 			{
-				var chatMessage = new Message { Role = "user", Parts = new List<Part> { new TextPart(message) } };
-				_logger.LogInformation("Responding to chat message: {Message}", chatMessage);
+				var chatMessage = new Message { 
+					MessageId = Guid.NewGuid().ToString(),
+					Role = MessageRole.User, 
+					Parts = [new TextPart { Text = message } ] 
+				};
+
+				_logger.LogInformation("Sending chat message: {@Message}", chatMessage);
 
 
-				var result = await _a2aClient.SendTaskAsync(Guid.NewGuid().ToString(), chatMessage, cancellationToken: HttpContext.RequestAborted);
-				response = result.Status.Message?.Parts?.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)";
-
+				var result = (AgentTask) await _a2aClient.SendMessageAsync(new () { Message = chatMessage}, HttpContext.RequestAborted);
 				if (result.Status.State == TaskState.Completed)
 				{
 					_logger.LogInformation("Task completed successfully. Result: {Result}", response);
+					response = result.Status.Message?.Parts?.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)";
 				}
 				else
 				{ 
 					_logger.LogWarning("Task did not complete successfully. State: {State}, Message: {Message}", result.Status.State, response);
 				}
 			}
-			catch (A2AClientException ex)
+			catch (A2AException ex)
 			{
 				_logger.LogError(ex, "Task failed with A2A Error Code {ErrorCode}: {ErrorMessage}", ex.ErrorCode, ex.Message);
 			}

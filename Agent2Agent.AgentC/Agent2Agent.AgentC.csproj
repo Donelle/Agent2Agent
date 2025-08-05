@@ -9,10 +9,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Agent2Agent.ServiceDefaults\Agent2Agent.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\ThirdParty\a2adotnet\src\A2Adotnet.Server\A2Adotnet.Server.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+	<PackageReference Include="A2A.AspNetCore" Version="0.1.0-preview.2" />
     <PackageReference Include="NRedisStack" Version="1.0.0" />
     <PackageReference Include="OpenAI" Version="2.2.0" />
 	<PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.61.0" />

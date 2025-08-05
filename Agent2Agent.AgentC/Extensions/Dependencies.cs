@@ -1,11 +1,12 @@
-using A2Adotnet.Server;
-using A2Adotnet.Server.Abstractions;
-using A2Adotnet.Server.Implementations;
 
-using StackExchange.Redis;
+using A2A;
+
+using Agent2Agent.AgentC.Configurations;
 
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
+
+using StackExchange.Redis;
 
 namespace Agent2Agent.AgentC.Extensions;
 
@@ -16,10 +17,21 @@ public static class Dependencies
 		services.AddProblemDetails();
 		services.AddLogging(o => o.AddDebug().SetMinimumLevel(LogLevel.Trace));
 		services.AddHttpClient();
-	
-		// Override the singleton ITaskManager registration with scoped to fix DI issue
-		services.AddScoped<ITaskManager, InMemoryTaskManager>();
-		services.AddScoped<IAgentLogicInvoker, KnowledgeGraphAgentLogic>();
+
+		services.Configure<A2AClientOptions>(options =>
+		{
+			configuration.GetSection("AgentCard").Bind(options);
+		});
+
+		services.AddSingleton<ITaskManager>(sp =>
+		{
+			var taskManager = new TaskManager();
+			var agent = sp.GetRequiredService<IAgentLogicInvoker>();
+			agent.Attach(taskManager);
+			return taskManager;
+		});
+
+		services.AddSingleton<IAgentLogicInvoker, KnowledgeGraphAgentLogic>();
 		services.AddSingleton<IEmbeddingProvider, OpenAIEmbeddingProvider>();
 		services.AddSingleton<IVectorStoreProvider, RedisVectorStoreProvider>();
 		services.AddTransient<FactStoreService>();
@@ -38,11 +50,6 @@ public static class Dependencies
 			}
 
 			return redis;
-		});
-
-		services.AddA2AServer(options =>
-		{
-			configuration.GetSection("AgentCard").Bind(options);
 		});
 
 		var serviceProvider = services.BuildServiceProvider();
