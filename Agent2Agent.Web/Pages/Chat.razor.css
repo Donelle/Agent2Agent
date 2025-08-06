@@ -5,22 +5,28 @@
   width: 100%;
   background-color: #1e1e1e;
   padding: 20px 20%;
-  overflow-y: scroll;
-  /* Scrollbar styling */
+  overflow: hidden;
 }
-.thread::-webkit-scrollbar {
-  width: 8px; /* Slim scrollbar */
+.thread-top {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  height: 89%;
+  overflow-y: auto;
 }
-.thread::-webkit-scrollbar-track {
-  background: #2a2a2a; /* Track color */
-  border-radius: 10px; /* Rounded corners for the track */
+.thread-top::-webkit-scrollbar {
+  width: 8px;
 }
-.thread::-webkit-scrollbar-thumb {
-  background: #555; /* Thumb color */
-  border-radius: 10px; /* Rounded corners for the thumb */
+.thread-top::-webkit-scrollbar-track {
+  background: #2a2a2a;
+  border-radius: 10px;
 }
-.thread::-webkit-scrollbar-thumb:hover {
-  background: #777; /* Thumb color on hover */
+.thread-top::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
+}
+.thread-top::-webkit-scrollbar-thumb:hover {
+  background: #777;
 }
 .thread-top-header {
   font-size: 28px;
@@ -29,14 +35,6 @@
   line-height: 34px;
   color: #fff;
   text-align: center;
-}
-.thread-top-container {
-  display: flex;
-  min-width: 32rem;
-  flex-direction: column;
-  flex-shrink: 1;
-  flex-basis: auto;
-  margin-top: 40px;
 }
 .thread-user-message {
   display: flex;

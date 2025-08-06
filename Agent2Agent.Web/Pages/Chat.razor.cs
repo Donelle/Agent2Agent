@@ -20,6 +20,7 @@ public partial class Chat
 	[Inject] IChatAgentService ChatAgentService { get; set; } = default!;
 
 	private IJSObjectReference? _module;
+	private MarkdownPipeline _pipeline = default!;
 	private List<KeyValuePair<MesageType, string>> messages = new();
 	private string currentMessage = string.Empty;
 	private bool isProcessing;
@@ -28,6 +29,7 @@ public partial class Chat
 	protected override async Task OnInitializedAsync()
 	{
 		_module = await JS.InvokeAsync<IJSObjectReference>("import", $"./Pages/{nameof(Chat)}.razor.js");
+		_pipeline = new MarkdownPipelineBuilder().DisableHtml().UseAdvancedExtensions().Build();
 		await base.OnInitializedAsync();
 	}
 
@@ -36,9 +38,9 @@ public partial class Chat
         isMessageAreaVisible = !isMessageAreaVisible;
     }
 
-	private async Task HandleKeyPress(KeyboardEventArgs e)
+	private async Task HandleKeyUp(KeyboardEventArgs e)
 	{
-		if (e.Key == "Enter" && !e.ShiftKey)
+		if (e.Key == "Enter")
 		{
 			await SendMessage();
 		}
@@ -55,7 +57,7 @@ public partial class Chat
 			StateHasChanged();
 
 			// Scroll to the latest message
-			await _module!.InvokeVoidAsync("ScrollToBottom", "thinkingindicator");
+			await _module!.InvokeVoidAsync("ScrollToBottom", "thread-top");
 
 			try
 			{
@@ -76,10 +78,9 @@ public partial class Chat
 
 	public RenderFragment MarkdownFragment(string input)
 	{
-		var pipeline = new MarkdownPipelineBuilder().DisableHtml().UseAdvancedExtensions().Build();
 		return (RenderTreeBuilder b) =>
 		{
-			Markdig.Blazor.Markdown.RenderToFragment(input, b, pipeline);
+			Markdig.Blazor.Markdown.RenderToFragment(input, b, _pipeline);
 		};
 	}
 }

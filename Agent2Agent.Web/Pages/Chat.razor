@@ -1,12 +1,11 @@
 @page "/"
 @inject IJSRuntime JS
 
-<Preload />
-<div class="overflow-y-auto flex-col w-full h-full flex">
+<div class="flex-col w-full h-full flex">
     <div class="thread">
-        <div class="thread-top-container">
+        <div class="thread-top">
             <div class="container items-center">
-                <div class="row gy-1">
+                <div class="row">
                     @if (messages.Count > 0)
                     {
                         foreach (var message in messages)
@@ -26,7 +25,7 @@
                             </div>
                         }
                     }
-                    <div id="thinkingindicator" class="thinking-indicator" style="display: @(isProcessing ? "flex" : "none")">
+                    <div class="thinking-indicator" style="display: @(isProcessing ? "flex" : "none")">
                         <span></span><span></span><span></span> <span></span><h6>Thinking</h6>
                     </div>
                 </div>
@@ -48,7 +47,7 @@
                         <div class="thread-bottom-input-content">
                             <input class="thread-bottom-placeholder-input"
                                    @bind="currentMessage"
-                                   @onkeypress="HandleKeyPress"
+                                   @onkeyup="HandleKeyUp"
                                    placeholder="Type a message..." />
                         </div>
                     </div>

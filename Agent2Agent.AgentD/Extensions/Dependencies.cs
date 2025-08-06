@@ -43,7 +43,7 @@ public static class Dependencies
                     - Title: [Title of the information]
                     - Content: [Content of the information]
                     - Sources: [URL or source of the information]
-                    Ensure your response is formated as Markdown.
+                    Ensure your response is formated as Markdown and never render a code block element.
                     If the user asks for a specific topic, focus on that topic.
                     If the user asks for a summary, provide a concise summary of the information found.
                     If the user asks for a list, provide a list of relevant items.                    
