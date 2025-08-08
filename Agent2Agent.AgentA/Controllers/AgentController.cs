@@ -1,6 +1,12 @@
+using System.Linq;
+using System.Text;
+
 using A2A;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Agents;
+using Microsoft.SemanticKernel.ChatCompletion;
 
 
 namespace Agent2Agent.AgentA.Controllers
@@ -10,65 +16,45 @@ namespace Agent2Agent.AgentA.Controllers
 	public class AgentController : ControllerBase
 	{
 		private readonly ILogger<AgentController> _logger;
-		private readonly IA2AClient _a2aClient;
 
-		public AgentController(ILogger<AgentController> logger, IA2AClient a2aClient)
+		public AgentController(ILogger<AgentController> logger)
 		{
 			_logger = logger;
-			_a2aClient = a2aClient;
 		}
 
 		[HttpPost("chat")]
-		public async Task<IActionResult> Post([FromBody] string message)
+		public async Task<IActionResult> Post([FromBody] string message, [FromServices] ChatCompletionAgent agent)
 		{
 			if (string.IsNullOrWhiteSpace(message))
 			{
 				return BadRequest("Message cannot be empty.");
 			}
 
-			var response = string.Empty;
+			var response = new StringBuilder();
 
 			try
 			{
-				var chatMessage = new Message { 
-					MessageId = Guid.NewGuid().ToString(),
-					Role = MessageRole.User, 
-					Parts = [new TextPart { Text = message } ] 
-				};
-
-				_logger.LogInformation("Sending chat message: {@Message}", chatMessage);
-
-
-				var result = (AgentTask) await _a2aClient.SendMessageAsync(new () { Message = chatMessage}, HttpContext.RequestAborted);
-				if (result.Status.State == TaskState.Completed)
+				await foreach (var result in agent.InvokeAsync(new ChatMessageContent(AuthorRole.User, message), cancellationToken: HttpContext.RequestAborted))
 				{
-					_logger.LogInformation("Task completed successfully. Result: {Result}", response);
-					response = result.Status.Message?.Parts?.OfType<TextPart>().FirstOrDefault()?.Text ?? "(no message)";
+					if (result.Message is ChatMessageContent chatResponse)
+					{
+						response.Append(chatResponse.Content);
+					}
+					else
+					{
+						// Handle other types of results if necessary
+						_logger.LogWarning("Received unexpected message type: {MessageType}", result.Message.GetType());
+					}
 				}
-				else
-				{ 
-					_logger.LogWarning("Task did not complete successfully. State: {State}, Message: {Message}", result.Status.State, response);
-				}
-			}
-			catch (A2AException ex)
-			{
-				_logger.LogError(ex, "Task failed with A2A Error Code {ErrorCode}: {ErrorMessage}", ex.ErrorCode, ex.Message);
 			}
 			catch (Exception ex)
 			{
 				_logger.LogError(ex, "Task failed with unexpected error.");
 			}
 
-			return Ok(response);
+			return Ok(response.ToString());
 		}
 
-		[HttpPost("send-message")]
-		public IActionResult SendMessage([FromBody] ChatMessage message)
-		{
-			// Forward the message to the chat logic
-			// Example: ChatLogic.HandleMessage(message);
-			return Ok(new { Status = "Message received" });
-		}
 
 		[HttpPost("upload-file")]
 		public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
