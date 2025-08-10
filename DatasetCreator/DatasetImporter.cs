@@ -80,7 +80,7 @@ public class DatasetImporter
 
 			foreach (var batch in batches)
 			{
-				await ProcessBatch(batch, result);
+				await ProcessBatchWithDeduplication(batch, result);
 			}
 
 			result.ProcessingTime = DateTime.UtcNow - startTime;
@@ -138,6 +138,17 @@ public class DatasetImporter
 
 			foreach (var chunk in chunks)
 			{
+				// Deterministic ID: hash of key fields
+				chunk.Id = GenerateDeterministicId(chunk);
+
+				// Check for existing record in Redis
+				var existing = await _redisService.GetDocumentChunkAsync(chunk.Id);
+				if (existing is DocumentChunk doc)
+				{
+					_logger.LogInformation("Duplicate detected for chunk: {Id}. Skipping import.", chunk.Id);
+					continue;
+				}
+
 				// Generate embedding
 				var embedding = await _embeddingService.GetEmbeddingAsync(chunk.Text);
 				if (embedding.Length == 0)
@@ -172,7 +183,8 @@ public class DatasetImporter
 		}
 	}
 
-	private async Task ProcessBatch(string[] files, ProcessingResult result)
+	// Deduplication and update workflow with audit logging
+	private async Task ProcessBatchWithDeduplication(string[] files, ProcessingResult result)
 	{
 		var tasks = files.Select(async file =>
 		{
@@ -189,6 +201,17 @@ public class DatasetImporter
 
 				foreach (var chunk in chunks)
 				{
+					// Deterministic ID: hash of key fields
+					chunk.Id = GenerateDeterministicId(chunk);
+
+					// Check for existing record in Redis
+					var existing = await _redisService.GetDocumentChunkAsync(chunk.Id);
+					if (existing is DocumentChunk doc)
+					{
+						_logger.LogInformation("Duplicate detected for chunk: {Id}. Skipping import.", chunk.Id);
+						continue;
+					}
+
 					// Generate embedding
 					var embedding = await _embeddingService.GetEmbeddingAsync(chunk.Text);
 					if (embedding.Length == 0)
@@ -198,7 +221,7 @@ public class DatasetImporter
 						continue;
 					}
 
-					// Store in Redis
+					// Store in Redis (upsert)
 					if (await _redisService.UpsertDocumentAsync(chunk.Id, chunk.Text, embedding, chunk.Metadata))
 					{
 						result.TotalEmbeddings++;
@@ -227,6 +250,22 @@ public class DatasetImporter
 		});
 
 		await Task.WhenAll(tasks);
+	}
+
+	// Helper: deterministic ID generation using SHA256 hash
+	private static string GenerateDeterministicId(DocumentChunk chunk)
+	{
+		using var sha = System.Security.Cryptography.SHA256.Create();
+		var key = string.Join("|", new[] {
+			chunk.Text,
+			chunk.Metadata.GetValueOrDefault("state", "unknown"),
+			chunk.Metadata.GetValueOrDefault("documentType", "unknown"),
+			chunk.Metadata.GetValueOrDefault("title", "unknown"),
+			chunk.Metadata.GetValueOrDefault("sourceUrl", "unknown"),
+			chunk.Metadata.GetValueOrDefault("documentId", "unknown")
+		});
+		var hash = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
+		return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
 	}
 
 	private List<string> GetFilesToProcess(string inputPath, string[] formats)

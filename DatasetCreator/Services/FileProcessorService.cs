@@ -66,6 +66,7 @@ public class FileProcessorService : IFileProcessorService
 
 				// Chunk the text with custom parameters
 				var textChunks = ChunkText(record.Content, chunkSize, chunkOverlap);
+				var documentId = GenerateDocumentId(record.State, record.DocumentType, record.Title);
 
 				for (int i = 0; i < textChunks.Count; i++)
 				{
@@ -80,7 +81,8 @@ public class FileProcessorService : IFileProcessorService
 							["title"] = record.Title,
 							["sourceUrl"] = record.SourceUrl,
 							["sourceFile"] = Path.GetFileName(filePath),
-							["chunkIndex"] = i.ToString()
+							["chunkIndex"] = i.ToString(),
+							["documentId"] = documentId
 						}
 					};
 
@@ -98,6 +100,14 @@ public class FileProcessorService : IFileProcessorService
 		}
 
 		return chunks;
+	}
+
+	private static string GenerateDocumentId(string state, string documentType, string title)
+	{
+		using var sha = System.Security.Cryptography.SHA256.Create();
+		var key = $"{state}|{documentType}|{title}";
+		var hash = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
+		return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
 	}
 
 	private List<DocumentChunk> ProcessPdf(string filePath, string state, int chunkSize, int chunkOverlap)
@@ -131,6 +141,8 @@ public class FileProcessorService : IFileProcessorService
 
 			// Chunk the text with custom parameters
 			var textChunks = ChunkText(text, chunkSize, chunkOverlap);
+			var fileName = Path.GetFileName(filePath);
+			var documentId = GenerateDocumentId(state, "PDF Document", fileName);
 
 			for (int i = 0; i < textChunks.Count; i++)
 			{
@@ -142,10 +154,11 @@ public class FileProcessorService : IFileProcessorService
 					{
 						["state"] = state, // Use the provided state
 						["documentType"] = "PDF Document",
-						["title"] = Path.GetFileNameWithoutExtension(filePath),
+						["title"] = fileName,
 						["sourceUrl"] = filePath,
-						["sourceFile"] = Path.GetFileName(filePath),
-						["chunkIndex"] = i.ToString()
+						["sourceFile"] = filePath,
+						["chunkIndex"] = i.ToString(),
+						["documentId"] = documentId
 					}
 				};
 

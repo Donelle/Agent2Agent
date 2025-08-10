@@ -18,16 +18,15 @@ public record Chunk(string Text, IDictionary<string, string> Metadata);
 
 /// <summary>
 /// Interface for a vector store provider that manages document chunks and their embeddings.
+///
+/// Uniqueness is determined by the combination of `state`, `documentType`, and `title` in metadata.
+/// If a chunk with the same unique key exists, updates to `content` or `sourceUrl` will overwrite the existing record.
+/// All changes should be logged for audit consistency with DatasetCreator.
 /// This interface defines methods for upserting document chunks with their embeddings and metadata,
 /// as well as querying for similar chunks based on a given embedding.
 /// </summary>
 public interface IVectorStoreProvider
 {
-	/// <summary>
-	/// Indexes a document chunk with its embedding and metadata.
-	/// </summary>
-	Task UpsertChunkAsync(string id, string text, float[] embedding, IDictionary<string, string> metadata, CancellationToken cancellationToken = default);
-
 	/// <summary>
 	/// Returns the top-k most similar chunks to the given query embedding,
 	/// optionally filtered by a similarity threshold.
@@ -56,20 +55,6 @@ internal class RedisVectorStoreProvider : IVectorStoreProvider, IDisposable
 		_logger = logger;
 	}
 
-	public async Task UpsertChunkAsync(string id, string text, float[] embedding, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
-	{
-		var hash = new HashEntry[]
-		{
-			new HashEntry("text", text),
-      new HashEntry("embedding", SerializeFloatArray(embedding)),
-			new HashEntry("state", metadata.ContainsKey("state") ? metadata["state"] : "unknown"),
-			new HashEntry("sourceUrl", metadata.ContainsKey("sourceUrl") ? metadata["sourceUrl"] : "unknown"),
-			new HashEntry("documentType",  metadata.ContainsKey("documentType") ? metadata["documentType"] : "unknown"),
-			new HashEntry("title", metadata.ContainsKey("title") ? metadata["title"] : "No Title")
-		};
-
-		await _database.HashSetAsync(new RedisKey($"doc:{id}"), hash);
-	}
 
 	public async Task<IReadOnlyList<Chunk>> QuerySimilarAsync(float[] queryEmbedding, int topK, double threshold, CancellationToken cancellationToken = default)
 	{
@@ -122,6 +107,8 @@ internal class RedisVectorStoreProvider : IVectorStoreProvider, IDisposable
 				schema.AddTextField("state");
 				schema.AddTextField("sourceUrl");
 				schema.AddTextField("documentType");
+				schema.AddTextField("documentId");
+				schema.AddTextField("chunkIndex");
 
 				await ft.CreateAsync("vehicle_docs_idx", schema);
 			}

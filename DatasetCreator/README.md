@@ -147,11 +147,17 @@ Hash Fields:
   - text: The processed text content
   - embedding: Serialized float array of embedding vector
   - state: US state abbreviation
-  - sourceUrl: Original document URL or file path
+  - sourceUrl: Original document URL or file path (can be updated)
   - documentType: Type classification
   - title: Document title
   - chunkIndex: For multi-chunk documents
 ```
+
+### Uniqueness & Update Logic
+
+- Each record's uniqueness is determined by the combination of `state`, `documentType`, and `title`.
+- If a new import matches these three fields, any changes to `content` or `sourceUrl` will overwrite the existing record and be logged for audit.
+- This enables updating document details without creating duplicates.
 
 ### Processing Report
 
