@@ -22,6 +22,7 @@ public partial class Chat
 	private IJSObjectReference? _module;
 	private MarkdownPipeline _pipeline = default!;
 	private List<KeyValuePair<MesageType, string>> messages = new();
+	private string threadId = Guid.NewGuid().ToString();
 	private string currentMessage = string.Empty;
 	private bool isProcessing;
 	private bool isMessageAreaVisible;
@@ -61,7 +62,7 @@ public partial class Chat
 
 			try
 			{
-				var response = await ChatAgentService.SendMessageAsync(messageToSend);	
+				var response = await ChatAgentService.SendMessageAsync(threadId, messageToSend);	
 				messages.Add(new(MesageType.Agent, response));
 			}
 			catch (Exception ex)

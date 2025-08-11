@@ -66,10 +66,7 @@
             "stopAtEntry": false,
             "console": "internalConsole",
             "args": [
-                "--input",
-                "/mnt/c/Tmp",
-                "--verbose",
-                "--clear-existing"
+                "--verbose"
             ],
             "env": {
                 "DOTNET_ENVIRONMENT": "Development",

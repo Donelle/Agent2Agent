@@ -7,6 +7,7 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
     <NpmLastInstall>node_modules/.last-install</NpmLastInstall>
+	<NoWarn>$(NoWarn);EXTEXP0001,SKEXP0001,SKEXP0110</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,8 +1,10 @@
 using NRedisStack.RedisStackCommands;
 using NRedisStack.Search;
-using static NRedisStack.Search.Schema.VectorField;
+using NRedisStack.Search.Literals.Enums;
 
 using StackExchange.Redis;
+
+using static NRedisStack.Search.Schema.VectorField;
 
 namespace Agent2Agent.AgentC.Providers;
 
@@ -48,6 +50,17 @@ internal class RedisVectorStoreProvider : IVectorStoreProvider, IDisposable
 	private readonly IDatabase _database;
 	private bool disposedValue;
 
+	#region Field names used in the Redis index
+	const string ContentFieldName = "content";
+	const string EmbeddingFieldName = "embedding";
+	const string TitleFieldName = "title";
+	const string SourceUrlFieldName = "sourceUrl";
+	const string StateFieldName = "state";
+	const string DocumentTypeFieldName = "documentType";
+	const string ChunkIndexFieldName = "chunkIndex";
+	const string DocumentIdFieldName = "documentId";
+	#endregion
+
 	public RedisVectorStoreProvider(ConnectionMultiplexer connection, ILogger<RedisVectorStoreProvider> logger)
 	{
 		_connection = connection;
@@ -61,19 +74,19 @@ internal class RedisVectorStoreProvider : IVectorStoreProvider, IDisposable
 		var knnArgs = new Dictionary<string, object> { ["vec"] = SerializeFloatArray(queryEmbedding) };
         var query = new Query($"*=>[KNN {topK} @embedding $vec]")
 				.Params(knnArgs)
-				.ReturnFields("content", "title", "sourceUrl", "state", "documentType");
+				.ReturnFields(ContentFieldName, TitleFieldName, SourceUrlFieldName, StateFieldName, DocumentTypeFieldName);
 		try
 		{
 			var res = await _database.FT().SearchAsync("vehicle_docs_idx", query);
 			return res.Documents
 				.Select(doc => new Chunk(
-						doc["content"]!,
+						doc[ContentFieldName]!,
 						new Dictionary<string, string>
 						{
-							["state"] = doc["state"]!,
-							["sourceUrl"] = doc["sourceUrl"]!,
-							["documentType"] = doc["documentType"]!,
-							["title"] = doc["title"]!
+							[StateFieldName] = doc[StateFieldName]!,
+							[SourceUrlFieldName] = doc[SourceUrlFieldName]!,
+							[DocumentTypeFieldName] = doc[DocumentTypeFieldName]!,
+							[TitleFieldName] = doc[TitleFieldName]!
 						}
 				))
 				.Where((_, i) => res.Documents[i].Score >= threshold)
@@ -94,21 +107,23 @@ internal class RedisVectorStoreProvider : IVectorStoreProvider, IDisposable
 			if (t.IsFaulted || t.Result == null)
 			{
 				_logger.LogInformation("Index 'vehicle_docs_idx' does not exist, creating it.");
+
+				var opts = new FTCreateParams().On(IndexDataType.HASH).Prefix("doc:");
 				var schema = new Schema();
-				schema.AddVectorField("embedding", VectorAlgo.FLAT, new Dictionary<string, object>
+				schema.AddVectorField(EmbeddingFieldName, VectorAlgo.FLAT, new Dictionary<string, object>
 				{
 					["TYPE"] = "FLOAT32",
 					["DIM"] = 1536,
 					["DISTANCE_METRIC"] = "COSINE"
 				});
 
-				schema.AddTextField("title", 2);
-				schema.AddTextField("content");
-				schema.AddTextField("state");
-				schema.AddTextField("sourceUrl");
-				schema.AddTextField("documentType");
-				schema.AddTextField("documentId");
-				schema.AddTextField("chunkIndex");
+				schema.AddTextField(TitleFieldName, 2, true);
+				schema.AddTextField(ContentFieldName);
+				schema.AddTextField(StateFieldName, sortable: true);
+				schema.AddTextField(SourceUrlFieldName);
+				schema.AddTextField(DocumentTypeFieldName, sortable: true);
+				schema.AddTextField(DocumentIdFieldName);
+				schema.AddTextField(ChunkIndexFieldName, 1, false);
 
 				await ft.CreateAsync("vehicle_docs_idx", schema);
 			}

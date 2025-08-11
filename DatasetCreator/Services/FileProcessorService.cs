@@ -1,12 +1,16 @@
 using System.Globalization;
 using System.Text;
+
 using CsvHelper;
 using CsvHelper.Configuration;
+
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
+
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
+
 using DatasetCreator.Models;
+using DatasetCreator.Shared;
 
 namespace DatasetCreator.Services;
 
@@ -18,12 +22,10 @@ public interface IFileProcessorService
 public class FileProcessorService : IFileProcessorService
 {
 	private readonly ILogger<FileProcessorService> _logger;
-	private readonly IConfiguration _configuration;
 
-	public FileProcessorService(ILogger<FileProcessorService> logger, IConfiguration configuration)
+	public FileProcessorService(ILogger<FileProcessorService> logger)
 	{
 		_logger = logger;
-		_configuration = configuration;
 	}
 
 	public async Task<List<DocumentChunk>> ProcessFileAsync(string filePath, string state, int chunkSize, int chunkOverlap, CancellationToken cancellationToken = default)
@@ -38,15 +40,15 @@ public class FileProcessorService : IFileProcessorService
 		};
 	}
 
-	private async Task<List<DocumentChunk>> ProcessCsvAsync(string filePath, string state, int chunkSize, int chunkOverlap, CancellationToken cancellationToken = default)
+	private async Task<List<DocumentChunk>> ProcessCsvAsync(string fileName, string state, int chunkSize, int chunkOverlap, CancellationToken cancellationToken = default)
 	{
 		var chunks = new List<DocumentChunk>();
 
 		try
 		{
-			_logger.LogInformation("Processing CSV file: {FilePath}", filePath);
+			_logger.LogInformation("Reading CSV file: {FilePath}", Path.GetFileName(fileName));
 
-			using var reader = new StringReader(await File.ReadAllTextAsync(filePath, cancellationToken));
+			using var reader = new StringReader(await File.ReadAllTextAsync(fileName, cancellationToken));
 			using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
 			{
 				HasHeaderRecord = true,
@@ -59,30 +61,28 @@ public class FileProcessorService : IFileProcessorService
 			{
 				if (string.IsNullOrWhiteSpace(record.Content))
 				{
-					_logger.LogWarning("Skipping record with empty content: {Title}", record.Title);
+					_logger.LogWarning("Skipping record with empty content: {@Record}", record);
 					skipped++;
 					continue;
 				}
 
 				// Chunk the text with custom parameters
 				var textChunks = ChunkText(record.Content, chunkSize, chunkOverlap);
-				var documentId = GenerateDocumentId(record.State, record.DocumentType, record.Title);
+				var documentId = GenerateId($"{record.State.Trim()}|{record.DocumentType.Trim()}|{record.Title.Trim()}");
 
 				for (int i = 0; i < textChunks.Count; i++)
 				{
 					var chunk = new DocumentChunk
 					{
-						Id = Guid.NewGuid().ToString(),
+						Id = GenerateId($"{documentId}|{textChunks[i]}"),
 						Text = textChunks[i],
 						Metadata = new Dictionary<string, string>
 						{
-							["state"] = record.State,
-							["documentType"] = record.DocumentType,
-							["title"] = record.Title,
-							["sourceUrl"] = record.SourceUrl,
-							["sourceFile"] = Path.GetFileName(filePath),
-							["chunkIndex"] = i.ToString(),
-							["documentId"] = documentId
+							[RedisFieldNames.StateFieldName] = record.State,
+							[RedisFieldNames.DocumentTypeFieldName] = record.DocumentType,
+							[RedisFieldNames.TitleFieldName] = record.Title,
+							[RedisFieldNames.SourceUrlFieldName] = record.SourceUrl,
+							[RedisFieldNames.DocumentIdFieldName] = documentId,
 						}
 					};
 
@@ -90,24 +90,16 @@ public class FileProcessorService : IFileProcessorService
 				}
 			}
 
-			_logger.LogInformation("Processed {Count} records from CSV file: {FilePath}, Created {Count} chunks", 
-				records.Count - skipped, chunks.Count, filePath);
+			_logger.LogInformation("Read {Count} records from CSV file: {FileName}, Created {Count} chunks", 
+				records.Count - skipped, chunks.Count, fileName);
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, "Error processing CSV file: {FilePath}", filePath);
+			_logger.LogError(ex, "Error reading CSV file: {FilePath}", fileName);
 			throw;
 		}
 
 		return chunks;
-	}
-
-	private static string GenerateDocumentId(string state, string documentType, string title)
-	{
-		using var sha = System.Security.Cryptography.SHA256.Create();
-		var key = $"{state}|{documentType}|{title}";
-		var hash = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
-		return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
 	}
 
 	private List<DocumentChunk> ProcessPdf(string filePath, string state, int chunkSize, int chunkOverlap)
@@ -142,23 +134,21 @@ public class FileProcessorService : IFileProcessorService
 			// Chunk the text with custom parameters
 			var textChunks = ChunkText(text, chunkSize, chunkOverlap);
 			var fileName = Path.GetFileName(filePath);
-			var documentId = GenerateDocumentId(state, "PDF Document", fileName);
+			var documentId = GenerateId($"{state}|PDFDOCUMENT|{fileName}");
 
 			for (int i = 0; i < textChunks.Count; i++)
 			{
 				var chunk = new DocumentChunk
 				{
-					Id = Guid.NewGuid().ToString(),
+					Id = GenerateId($"{documentId}|{textChunks[i]}"),
 					Text = textChunks[i],
 					Metadata = new Dictionary<string, string>
 					{
-						["state"] = state, // Use the provided state
-						["documentType"] = "PDF Document",
-						["title"] = fileName,
-						["sourceUrl"] = filePath,
-						["sourceFile"] = filePath,
-						["chunkIndex"] = i.ToString(),
-						["documentId"] = documentId
+						[RedisFieldNames.StateFieldName] = state, // Use the provided state
+						[RedisFieldNames.DocumentTypeFieldName] = "PDF Document",
+						[RedisFieldNames.TitleFieldName] = fileName,
+						[RedisFieldNames.SourceUrlFieldName] = filePath,
+						[RedisFieldNames.DocumentIdFieldName] = documentId
 					}
 				};
 
@@ -235,5 +225,12 @@ public class FileProcessorService : IFileProcessorService
 			return text[spaceIndex..].Trim();
 
 		return text[startIndex..].Trim();
+	}
+
+	private static string GenerateId(string key)
+	{
+		using var sha = System.Security.Cryptography.SHA256.Create();
+		var hash = sha.ComputeHash(Encoding.UTF8.GetBytes(key));
+		return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
 	}
 }

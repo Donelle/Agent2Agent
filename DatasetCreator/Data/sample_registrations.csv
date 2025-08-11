@@ -1,6 +1,1284 @@
-State,DocumentType,Title,Content,SourceUrl
-CA,Registration Form,DMV Form 343,"Vehicle registration application process for California residents. This form must be completed for new vehicle registrations, transfers of ownership, and registration renewals. Required documents include proof of ownership, proof of insurance, and smog certification for vehicles over 4 years old.",https://dmv.ca.gov/forms
-TX,Renewal Guide,Registration Renewal,"Steps to renew your vehicle registration in Texas. Registration must be renewed annually by the last day of the month indicated on your registration receipt. You can renew online, by mail, or in person at your local county tax office. Late renewals incur additional fees.",https://txdmv.gov/renewal
-FL,Fee Schedule,Registration Fees,"Current fee structure for vehicle registration in Florida. Initial registration fees vary by vehicle weight and type. Additional fees may apply for specialty plates, late renewals, and expedited processing. Electronic filing fees are additional.",https://flhsmv.gov/fees
-NY,Requirements Guide,Vehicle Inspection,"New York State vehicle safety and emissions inspection requirements. All vehicles registered in New York must pass annual safety inspections. Vehicles in certain counties must also pass emissions testing. Inspection must be completed at a licensed facility.",https://dmv.ny.gov/inspection
-CA,Title Transfer,Ownership Transfer,"Process for transferring vehicle ownership in California. Both buyer and seller must complete required forms. Transfer must be completed within 10 days of sale. Required documents include title certificate, bill of sale, and odometer disclosure statement.",https://dmv.ca.gov/title-transfer
+State,DocumentType,Title,SourceUrl,Content,
+AZ,Registration Renewal,Emissions,https://www.myazcar.com/,"### Emissions Testing Is Essential
+
+The quality of the air we breathe is more important than ever. All Arizonans deserve the cleanest possible air today, for our future -- especially those with compromised health. We all can make a positive difference by the choices we make and actions we take everyday. Vehicle emissions contribute to increased levels of air pollution like man-made ozone and particulate matter (smoke and dust). And, for the millions of Arizonans who choose to own and operate motor vehicles, each plays an important role in maintaining and improving Arizona's air quality by simply testing vehicle emissions to ensure they meet health-based standards.
+
+### Why Emissions Testing is Required
+
+Vehicle emissions testing is required in major metropolitan areas that are not meeting federal air quality standards for ozone and other pollutants. In Arizona, testing is required in the Phoenix and Tucson metropolitan areas, where ozone and particulate matter pollution are a problem.
+
+### Why is ozone and particulate matter pollution a problem?
+
+Ozone and particulate matter pollution exacerbates breathing-related illnesses such as bronchitis, emphysema, asthma, chronic obstructive pulmonary disorder (COPD), and other respiratory or pulmonary issues. The science linking ozone and particulate matter pollution to negative health effects is extensive:
+
+- PHYS ORG: One Million Premature Deaths Linked to Ozone Air Pollution | https://phys.org/news/2017-08-million-premature-deaths-linked-ozone.html
+- Harvard Study: Exposure to air pollution and COVID-19 mortality in the United States | https://projects.iq.harvard.edu/files/covid-pm/files/pm_and_covid_mortality.pdf
+- Martin-Luther University Halle-Wittenberg (Germany): Assessing nitrogen dioxide (NO2) levels as a contributing factor to coronavirus (COVID-19) fatality | https://www.sciencedirect.com/science/article/pii/S0048969720321215#!
+- American Lung Association: Ozone | https://www.lung.org/clean-air/outdoors/what-makes-air-unhealthy/ozone
+- EPA: Health Effects of Ozone Pollution | https://www.epa.gov/ground-level-ozone-pollution/health-effects-ozone-pollution
+- CDC: Particulate Matter Pollution | https://www.cdc.gov/air/particulate_matter.html
+
+### What to expect when you come to test your vehicle emissions:
+- Pull your car into the station, put it in park and apply your emergency brake. If your vehicle is a manual transmission, ensure you put it in neutral
+- Choose where you are most comfortable waiting for test to be completed: the waiting booth, waiting area or outside
+- While you are waiting the inspector performs the On-Board Diagnostic (OBD) test -- without getting into your vehicle -- the inspector reaches in to connect the OBD cord to the data link connector (DLC)
+- Once that is complete, you will be asked to return to your vehicle to turn the ignition key to the accessory position, so the inspector can verify the check engine light is functioning
+- You will then start your vehicle, allowing the inspector to observe that the check engine light turns off from a safe distance
+- After the OBD test is complete, you will turn off the vehicle and exit to the waiting area of your choice (waiting booth, waiting area or outside)
+- When payment is due, simply inserts your credit card and remove whenprocessing is complete
+- You then return to your vehicle, and a new vehicle information report will be delivered to you.",
+AZ,Registration Renewal,Late Fees,https://azdot.gov/mvd/services/vehicle-services/vehicle-registration,"To avoid a penalty fee your online or phone renewal must be completed on or before the due date or your mail-in payment must be postmarked by the due date. The initial fee for a late registration is $8, plus an additional $4 for each month it's overdue.
+
+Registration renewal reminders are mailed or emailed to the owner of record 45 days prior to expiration. You are responsible for renewing your registration by the due date whether or not you receive this courtesy notice. Your expiration date is printed on your registration document.
+
+If your vehicle fails the initial or any subsequent emissions test, you will not be charged a penalty fee for late registration renewal if the original test was before the registration expiration date and the registration renewal is completed within 30 days of the original test.
+
+A $25 fee is charged for any check returned by a financial institution and may result in cancellation of vehicle registrations and driving privileges.",
+AZ,Registration Renewal,Renew By Mail,https://azdot.gov/mvd/services/vehicle-services/vehicle-registration,"Mail (Check or money order payable to Motor Vehicle Division. Write license plate number on the check.)
+
+Arizona Department of Transportation
+Motor Vehicle Division
+PO Box 29008
+Phoenix, AZ 85038
+
+A $25 fee is charged for any check returned by a financial institution and may result in cancellation of vehicle registrations and driving privileges.",
+AZ,Registration Renewal,Early Renewal,https://azdot.gov/mvd/services/vehicle-services/vehicle-registration,"Early renewal is based on an emissions test requirement.
+
+- If an emissions test is not required, you may renew up to six months before the expiration.
+- If an emissions test is required, you may renew your registration up to 90 days before the expiration by showing your current registration at the test station.",
+AZ,Registration Renewal,Trailer Registration,https://azdot.gov/mvd/services/vehicle-services/vehicle-registration/trailer-registration,"Trailers registrations are determined by whether or not the trailer will be used for commercial purposes, and on the weight of the trailer (both as certified by the owner). A trailer may be eligible for a regular registration (one, two or five year) or a permanent registration.
+
+Permanent registration will be issued for the following:
+
+- Noncommercial trailers with a declared gross vehicle weight (GVW) of 10,000 lbs or less (one-time $125 registration fee, reduced to $75 if converting a current commercial trailer registration to noncommercial)
+- Trailers with a declared GVW of more than 10,000 lbs (one-time $800 registration fee). If previously registered in another state and the model year of the trailer is less than six years old (fee is reduced to $500), if at least six years old (fee is reduced to $195).
+
+Permanent registration is a one-time fee and a PERM license plate tab is issued. There is no annual billing for vehicle license tax or registration fees. If the trailer has a special plate, only the fee for the plate will be billed annually.
+
+The following are not eligible for permanent registration:
+
+- Travel trailer or camper/tent trailer
+- Commercial trailer with declared GVW of 10,000 pounds or less
+- Historic trailer that is designed for commercial use, but is not used for commercial purposes 
+
+Note: Additional fees may apply at the time of registration.",
+AZ,Registration Renewal,Vehicle Permits,https://azdot.gov/mvd/services/vehicle-services/vehicle-registration/vehicle-permits,"
+### 3-Day Trip Permit
+
+A Restricted Use 3-Day Permit allows a person to legally operate an unregistered vehicle on Arizona roadways from the vehicle's present location to the following destinations: 
+
+- Emissions testing
+- Vehicle inspection
+- Application for title or registration
+- Vehicle repair to comply with emissions or inspection
+
+You may obtain a Restricted Use 3-Day Permit at https://azmvdnow.gov/home or any http://www.azdot.gov/mvd-hours-and-locations or https://adot.maps.arcgis.com/apps/View/index.html?appid=c8157fc5cef549a6b33833fad1e7d7c1. The fee is $1. Note: Vehicles that have never been titled or registered in Arizona may not be able to purchase a 3-Day Trip permit online.
+
+### 30-Day General Use Permit
+
+A 30-Day General Use Permit allows an unregistered vehicle to operate on the roadway for a 30 day period, and can be issued only once in a 12 month period. It has no movement restrictions or residency requirements. The permit is available azmvdnow.gov or may be purchased at any MVD or Authorized Third Party office. The fee is $15.
+
+### 90-Day Non-Resident (Drive Out) Permit
+
+A 90-Day Nonresident (Drive Out) Permit allows a person to drive their newly purchased vehicle out of Arizona for registration in another state. You will be required to show your out-of-state identification and the dealer invoice or assigned title. The fee is $15 and the permit can be purchased from any MVD or Authorized Third Party office.
+
+### 90-Day Resident Permit
+
+An Arizona resident who does not have complete documentation for issuance of a title or registration may apply for a 90-Day Permit. This registration allows you to operate the vehicle while obtaining additional documentation. When complete documentation is submitted, vehicle license taxes will be calculated, for the full year, back to the date of issuance of the 90-Day Permit. It may be purchased at any MVD or Authorized Third Party office. The fee is $15.
+
+### Temporary Registration Plate (TRP)
+
+A licensed dealer will issue a TRP when a vehicle is purchased. It will allow the vehicle to be operated for any purpose. The TRP is valid for 45 days.",
+AZ,Vehicle Title & Registration,Vehicle Title and Registration,https://azdot.gov/mvd/services/vehicle-services/vehicle-title-and-registration,"When you buy a vehicle, Arizona law requires that you apply for a title within 15 days of purchase and take the application to an MVD Office or Authorized Third Party provider to complete the process. Electronic title transfer is available.
+
+Most vehicles may be registered for one, two, or five years, depending on emissions requirements. Permanent registration may be available for some trailers.
+
+If your vehicle was registered in another state and you want to operate it in Arizona, you must register it as soon as you become an Arizona resident. 
+
+**References:**
+- https://apps.azdot.gov/files/mvd/mvd-forms-lib/96-0236.pdf
+- https://azdot.gov/node/4811
+- https://azdot.gov/motor-vehicles/vehicle-services/title-and-registration/etitle-transfer
+- https://azdot.gov/motor-vehicles/vehicle-services/vehicle-registration/trailer-registration",
+TN,Vehicle Title & Registration,Surrendering a License Plate,https://www.tn.gov/revenue/title-and-registration/license-plates.html,"Tennessee license plates follow the owner, not the vehicle, and can be transferred to a different vehicle for a $1 fee.  Transfers as well as exchanges of specialty and personalized plates for regular passenger plates can be done at your county clerk’s office.
+
+**Immediately destroy a plate when:**
+
+- you no longer meet its eligibility criteria and the vehicle registration is not expired; or
+- it is mutilated or effaced and no longer meets requirements of the law.
+
+**Surrender a specialty or personalized plate at renewal when:**
+
+- you no longer meet its eligibility criteria; or
+- you no longer want a specialty or personalized plate.",
+TN,Vehicle Title & Registration,Disabled Plates & Placards,https://www.tn.gov/revenue/title-and-registration/license-plates/disabled-plates-placards.html,"Disabled driver or passenger license plates, placards and decals are available to Tennessee residents who:
+
+- use a wheelchair.
+- walk with difficulty or uncertainty.
+- have 20/200 vision or worse with corrective lenses.
+- are the parent or legal guardian of a person who is permanently disabled and incapable of operating a motor vehicle.
+
+An agency can obtain a disabled placard if it:
+
+- transports disabled clients;
+- uses the placard only when transporting disabled clients; and
+- secures just one placard per vehicle owned and operated for the purpose of transporting disabled clients.
+
+Temporary disabled placards are:
+
+- available to those with a temporary disabling condition.
+- valid for up to six months.
+- reissued once, if necessary.
+
+A disabled driver decal is available to people with a permanent disability who currently own or purchase a specialty plate.
+",
+TN,Vehicle Title & Registration,Fees & Application Process,https://www.tn.gov/revenue/title-and-registration/license-plates/disabled-plates-placards/fee-application-process.html,"- **Disabled plate:** $26.50 annually (no charge if you are a person using a wheelchair)
+- **Permanent disability placard:** $26.50 + $3 renewal every two years (no charge if vehicle registration in applicant’s name)
+- **Temporary disability placard:** $10
+- **Replacement placard:** $2
+- **Disabled driver decal:** no charge
+
+To apply for a disabled person license plate/placard/decal:
+
+1. Complete the Application for Disabled Person License Plate, Placard and/or Decal (applications are also available from your county clerk).
+2. Provide certification of disability from either:
+    - medical doctor licensed to practice medicine; 
+    - physician’s assistant or nurse practitioner acting in conjunction with a written protocol developed jointly by a physician;
+    - licensed physical therapist; or
+    - Christian Science Practitioner listed in the Christian Science Journal
+3. Submit the two forms to your local county clerk.",
+CA,Vehicle Title & Registration,Registration For a Vehicle Purchased from a Dealer,https://www.dmv.ca.gov/portal/vehicle-registration/new-registration/registering-a-vehicle-purchased-from-a-dealer/,"To register your vehicle/vessel, you will always need:
+
+- If the vehicle is new, a completed **Application for Title or Registration (REG 343)** (PDF) form.
+- If the vehicle is used, the **California Certificate of Title** (or an out-of-state title, if the car is currently registered in another state).
+- If the title has been lost or damaged, complete an **Application for Replacement or Transfer of Title (REG 227)** (PDF) to request a copy.
+- The signature(s) of seller(s) and/or lienholder on the Certificate of Title.
+- Your signature on the Certificate of Title.
+- Applicable title transfer fees or a use tax.
+
+You may also need:
+
+- A completed **Vehicle/Vessel Transfer and Reassignment (REG 262)** form. Show Citation 11 
+- A **Statement of Facts (REG 256)** (PDF) form.
+- Smog certification.
+- **Vehicle Emission System Statement (SMOG) (REG 139)** (PDF) form.
+- A **Declaration of Gross Vehicle Weight (GVW)/Combined Gross Vehicle Weight (CGW) (REG 4008)** (PDF) form (if you are purchasing a commercial vehicle).
+- Use tax and/or various other fees.
+- To complete your registration, please visit a DMV field office in person.
+
+**Sources:** 
+
+- [Application for Title or Registration (REG 343) (PDF)](https://www.dmv.ca.gov/portal/file/application-for-title-or-registration-reg-343-pdf/)
+- [Application for Replacement or Transfer of Title (REG 227) (PDF)](https://www.dmv.ca.gov/portal/file/application-for-duplicate-or-transfer-of-title-reg-227-pdf/)
+- [Title Transfer Fees](https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/)
+- [Statement of Facts (REG 256) (PDF)](https://www.dmv.ca.gov/portal/file/statement-of-facts-reg-256-pdf/)
+- [Vehicle Emission System Statement (SMOG) (REG 139) (PDF)](https://www.dmv.ca.gov/portal/file/vehicle-emission-system-statement-smog-reg-139-pdf/)
+- [Declaration of Gross Vehicle Weight (GVW)/Combined Gross Vehicle Weight (CGW) (REG 4008) (PDF)](https://www.dmv.ca.gov/portal/file/declaration-of-gross-vehicle-weight-gvw-combined-gross-vehicle-weight-cgw-reg-4008-pdf/)",
+CA,Vehicle Title & Registration,Titles,https://www.dmv.ca.gov/portal/vehicle-registration/titles/,"In addition to identifying the owner of a vehicle, a California Certificate of Title is an official source of information about the vehicle. A title may include:
+
+- Registered owner’s name and address
+- Vehicle identification information, including vehicle identification number (VIN), make, model, and year
+- Odometer mileage
+- Registration date
+- Lienholder’s name and information (if there is money owed on the vehicle)
+- Title brands, if any (see Branded Titles, below)
+- Value",
+CA,Vehicle Title & Registration,Registration Fees,https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/,"### Determining Fees
+
+Registration fees are based on:
+
+- Your vehicle type (auto, motorcycle, etc.).
+- Your vehicle’s purchase price or declared value.
+- Dates (for example, the date you purchased your vehicle, or the date your vehicle entered California).
+- The city and/or county you live in.
+- The city and/or county your business is based in.
+- The unladen or declared gross vehicle weight (GVW) and the number of axles your vehicle may have.
+- Any special license plates your vehicle may have.
+- Whether you have any unpaid parking violations or toll evasion bail.
+ 
+You will likely have to pay the following fees if your vehicle is registered for on-highway use:
+
+- The registration fee
+- California Highway Patrol (CHP) fee
+- Vehicle license fee
+- Transportation improvement fee
+- County/district fee
+
+### DMV Fee Calculators
+
+To help people plan for registration-related fees, DMV provides vehicle registration fee calculators.
+
+These fee calculators can help you:
+
+- Determine registration fees for a new vehicle that will be purchased in California from a licensed California dealer.
+- Determine registration fees for a nonresident vehicle (vehicles last registered outside the state of California).
+- Determine registration fees for a used vehicle that will be purchased in California.
+- Determine vehicle license fee (VLF) paid for tax purposes.
+- Determine registration renewal fees due.
+- Your estimate will vary depending on the information you enter.
+
+**Note:** All fees may change depending on the law.
+
+**Sources:**
+
+- [Fees for a New Vehicle](https://www.dmv.ca.gov/wasapp/FeeCalculatorWeb/newVehicleForm.do)
+- [Fees for a Non-Resident Vehicle](https://www.dmv.ca.gov/wasapp/FeeCalculatorWeb/newResidentForm.do)
+- [Fees for a Used Vehicle](https://www.dmv.ca.gov/wasapp/FeeCalculatorWeb/usedVehicleForm.do)
+- [Vehicle License Fee (VLF)](https://www.dmv.ca.gov/wasapp/FeeCalculatorWeb/vlfForm.do)
+- [Registration Renewal Fees](https://www.dmv.ca.gov/wasapp/FeeCalculatorWeb/renewalForm.do)",
+CA,Vehicle Title & Registration,Insurrance Requirements,https://www.dmv.ca.gov/portal/vehicle-registration/insurance-requirements/,"Insurance (also referred to as financial responsibility) is required on all vehicles operated or parked on California roads.
+
+You must carry evidence of insurance in your vehicle at all times and it must be provided when:
+
+- Requested by law enforcement.
+- You are renewing the vehicle registration.
+- The vehicle is involved in a traffic collision.
+
+
+### Types of Insurance
+
+Here are the types of acceptable insurance:
+
+- Motor vehicle liability insurance policy.
+- Cash deposit of $75,000 with DMV.
+- DMV-issued self-insurance certificate.
+- Surety bond for $75,000 from a company licensed to do business in California.
+
+For information regarding cash deposits or self-insurance, contact DMV Insurance Unit at (916) 657-6677 and select Option 3.
+
+To locate a company that issues surety bonds, contact the Department of Insurance at insurance.ca.gov or by calling 1-800-927-4357.
+
+
+### Minimum Liability Insurance Requirements for Private Passenger, Commercial and Fleet Vehicles
+
+
+Here are the minimum liability insurance requirements (per California Insurance Code §11580.1b):
+
+- $30,000 for injury/death to one person.
+- $60,000 for injury/death to more than one person.
+- $15,000 for damage to property.
+
+Liability insurance compensates a person other than the policy holder for personal injury or property damage.
+
+Comprehensive or collision insurance does not meet vehicle financial responsibility requirements.
+
+Does not include any additional Insurance requirements for Commercial and/or Fleet Vehicles deemed necessary by any Federal, State or Local Agency.
+
+### Insurance Companies that Electronically Report to DMV
+
+Insurance companies in California are required by law (California Vehicle Code [CVC] §16058) to electronically report private-use vehicle information and as of January 1, 2023, Commercial and Fleet vehicle insurance information.
+
+### Submitting Proof of Insurance
+
+If DMV does not receive proof of insurance for a vehicle, its registration will be suspended. The vehicle may not be operated or parked on public roadways until proof of insurance is submitted.
+
+Proof of insurance can be submitted online or through email
+
+**Sources:**
+
+- [Proof of insurance can be submitted online or through email](https://www.dmv.ca.gov/portal/vehicle-registration/insurance-requirements/suspended-vehicle-registration/)
+- [Department of Insurance](http://www.insurance.ca.gov/)",
+UT,Vehicle Title & Registration,Registering Your Vehicle in Utah,https://dmv.utah.gov/register/registering-your-vehicle/,"Most on and off-road vehicles, boats, aircraft, and commercial vehicles must be registered to operate in Utah. Different requirements, fees, and taxes apply, depending on your vehicle type and other factors. Review the other registration pages for an overview of the Utah vehicle registration process.
+
+Keep in mind that many registration and other functions can be done online at Utah’s Motor Vehicle Portal (MVP), opens in a new tab. Conducting business online saves time that you would otherwise spend driving to an office and waiting in line.
+
+**Sources:**
+
+-  [Utah’s Motor Vehicle Portal (MVP)](https://mvp.tax.utah.gov/_/)",
+UT,Registration Renewal,Renew Your Registration,https://dmv.utah.gov/register/renewal/,"A registration renewal may be completed 60 days prior to expiration of the current registration, subject to the availability of renewal materials. The new registration period retains the same expiration month as the original registration, with few exceptions. Some registration renewals require that you visit an office in person, such as when your renewal has been expired for over 6 months or you qualify for an abatement. In these types of cases, please go directly to the online Appointment Scheduler, opens in a new tab.
+
+**Sources:**
+
+- [Appointment Scheduler](https://mvp.tax.utah.gov/?link=ScheduleAppointment)",
+NV,Registration Renewal,Registration Renewal,https://dmv.nv.gov/regrenewal.htm,"### Registration Renewal
+
+#### General Information
+
+Vehicle registrations expire on the exact date listed, not at the end of the month. You will receive a renewal postcard in the mail approximately 30 days prior to renewal. You will receive only email notices if you have a MyDMV account  and have chosen to go paperless.
+
+You are responsible for timely registration renewal even if you do not receive a notice. Late fees based on the expiration date are assessed for late renewals. Nevada has no grace period.
+
+You may obtain a temporary movement permit through MyDMV or at your nearest DMV office if you must drive after your registration is expired.
+
+#### Renewal Options
+
+You may renew approximately 35 days before expiration or up to 18 months after (late fees apply) using the online, kiosks or emission station options. Renew in person outside of these time frames.
+
+You must register your vehicle for a full year. There are no partial registrations. Trailers may be registered for one year or three years.
+
+Have your current odometer reading ready.
+
+
+**Sources:**
+
+- [MyDMV Account](https://dmvapp.nv.gov/dmv/application/dmvportal/pages/default.aspx)
+- [DMV Office](https://dmv.nv.gov/locat.htm)",
+TX,Vehicle Registration,Initial Vehicle Registration,https://www.txdmv.gov/motorists/register-your-vehicle,"### For New Residents
+Upon moving to Texas, you have 30 days to register your vehicle. The process involves these key steps:
+1. **Obtain Texas Auto Insurance:** Your vehicle must be insured by a provider licensed in Texas.
+2. **Vehicle Inspection:** An emissions inspection is mandatory in 17 counties for vehicles aged 2 to 24 years.
+3. **Gather Required Documents:**
+    - Proof of a passing vehicle inspection report (if applicable)
+    - Proof of Texas auto insurance
+    - The vehicle's out-of-state title or registration
+    - A completed Application for Texas Title and/or Registration (Form 130-U)
+    - A valid government-issued photo ID
+4. **Visit Your Local County Tax Assessor-Collector's Office:** Submit your documents and pay the required fees to receive your Texas license plates and registration sticker.",
+UT,Vehicle Registration,Registering Your Vehicle in Utah,https://dmv.utah.gov/register/registering-your-vehicle,"To register your vehicle, you will generally need the following documents:
+- Completed and signed Form TC-656, Vehicle Application for Utah Title
+- Proof of vehicle ownership (title or Manufacturer's Certificate of Origin)
+- Current out-of-state registration (for new residents)
+- A valid Utah driver's license
+- Proof of Utah car insurance
+- Payment for all applicable fees and taxes.
+
+All vehicles being titled in Utah for the first time require a VIN inspection. Emissions testing requirements vary by county.",
+MN,Vehicle Registration,New Minnesota Residents,https://dps.mn.gov/divisions/dvs/Pages/new-resident-vehicle-services.aspx,"New residents have 60 days to register their vehicles in Minnesota. You will need:
+- Proof of Ownership (out-of-state vehicle title or registration card if lienholder has title)
+- A current Minnesota driver's license or ID card
+- Proof of Minnesota auto insurance
+- The current odometer reading
+- A completed Application to Title and Register a Motor Vehicle (Form PS2000).
+
+Submit your documents and payment in person at a Deputy Registrar Office.",
+WA,Vehicle Registration,New to Washington,https://www.dol.wa.gov/vehicleregistration/moving-washington,"If you've recently moved to Washington, you have 30 days to register your out-of-state vehicle with the DOL. Before you can register your vehicle, you must first obtain a Washington driver's license. You'll need to visit a local DOL office and provide:
+- Proof of Ownership (your vehicle's current title)
+- A completed Vehicle Title Application (Form TD-420-001)
+- An odometer disclosure
+- A VIN inspection.
+
+You must also have Washington state vehicle insurance.",
+IA,Vehicle Registration,New Iowa Residents,https://www.iowadot.gov/mvd/vehicleregistration/new-to-iowa,"New residents must register their vehicles within 30 days of establishing residency. You will need to visit your county treasurer's office with the following:
+- Proof of Ownership (your vehicle's original certificate of title or current out-of-state registration if a lienholder holds the title)
+- A signed Application for Certificate of Title and/or Registration (Form 411007)
+- A bill of sale
+- Proof of identity.",
+NE,Vehicle Registration,New Residents,https://dmv.nebraska.gov/services/new-resident,"New residents to Nebraska also have a 30-day window after establishing residency to title and register their vehicles in the state. You will need:
+- Your current certificate of title from your previous state of residence
+- A vehicle inspection conducted by the local sheriff's office
+- A completed Application for Certificate of Title
+- Proof of current, valid Nebraska auto insurance
+- Your most recent registration certificate from your previous state.",
+NV,Vehicle Registration,New Resident Registration,https://dmv.nv.gov/newresident.htm,"New residents must obtain a Nevada driver license and register their vehicles within 30 days of becoming a resident. You will need:
+- A Nevada smog check (if required)
+- Your current registration and license plates
+- The out-of-state title
+- Proof of Nevada liability insurance
+- A completed Vehicle Inspection Certificate (VIN inspection).
+
+You must register in person at a DMV office.",
+SD,Vehicle Registration,New Residents,https://dor.sd.gov/individuals/motor-vehicle/title-registration/,"If you're moving to South Dakota, you have 90 days from your arrival to title and register your vehicle. You'll need to visit your local county treasurer's office with the following documents:
+- Original Title from your previous state
+- A completed and signed South Dakota Application for Title & Registration
+- Your South Dakota driver's license.
+
+South Dakota has a 4% motor vehicle excise tax.",
+ND,Vehicle Registration,New to North Dakota,https://www.dot.nd.gov/divisions/mv/new-to-nd.htm,"New residents have a short window to register their vehicles after establishing residency or employment. You will need:
+- Proof of Ownership (vehicle's title or Manufacturer's Certificate of Origin)
+- Application for Certificate of Title and Registration of a Vehicle (SFN 2872)
+- A valid North Dakota driver's license or ID card
+- Proof of North Dakota Insurance.
+
+A 5% excise tax is levied on the purchase price of the vehicle.",
+MO,Vehicle Registration,New Resident,https://dor.mo.gov/motor-vehicle/titling-registration/,"For new residents, you have 30 days from establishing residency to register your vehicle. You will need to visit a local Missouri license office with the following documents:
+- Proof of Ownership (Certificate of Title or Manufacturer's Statement of Origin)
+- A signed Application for Missouri Title and License (Form 108)
+- A current insurance identification card
+- A safety inspection certificate
+- A statement of non-assessment from your county collector's office or a paid personal property tax receipt.",
+OR,Vehicle Registration,New Oregon Residents,https://www.oregon.gov/odot/dmv/pages/new2or/moving.aspx,"If you are moving to Oregon, you must title and register your vehicle. To be eligible, you must be a resident of or domiciled in the state. You will need:
+- Application for Title and Registration (Form 735-226)
+- Proof of Ownership (original title or MCO)
+- Lien releases
+- Bills of sale
+- Your valid Oregon driver's license
+- Proof of auto insurance.
+
+A VIN inspection is required for vehicles with out-of-state titles.",
+OK,Vehicle Registration,New Residents,https://oklahoma.gov/service/sok/vehicle-registration.html,"For new residents, you have 30 days after establishing residency to register your out-of-state vehicle. You will need:
+- Proof of Ownership (title or MCO)
+- A completed Application for Oklahoma Certificate of Title (Form 701-6)
+- Proof of Oklahoma Liability Insurance
+- Valid identification
+- An Odometer Disclosure Statement
+- A VIN Inspection.
+
+You must register your vehicle at a Service Oklahoma or a Licensed Operator location.",
+ID,Vehicle Registration,New Residents,https://transportation.idaho.gov/itddmv/,"New residents have 90 days to register their out-of-state vehicle. A VIN inspection is required for all vehicles being registered in Idaho for the first time. You will need your out-of-state title, proof of Idaho residency, and an Idaho driver's license or Social Security Number (SSN).",
+MT,Vehicle Registration,New Residents,https://dojmt.gov/driving/vehicle-title-and-registration/,"New residents have 60 days to register their vehicles. You will need your out-of-state title, a completed Application for Certificate of Title for a Motor Vehicle (Form MV1), proof of insurance, a valid driver's license, and two forms of proof of residency.",
+WY,Vehicle Registration,New Residents,https://www.dot.state.wy.us/home/vehicle_boat_registration.html,"New residents have 30 days to register their vehicles upon becoming employed, or 120 days if not employed. A VIN inspection is required for all out-of-state vehicles. You will need your Wyoming title (or out-of-state title to apply for one), proof of auto insurance, and your previous out-of-state registration.",
+CO,Vehicle Registration,New Residents,https://dmv.colorado.gov/new-to-colorado,"New residents have 90 days after establishing residency to register their vehicle. You will need proof of ownership (title or out-of-state registration), Secure and Verifiable Identification (SVID), proof of Colorado vehicle emissions (if applicable), proof of insurance, and a VIN verification for out-of-state vehicles.",
+NM,Vehicle Registration,New Residents,https://www.mvd.newmexico.gov/vehicles/vehicle-registration/,"New residents must register their vehicle. A VIN inspection is mandatory for all vehicles being brought to New Mexico from another state. You will need proof of identity, two documents proving New Mexico residency, proof of insurance, the vehicle's title, and a bill of sale.",
+AR,Vehicle Registration,New Residents,https://www.dfa.arkansas.gov/motor-vehicle/vehicle-registration/,"New residents have 60 days to register their vehicles. You must have the vehicle assessed by the local county assessor. You will need proof of ownership (title or MSO), a bill of sale, an odometer disclosure statement, proof of insurance, and proof that personal property taxes have been paid.",
+IL,Vehicle Registration,New Residents,https://www.ilsos.gov/departments/vehicles/title_and_registration/home.html,"New residents have 30 days to register their vehicles after establishing residency. You will need to submit an Application for Vehicle Transaction (VSD 190), proof of vehicle ownership, proof of Illinois residency, and proof of insurance. An emissions test may be required.",
+KS,Vehicle Registration,New Residents,https://www.ksrevenue.gov/dov-newlienkansas.html,"New residents have 90 days from establishing residency to register their vehicles. All vehicles with out-of-state titles require a VIN inspection from the Kansas Highway Patrol. You will need the original title, proof of insurance from a Kansas-approved company, your previous state's registration, and a valid driver's license.",
+WI,Vehicle Registration,New Residents,https://wisconsindot.gov/Pages/dmv/vehicles/title-plates/new-res.aspx,"New residents have 60 days after establishing residency to register their vehicles. You will need your out-of-state title and registration, a completed Title and License Plate Application (Form MV1), and proof of identity (your new Wisconsin driver's license).",
+IN,Vehicle Registration,New Residents,https://www.in.gov/bmv/registration-plates/vehicle-registrations/,"New residents have a 60-day window to register their vehicles. You must first obtain an Indiana certificate of title. The vehicle must be present for a VIN inspection. You will need your out-of-state title, proof of address, proof of Social Security Number (SSN), and proof of insurance.",
+OH,Vehicle Registration,New Residents,https://www.bmv.ohio.gov/titles-new.aspx,"New residents have 30 days to obtain an Ohio title and register their vehicle. A VIN inspection is required for out-of-state vehicles. You will need a notarized Ohio Certificate of Title, a valid Ohio driver's license or state ID, and proof of financial responsibility.",
+KY,Vehicle Registration,New Residents,https://transportation.ky.gov/Motor-Vehicle-Licensing/Pages/Vehicle-Titling-and-Registration.aspx,"New residents are required to register their out-of-state vehicle within 15 days of establishing residency. The vehicle will need to undergo a Sheriff's Inspection to verify the VIN. You will need your out-of-state title, proof of Kentucky insurance, and a valid Kentucky driver's license.",
+WV,Vehicle Registration,New Residents,https://transportation.wv.gov/DMV/Vehicle-Services/Pages/New-to-WV.aspx,"Newcomers to the state have 30 days from establishing residency to title and register their vehicles. The 6% titling sales tax is waived for new residents on vehicles already titled in their name in another state. You will need your out-of-state vehicle title, a completed Application for Certificate of Title (Form DMV-1-TR), proof of West Virginia residency, and proof of insurance.",
+VA,Vehicle Registration,New Residents,https://www.dmv.virginia.gov/vehicles/titling-registering-vehicle,"New residents have a 30-day window to title and register their vehicles. You must first transfer your out-of-state vehicle title to a Virginia title. A valid Virginia safety inspection sticker is required, and an emissions inspection may be necessary depending on the locality. You will need proof of ownership, proof of identity and residency, a completed application form, and proof of Virginia liability insurance.",
+AL,Vehicle Registration,New Residents,https://www.revenue.alabama.gov/division/motor-vehicle/,"New residents have 30 calendar days to transfer their out-of-state registration to Alabama. You will need proof of ownership (title or MSO), a bill of sale, a valid unexpired driver's license or non-driver ID, and proof of insurance.",
+AK,Vehicle Registration,New Residents,https://doa.alaska.gov/dmv/reg/new.htm,"New residents or individuals who begin working in Alaska must apply for vehicle registration within 10 days of arriving in the state or starting a job. You will need your driver's license or ID, the vehicle's current out-of-state registration, the vehicle's title, proof of ownership, proof of liability insurance, and a completed Application for Title & Registration (Form V1).",
+CT,Vehicle Registration,New Residents,https://portal.ct.gov/dmv/vehicle-services/register-a-vehicle-previously-registered-out-of-state?language=en,"New residents have 60 days from the date of establishing residency to register their vehicle. You will need to complete an emissions test or have your VIN verified. You will also need proof of insurance, a completed Connecticut Registration and Title Application (Form H-13B), proof of ownership, and a valid Connecticut driver's license.",
+DE,Vehicle Registration,New Residents,https://www.dmv.de.gov/VehicleServices/registration/index.shtml?dc=ve_reg_new,"New residents have 60 days from the time they establish residency to title and register their vehicles. All vehicles must pass a safety and/or emissions inspection. You will need proof of ownership, proof of Delaware auto insurance, and a valid Delaware driver's license.",
+FL,Vehicle Registration,New Residents,https://www.flhsmv.gov/motor-vehicles/,"New residents are required to register their out-of-state vehicles within 10 days of becoming employed, enrolling children in public school, or establishing residency. You will need proof of identity, proof of Florida insurance, the out-of-state title, and a completed Application for Certificate of Title With/Without Registration (HSMV form 82040). All out-of-state vehicles must have their VIN and odometer reading verified.",
+GA,Vehicle Registration,New Residents,https://dor.georgia.gov/motor-vehicles/vehicle-registration,"You have 30 days from the date you move to Georgia to register your vehicle. You will need your Georgia driver's license, proof of ownership, a completed MV-1 Title/Tag Application, proof of Georgia liability insurance, and a passed emissions inspection (if required by your county).",
+HI,Vehicle Registration,New Residents,https://www.honolulu.gov/csd/vehicle-services-information.html,"You must register your vehicle in the county where it is physically located within 30 days of its arrival. You will need proof of ownership, the current out-of-state registration, a Hawaii vehicle safety inspection certificate, proof of Hawaii auto insurance, and a completed county-specific application form.",
+LA,Vehicle Registration,New Residents,https://www.expresslane.org/,"New residents have 40 days from their date of arrival to register their vehicles. You will need proof of ownership, proof of insurance, a valid driver's license or ID, a completed Vehicle Application (DPSMV 1799), and an odometer disclosure statement.",
+ME,Vehicle Registration,New Residents,https://www.maine.gov/sos/bmv/registration/,New residents must first pay excise tax at their town office. You will need to provide your out-of-state title for vehicles 25 years old and newer and a Maine use tax form to show you are exempt from sales tax if you can provide an out-of-state registration.,
+MD,Vehicle Registration,New Residents,https://mva.maryland.gov/vehicles/Pages/registration/out-of-state.aspx,"New residents have a 60-day grace period to register their vehicles. You will need your vehicle's current title, an Application for Certificate of Title (Form VR-005), and a Maryland Safety Inspection Certificate.",
+MA,Vehicle Registration,New Residents,https://www.mass.gov/how-to/transfer-your-registration-and-title-from-out-of-state,"I have gathered the requested information on vehicle registration in Massachusetts and have appended it to the `vehicledata.csv` file. The file now contains a summary of the registration process, including the necessary steps, required documents, and associated fees. It also includes information on where to find public vehicle registration data and statistics for Massachusetts.",
+MI,Vehicle Registration,New Residents,https://www.michigan.gov/sos/vehicle/registration,"All vehicles and trailers used on Michigan roadways must be registered with the Michigan Secretary of State. To register a vehicle, you will need to provide the vehicle's title, proof of Michigan no-fault insurance, and payment for the registration fees.",
+MS,Vehicle Registration,New Residents,https://www.dor.ms.gov/vehicle-services,"New residents have 30 days to register their vehicles. You'll need to visit your local county Tax Collector's office and provide state-issued photo identification, your vehicle's title, your previous state's registration, and an odometer reading for the vehicle.",
+NH,Vehicle Registration,New Residents,https://www.nh.gov/safety/divisions/dmv/registration/index.htm,New residents to New Hampshire have 60 days from the date they move to the state to obtain a New Hampshire driver's license and register their vehicles. The process starts at your local town or city clerk's office where you will pay a motor vehicle permit fee. You will need proof of identification and two documents proving your residency.,
+NJ,Vehicle Registration,New Residents,https://www.state.nj.us/mvc/vehicles/reginitial.htm,"### Required Documents
+*   A valid driver's license or state-issued ID.
+*   Proof of vehicle ownership (title or bill of sale).
+*   A valid insurance card for the vehicle.
+*   Proof of address (utility bill or lease agreement).
+*   Vehicle registration application form (Form BA-49).
+*   Social Security card or proof of your number.
+
+### Registration Process
+1.  **Title Transfer:** If you have purchased a new or used vehicle, you must first transfer the title to your name.
+2.  **Vehicle Insurance:** You must have active vehicle insurance that meets New Jersey's minimum coverage requirements.
+3.  **Visit MVC or Register Online:** You can register your vehicle online if you meet the requirements, or you must visit a New Jersey Motor Vehicle Commission (MVC) office. It is recommended to schedule an appointment to avoid long wait times.
+4.  **Submit Documents and Fees:** Submit the required documents and pay the necessary fees.
+
+### Fees
+*   **Title Fee:** $60 for a standard registration, $85 for a financed vehicle with one lien, and $110 for a financed vehicle with two liens.
+*   **Registration Fee:** Varies based on the age and weight of the vehicle.
+*   **Sales Tax:** A sales tax fee is also required.
+*   **Payment:** Fees can be paid with a credit card, cash, or check.
+
+### Renewal
+*   Vehicle registration needs to be renewed annually for most vehicles, while new vehicles are re-registered every four years.
+*   You will receive a renewal notice three months before your registration expires.
+*   Renewal can be done online, in person, by phone, or by mail.",
+NY,Vehicle Registration,New Residents,https://dmv.ny.gov/registration/register-vehicle,"To register a vehicle for the first time, you will generally need proof of ownership, proof of identity, proof of insurance, and payment for fees. All vehicles registered in New York must undergo a safety inspection every 12 months.",
+NC,Vehicle Registration,New Residents,https://www.ncdot.gov/dmv/title-registration/vehicle-registration/Pages/default.aspx,"A valid North Carolina driver's license is the first requirement. You will also need to provide proof of North Carolina car insurance, a notarized vehicle title, and a completed Title Application form (MVR-1). A Declaration of Eligible Risk must be completed by all vehicle owners.",
+PA,Vehicle Registration,New Residents,https://www.dmv.pa.gov/VEHICLE-SERVICES/Title-Registration/Pages/New-to-PA.aspx,"New residents have 20 days to register their vehicle. Before you can register your car, you must obtain a Pennsylvania driver's license. You will need to surrender your out-of-state title when you apply for a Pennsylvania title.",
+RI,Vehicle Registration,New Residents,https://dmv.ri.gov/registrations-plates-titles/registration/new-registration,"New residents of Rhode Island have 30 days to register their vehicles. You must obtain a Rhode Island license before registering your vehicle. All vehicles registered in Rhode Island for the first time must undergo a VIN check at a local police station. You will need the original title from your previous state, proof of Rhode Island residency, and proof of insurance.",
+SC,Vehicle Registration,New Residents,https://www.scdmvonline.com/Vehicle-Owners/Moving-To-SC,"New residents have 45 days to register their vehicle. Before you can register, you must first obtain a South Carolina driver's license and transfer your vehicle's title. You will need to fill out the Application for Certificate of Title and Registration (SCDMV Form 400), provide proof of ownership, proof of identity, proof of insurance, and a paid property tax receipt.",
+VT,Vehicle Registration,New Residents,https://dmv.vermont.gov/registration/new,"All residents of Vermont are required to register their motor vehicles with the state's Department of Motor Vehicles (DMV). This includes those who have recently moved to the state, who must register their vehicles within 60 days of establishing residency. You will need proof of identification, proof of Vermont insurance, the vehicle's title, a Bill of Sale and Odometer Disclosure Statement (Form VT-005), and a completed Registration/Tax/Title Application (Form VD-119). If the vehicle is from out-of-state, a VIN verification is required.",
+AZ,Emissions,Vehicle Emissions Inspection Program,https://www.myazcar.com/,"### Locations Requiring Emissions Tests
+Emissions testing is mandatory for residents of, and commuters to, specific areas:
+*   **Area A (Metro Phoenix):** This includes most of Maricopa County and parts of Pinal and Yavapai counties.
+*   **Area B (Metro Tucson):** This covers parts of Pima County.
+
+You can use a ZIP code lookup tool on the ADEQ website to determine if your vehicle requires testing.
+
+### Vehicles That Require Testing
+Generally, if you live or commute to the designated areas, your 1967 or newer vehicle must pass an emissions test. This includes gasoline, diesel, alternative fuel, flexible fuel (E85), and hybrid vehicles. New residents must have their vehicle pass an emissions test before registration.
+
+**Testing Frequency:**
+*   **Phoenix Area (Area A):**
+    *   Most 1981 and newer gasoline vehicles under 8,500 lbs are tested every two years.
+    *   Vehicles from 1967-1980, diesel vehicles, and heavy-duty vehicles require annual testing.
+*   **Tucson Area (Area B):**
+    *   Most 1996 and newer gasoline vehicles under 8,500 lbs are tested every two years.
+    *   Vehicles from 1967-1995, diesel vehicles, and heavy-duty vehicles require annual testing.
+
+### Exemptions from Emissions Testing
+Several types of vehicles are exempt from emissions testing:
+*   **New Vehicles:** Vehicles are exempt for the first five model years.
+*   **Older Vehicles:** Vehicles manufactured in 1966 or earlier are exempt.
+*   **Electric Vehicles:** Fully electric vehicles are exempt.
+*   **Collectible Cars:** Some collectible vehicles 15 years or older may be exempt if they meet certain criteria, including having collectible car insurance.
+*   **Out-of-State:** If your vehicle is out of state for at least 90 days before your registration expires, you may qualify for an out-of-state exemption. Active duty military members stationed outside of Arizona may also be eligible for an exemption.
+
+### The Testing Process
+*   **Test Types:** The most common test for vehicles made in 1996 or later is the Onboard Diagnostics (OBD) test, which connects to the vehicle's computer. Older vehicles may undergo different tests, and diesel vehicles have a smoke-opacity test.
+*   **Testing Stations:** Testing is done at state-run emissions testing centers, with numerous locations in the Phoenix and Tucson areas. You can find a list of locations and even check wait times on the ADEQ's website, myAZcar.com.
+*   **Cost:** The fee for an emissions test typically ranges from $12 to $25.
+*   **Failing a Test:** If your vehicle fails, you will need to have it repaired at a certified facility before it can be retested.",
+CA,Emissions,Smog Check Program,https://www.bar.ca.gov/,"### Smog Check Program
+
+The cornerstone of California's emissions program is the Smog Check program which requires a biennial (every two years) emissions test for most vehicles.
+
+**Key aspects of the Smog Check program include:**
+
+*   **Applicability:** The program applies to most gasoline-powered vehicles manufactured in 1976 or later. Hybrid vehicles are also subject to smog checks.
+*   **Exemptions:** Several vehicle types are exempt from the Smog Check program,including:
+*   Gasoline-powered vehicles manufactured in 1975 or earlier.
+*   Diesel-powered vehicles from 1997 or older,or with a Gross Vehicle Weight (GVWR) over 14,000 lbs.
+*   Electric vehicles.
+*   Motorcycles.
+*   Vehicles less than eight years old (though a smog abatement fee is required).
+*   **Newer Vehicles:** While newer vehicles (less than 8 model years old) are exempt from the biennial smog check,they are still required to pay a yearly smog abatement fee.
+*   **Change of Ownership:** A smog check is required when a vehicle is sold or transferred,with the seller being responsible for providing the certificate.
+*   **Out-of-State Vehicles:** Vehicles brought into California from another state require a smog check for initial registration.
+*   **Inspection Process:** A smog check involves a visual inspection of emissions control components, a functional inspection of various systems like the check engine light and ignition timing,and a tailpipe emissions test.
+
+### Stricter Standards and Future Regulations
+
+California has consistently implemented stricter emissions standards over time.
+
+*   **Greenhouse Gas (GHG) Standards:** In 2012,CARB approved GHG emission regulations for light-duty vehicles for model years 2017-2025.
+*   **Advanced Clean Cars Program:** As part of the Advanced Clean Cars rulemaking,CARB adopted the LEV III regulations,which include increasingly stringent emission standards for both criteria pollutants and greenhouse gases for new passenger vehicles through the 2025 model year.
+*   **Clean Truck Check (CTC):** Effective January 1,2025,the Clean Truck Check regulation requires commercial fleets to conduct emissions tests twice a year,with the frequency increasing to four times a year by 2027.
+*   **Zero-Emission Vehicle (ZEV) Mandate:** California has a goal of achieving 100% plug-in electric vehicle sales by 2035. The state has received waivers from the federal government to set its own stricter emissions standards,including the ZEV mandate. However,there have been recent political and legal challenges to California's authority to set these standards.
+
+### 2025 Updates
+
+For 2025,new smog test requirements are being introduced with stricter emission standards and and more rigorous testing protocols. These updates involve enhanced scrutiny of components like the exhaust system and fuel injection systems, and the integration of new software and diagnostic tools for more precise measurements.",
+CO,Emissions,Emissions Information,https://dmv.colorado.gov/emissions-information,"### General Requirements:
+*   **Vehicles 1982 and newer:** Require an emissions test every two years.
+*   **Vehicles 1981 and older:** Require an emissions test annually.
+*   **New vehicles:** Are exempt for the first seven years.
+*   **Diesel-powered vehicles:** Light-duty diesel vehicles (14,000 pounds GVWR or less) are exempt for the first four years if purchased new. After that, those less than ten model years old are tested every two years, while those ten model years or older are tested annually. Heavy-duty diesel vehicles (over 14,001 pounds GVWR) are exempt for the first four years if new, and then tested every two years. Diesel emissions tests are conducted at independent facilities, not at Air Care Colorado stations.
+*   **Hybrid vehicles:** Are subject to on-board diagnostic (OBD) testing and follow the same testing cycle as gasoline-powered vehicles.
+
+### Exemptions:
+The following vehicles are exempt from emissions testing:
+*   All-electric vehicles.
+*   Motorcycles.
+*   Collector vehicles from 1975 or older.
+*   Farm vehicles, horseless carriages, street rods, and kit cars.
+
+### Counties Requiring Emissions Tests:
+Emissions testing is required in the following counties:
+*   Boulder
+*   Broomfield
+*   Denver
+*   Douglas
+*   Jefferson
+*   Portions of Adams, Arapahoe, Larimer, and Weld counties. It is recommended to check with your local DMV to confirm if your address falls within a required testing area.
+
+You will be notified on your vehicle registration renewal card if an emissions test is required. In some cases, a vehicle may pass a roadside emissions test, and a fee will be added to your registration renewal. The seller of a vehicle is responsible for providing a new emissions test.",
+CT,Emissions,Connecticut Emissions Program,https://ctemissions.com/,"### Testing Requirements and Exemptions
+
+Vehicles that are between four and 25 years old are typically subject to testing. However, there are several exemptions.
+
+**Exempt Vehicles:**
+*   Vehicles less than four model-years old
+*   Vehicles from the 2000 model year and older
+*   Vehicles with a gross vehicle weight rating over 10,001 pounds
+*   Composite vehicles
+*   Fully electric (non-hybrid) vehicles
+*   Motorcycles and bicycles with motors
+*   Certain vehicles not designed for highway use
+*   Farm vehicles
+*   Diesel-powered Type II School Buses
+
+### The Testing Process
+
+You will receive a notification postcard from the DMV at least 45 days before your vehicle's assigned test date. You can also find your test due date on the official Connecticut Emissions Program website, ctemissions.com, by entering your Vehicle Identification Number (VIN).
+
+The emissions test costs $20. If you are late for your test, a $20 late fee will be charged. Tests are conducted at privately owned automotive service facilities throughout the state.
+
+Different types of tests are administered depending on the vehicle's make, model year, fuel type, and driveline configuration. These may include:
+*   On-Board Diagnostic (OBD)
+*   Pre-Conditioned Two-Speed Idle (PC TSI)
+*   Opacity test
+*   Gas Cap Pressure Leak Test
+*   Accelerated Simulation Mode 25/25 (ASM)
+*   Load Mode Diesel (LMD) or Modified Snap Acceleration (MSA)
+
+### After the Test
+
+Once the test is complete, you will receive a Vehicle Inspection Report. If your vehicle fails, you are entitled to one free retest within 60 calendar days of the initial test. You can have your vehicle repaired at a facility of your choice, but if you are seeking a cost waiver after a retest failure, you must use a Certified Emissions Repair Facility.
+
+For more detailed information, you can visit the official Connecticut Emissions Program website at ctemissions.com or call them at (877) 469-2884. You can also contact the DMV Emissions Division at (860) 263-5611 or (860) 263-5333 for information on test waivers.",
+DE,Emissions,Vehicle Inspection,https://www.dmv.de.gov/VehicleServices/registration/index.shtml?dc=ve_reg_new,"In Delaware, most vehicles are required to undergo an emissions inspection every two years. These inspections are conducted at no cost to the vehicle owner at Division of Motor Vehicles (DMV) facilities.
+
+**Exemptions from Emissions Testing:**
+
+*   Vehicles are exempt for the first seven model years.
+*   Vehicles manufactured in or before 1967 are exempt.
+*   Motorcycles, mopeds, and electric vehicles do not require an emissions test.
+
+**Types of Emissions Tests:**
+
+*   **On-Board Diagnostics (OBD-II) Test:** This test is for gasoline-powered vehicles from model year 1996 and newer, and for diesel-powered vehicles from model year 1997 and newer with a gross vehicle weight rating of 8,500 pounds or less.
+*   **Curb Idle and Gas Cap Tests:** These tests are performed on vehicles from model years 1975 through 1995.
+
+In addition to the emissions inspection, Delaware also requires a vehicle safety inspection. This inspection covers items such as brakes, lights, tires, and windows to ensure they are in proper working condition.",
+FL,Emissions,Emissions and Smog Check Information,https://www.flhsmv.gov/,"Florida does not require vehicle emissions testing for registration. The state abolished its emissions testing program in the 1990s because it met federal clean-air standards and to save the state money.
+
+However, there are a few things to keep in mind:
+
+*   **Air Pollution Control Devices:** It is illegal to tamper with, remove, or render ineffective any air pollution control device that was installed by the vehicle's manufacturer.
+*   **Visible Emissions:** Gas-powered vehicles are not allowed to have visible exhaust emissions for more than five continuous seconds. Diesel vehicles have the same restriction, except during acceleration, lugging, or deceleration.
+*   **Voluntary Testing:** If you wish to have your vehicle's emissions tested voluntarily, you can do so at private service stations.
+*   **Inherently Low Emission Vehicles (ILEV):** Florida encourages the use of environmentally friendly vehicles. If you own a vehicle classified by the EPA as an ILEV, you may be eligible to drive in High-Occupancy Vehicle (HOV) lanes at any time, regardless of the number of passengers. You will need to apply for a windshield sticker to do so.",
+GA,Emissions,Georgia's Clean Air Force,https://www.cleanairforce.com/,"In Georgia, vehicle emissions testing is required annually for certain vehicles in 13 metro Atlanta counties. The test must be completed before you can renew your vehicle's registration.
+
+### **Counties Requiring Emissions Tests**
+Vehicle emissions testing is required in the following 13 counties:
+*   Cherokee
+*   Clayton
+*   Cobb
+*   Coweta
+*   DeKalb
+*   Douglas
+*   Fayette
+*   Forsyth
+*   Fulton
+*   Gwinnett
+*   Henry
+*   Paulding
+*   Rockdale
+
+### **Vehicles That Require Testing**
+For 2025 registration, gasoline-powered cars and light-duty trucks (up to 8,500 lbs) with model years 2001 through 2022 must have a valid Georgia emissions inspection.
+
+### **Exemptions**
+Several types of vehicles are exempt from emissions testing:
+*   **New Vehicles:** Vehicles less than 3 years old are exempt. For registration in 2025, this includes all 2023 and newer model year vehicles.
+*   **Older Vehicles:** Vehicles 25 years old or older are exempt. For registration in 2025, this includes model years 2000 and older.
+*   **Diesel and Alternative Fuel Vehicles:** Diesel-powered vehicles and vehicles that run exclusively on alternative fuels like propane or natural gas are exempt. However, bi-fuel or flexible-fuel vehicles that can run on gasoline must be tested.
+*   **Other Exemptions:** Motorcycles, recreational vehicles (RVs), and motor homes are also exempt.
+
+### **Senior Exemption**
+A senior exemption is available for vehicle owners who are 65 or older, own a vehicle that is 10 model years old or older, and drive less than 5,000 miles per year.
+
+### **Out-of-Area Extensions and Waivers**
+*   **Out-of-Area Extension:** If you are temporarily out of the area (e.g., military deployment, student), you may be able to get an extension.
+*   **Repair Waivers:** If your vehicle fails the emissions test twice, you may be eligible for a waiver if you have spent a minimum amount on qualified repairs at a certified facility.
+
+You can find authorized emissions inspection stations and more detailed information on the Georgia's Clean Air Force website.",
+HI,Emissions,Safety Inspection,https://hidot.hawaii.gov/highways/files/2022/12/PMVI-Manual-for-Inspectors-of-Passenger-Cars-and-Light-Trucks-Update-2022-12-20.pdf,"Hawaii does not have a statewide emissions testing requirement for vehicles. The state's focus is on an annual safety inspection to ensure vehicles are roadworthy. This safety inspection is required for all motor vehicles and must be passed every year.
+
+The annual safety inspection covers a wide range of vehicle components, including:
+*   Brakes
+*   Lights
+*   Tires and wheels
+*   Steering and suspension
+*   Exhaust system
+*   Seat belts
+*   Horn
+*   Windows and mirrors
+
+While there is no emissions test, the safety inspection does include a check of the exhaust system for leaks and to ensure it is functioning as designed.
+
+After a vehicle passes the safety inspection, a certificate of compliance is issued, which is valid for one year. If a vehicle fails, the owner receives a report of the issues that need to be addressed before it can be re-inspected.
+
+It is important to note that while Hawaii does not mandate emissions testing, keeping a vehicle's emissions system in good condition is still recommended for environmental and performance reasons.",
+ID,Emissions,Vehicle Emissions Testing Program,https://www.idahovip.org/,"As of July 1, 2023, vehicle emissions testing is no longer required in Ada and Canyon counties. The Idaho legislature passed a law in 2022 to repeal the state's requirement for an emissions testing program.
+
+Prior to this change, emissions testing was required in Ada County, Canyon County, and the city of Kuna to combat air pollution. Generally, gasoline and diesel-powered vehicles model year 1981 and newer that were older than five years had to be tested every other year.
+
+Some vehicles were exempt from testing, including:
+* Vehicles less than five years old.
+* Vehicles model year 1981 or older.
+* Hybrid and electric vehicles.
+* Classic automobiles.
+* Motorhomes.
+* Vehicles with a gross vehicle weight under 1,500 pounds.
+* Farm equipment.
+
+If you are a new resident, you will need to have the Vehicle Identification Number (VIN) inspected. This can be done by a deputy at the county assessor's motor vehicle office or the county sheriff's office.",
+IL,Emissions,Illinois Air Team,https://illinoisairteam.net/,"In Illinois, vehicle emissions testing is required in certain areas to comply with the federal Clean Air Act and the Illinois Vehicle Emissions Inspection Law of 2005. The program is designed to identify vehicles with malfunctioning emission control systems and reduce air pollution.
+
+### **Testing Requirements**
+
+*   **Vehicles Subject to Testing:** Most gasoline-powered passenger vehicles from model year 1996 or newer that are four years old or older require an emissions test. This includes light-duty trucks, SUVs, and vans. Heavy-duty vehicles with a gross vehicle weight rating between 8,501 and 14,000 pounds from model year 2007 or newer also require testing.
+*   **Testing Frequency:** Vehicles must be tested every two years. Typically, vehicles with even model years are tested in even-numbered years, and those with odd model years are tested in odd-numbered years.
+*   **Test Notice:** The Illinois Environmental Protection Agency (IEPA) will send a notice when your vehicle needs an emissions test. The inspection month coincides with the expiration date of your vehicle's license plate.
+*   **Test Type:** The inspection is an On-Board Diagnostic (OBD) test, which uses a scanning tool to check the vehicle's onboard computer.
+
+### **Geographic Areas Requiring Testing**
+
+Emissions testing is required for vehicles registered in the following areas:
+
+*   **Chicago Metropolitan Area:** Cook, DuPage, Kane, Lake, McHenry, and Will counties, as well as parts of Grundy and Kendall counties.
+*   **Metro-East St. Louis Area:** Madison, Monroe, and St. Clair counties.
+
+You can check if your specific zip code requires testing on the Illinois Air Team website.
+
+### **Exemptions**
+
+The following vehicles are exempt from emissions testing:
+
+*   Vehicles from model year 1967 or older.
+*   Diesel-powered vehicles.
+*   Electric vehicles and hybrids with no gasoline engine.
+*   Motorcycles and farm vehicles.
+*   Vehicles used exclusively for parades or sporting events may be able to apply for an exemption.
+
+### **Failing an Emissions Test**
+
+If your vehicle fails the emissions test, you will need to have it repaired and retested. You may be eligible for a repair waiver if your vehicle still fails after being repaired and tested at least twice. Failure to comply with emissions testing requirements can result in a fine of up to $300 and the inability to renew your vehicle's registration.",
+IN,Emissions,Clean Air Car Check Program,https://www.in.gov/bmv/registration-plates/vehicle-registrations/clean-air-car-check-program/,"In Indiana, vehicle emissions testing is required every two years for vehicles registered in Lake and Porter counties. This program, known as the Clean Air Car Check Program, is designed to identify vehicles with high emissions of nitrogen oxides (NOx) and volatile organic compounds (VOCs), which contribute to the formation of ground-level ozone.
+
+Here are the key points regarding Indiana's vehicle emissions requirements:
+
+*   **Counties:** The emissions testing requirement applies to vehicles registered in Lake and Porter counties.
+*   **Frequency:** Tests are required every two years. Vehicles with odd-numbered model years are tested in odd-numbered years, and those with even-numbered model years are tested in even-numbered years.
+*   **Vehicles Subject to Testing:** The requirement applies to vehicles manufactured after 1975 with a gross vehicle weight rating (GVWR) of 9,000 pounds or less.
+*   **Exemptions:** Vehicles from the four most recent model years and antique vehicles are exempt from testing.
+*   **Testing Procedure:** The type of test depends on the vehicle's model year.
+    *   **1996 and newer:** An On-Board Diagnostic (OBDII) test is performed.
+    *   **1981-1995:** An Inspection and Maintenance (I/M 93) test is conducted on a dynamometer.
+    *   **1976-1980:** A single idle speed (BAR 90) test is used.
+    *   All vehicles receive a gas cap pressure check.
+
+You can find more information about testing locations, hours, and services on the Clean Air Car Check website.",
+IA,Emissions,Vehicle emissions testing in Iowa,https://www.acuraofjohnston.com/vehicle-emissions-testing-in-iowa/,"Iowa does not have vehicle emissions testing requirements for passenger cars. The state does not mandate smog checks because it does not have any metropolitan areas that are out of compliance with the U.S. Clean Air Act.
+
+While emissions tests are not required for registration, some situations do require a vehicle inspection in Iowa. These are primarily for salvage or rebuilt vehicles, specially constructed or reconstructed vehicles, homemade trailers over 2,000 pounds, and out-of-state vehicles with only a registration. These inspections focus on safety and verifying the vehicle identification number (VIN), not on emissions.
+
+Even though not required, some repair shops in Iowa offer voluntary emissions inspections to help vehicle owners identify and address issues that could increase pollution or reduce engine efficiency.",
+KS,Emissions,Vehicle Inspection Program,https://www.ksrevenue.gov/dov-newlienkansas.html,"Kansas does not have vehicle emissions testing requirements for most vehicles. This is because the state does not have any metropolitan areas that fail to meet the standards of the U.S. Clean Air Act. While not required, vehicle owners are encouraged to keep their vehicles in good working order to minimize environmental impact.
+
+However, Kansas does have a vehicle inspection program for certain situations. A Vehicle Identification Number (VIN) inspection is required for any vehicle being registered in Kansas for the first time. These inspections are conducted by the Kansas Highway Patrol and are intended to prevent vehicle theft and fraud. A VIN inspection is also required for reconstructed vehicles or when the vehicle's identification is in question.
+
+While most vehicles in Kansas are exempt from periodic safety inspections, voluntary inspections are encouraged to identify potential issues before they become serious problems.",
+KY,Emissions,Vehicle Emissions Testing,https://transportation.ky.gov/Motor-Vehicle-Licensing/Pages/Vehicle-Titling-and-Registration.aspx,"The state of Kentucky does not have a statewide vehicle emissions testing requirement. A previous requirement for some northern counties ended in 2005.
+
+However, if you are bringing a vehicle to Kentucky from another state, it will need to be inspected by the Sheriff in the county where it will be licensed. This inspection includes checking the Vehicle Identification Number (VIN), lights, wipers, horn, turn signals, glass, brakes, tires, and exhaust.
+
+While not required, voluntary emissions tests are available. Also, there are federal tax deductions available for owners of eco-friendly vehicles.",
+LA,Emissions,Vehicle Inspection,https://www.expresslane.org/,"In Louisiana, all vehicles are required to have an annual safety inspection that includes a check of the exhaust system and emission components.
+
+For vehicles registered in the parishes of Ascension, East Baton Rouge, Iberville, Livingston, and West Baton Rouge, a more comprehensive emissions inspection is required.
+
+Here are the specifics for the enhanced emissions testing:
+
+*   **Affected Vehicles:** The requirement applies to gasoline-fueled passenger cars and trucks with a gross vehicle weight rating of 10,000 pounds or less. Sources vary on the model years, with some indicating 1996 and newer and others 1980 and newer.
+*   **Testing Frequency:** Emissions tests must be performed annually. While a two-year inspection sticker exists, it is for safety inspections only.
+*   **Inspection Process:** The emissions inspection includes an On-Board Diagnostics (OBD-II) test for vehicles model year 1996 and newer, a visual check of emission control devices, and a gas cap integrity test.
+*   **Required Documents:** To get your vehicle inspected, you will need a valid driver's license, current vehicle registration, and proof of insurance.
+*   **New Residents:** If you are a new resident of Louisiana, you must have your vehicle inspected and registered within 30 days.
+*   **Failed Inspections:** If a vehicle fails the emissions test, the owner will receive a 30-day temporary sticker to allow time for repairs and a retest.",
+ME,Emissions,Vehicle Emissions Testing,https://www.maine.gov/dep/air/mobile/enhanced-auto-inspection-maintenance.html,"In Maine, vehicle emissions testing is only required for gasoline-powered vehicles registered in Cumberland County. This requirement is part of the state's annual safety inspection. The emissions test includes a visual inspection of the emissions control equipment, a gas cap pressure test, and an Onboard Diagnostics (OBD) test for vehicles manufactured in 1996 or later.
+
+Several types of vehicles are exempt from emissions testing, even in Cumberland County. These include:
+*   Vehicles driven less than 1,000 miles per year.
+*   Antique vehicles (over 25 years old).
+*   Motorcycles and mopeds.
+*   Farm tractors.
+*   Island vehicles.
+*   Low-speed and experimental vehicles.
+*   Certain specific models and model years of Subaru, Mitsubishi, Volvo, and Chrysler vehicles.
+
+If a vehicle fails the emissions test, the owner has 30 days to make repairs and pass a retest. Federal law requires that emissions systems on vehicles from 1995 and newer are warrantied for two years or 24,000 miles, and the OBDII system and catalytic converter are warrantied for eight years or 80,000 miles.
+
+New residents in Maine with a vehicle registered in another state must get a Maine inspection once their out-of-state inspection expires. If the vehicle has not been inspected, it must pass a Maine inspection upon registration.",
+MD,Emissions,Vehicle Emissions Inspection Program,https://mva.maryland.gov/vehicles/Pages/registration/veip.aspx,"In Maryland, most vehicles are required to undergo an emissions inspection every two years to comply with the state's Vehicle Emissions Inspection Program (VEIP). The program is designed to help improve air quality by identifying vehicles that are releasing excessive pollutants.
+
+### Testing Frequency and Notification
+Vehicle owners are typically notified by mail or email 8-11 weeks before their testing deadline. New vehicles under original ownership are exempt for the first six years and then are tested every two years. Used vehicles, including those with a change of ownership, must be tested two years after purchase.
+
+### Exemptions from Emissions Testing
+Several types of vehicles are exempt from VEIP requirements, including:
+*   Motorcycles.
+*   Vehicles 20 years old or older.
+*   Fully electric (EV) and certain plug-in hybrid vehicles.
+*   Historic or antique vehicles.
+*   Vehicles owned by senior citizens (70+) or persons with disabilities who drive less than 5,000 miles annually may be eligible for a waiver.
+*   Active-duty military members deployed to a location without an emissions testing program may also qualify for a waiver.
+
+### The Inspection Process
+There are 18 VEIP stations located throughout Maryland. The standard test fee is $14, but a self-service kiosk option is available for $10 for eligible vehicles. During the inspection, a certified technician will perform a visual inspection and an On-Board Diagnostic (OBD) test for vehicles model year 1996 and newer. Older vehicles may undergo a gas cap test.
+
+To prepare for the test, ensure your vehicle's gas cap is on correctly and that there are no visible exhaust leaks. It is also recommended to drive your vehicle for at least 20 minutes at highway speeds before arriving at the station to ensure it is properly warmed up. You will need to bring your vehicle, the test notice or registration card, and the test fee.
+
+### Failing the Test
+If your vehicle fails the inspection, the first retest is free. You will need to have the necessary repairs made by a certified emissions repair facility or a mechanic of your choice. If the cost of repairs exceeds $450, you may be eligible for a repair waiver.",
+MA,Emissions,Massachusetts Vehicle Check,https://www.mass.gov/info-details/massachusetts-vehicle-check,"In Massachusetts, all registered vehicles are required to undergo an annual safety inspection. Many vehicles must also pass an emissions test at the same time. The cost for the combined safety and emissions inspection is $35.
+
+### Emissions Testing Requirements
+
+Whether a vehicle needs an emissions test depends on its age, weight, and fuel type.
+
+**The following vehicles require an annual On-Board Diagnostic (OBD) emissions test:**
+*   Passenger cars, trucks, and SUVs with a model year of 2011 or newer.
+*   Light-duty diesel vehicles (under 8,500 lbs.) with a model year of 2011 or newer.
+*   Medium-duty diesel vehicles (8,501 to 14,000 lbs.) with a model year of 2011 or newer.
+*   Medium-duty non-diesel vehicles (8,501 to 14,000 lbs.) with a model year of 2011 or newer.
+
+**Vehicles exempt from emissions testing include:**
+*   Cars, trucks, and SUVs manufactured before model year 2011. However, they will fail the safety inspection if they produce excessive smoke.
+*   Light-duty diesel vehicles (under 8,500 lbs.) manufactured before model year 2011.
+*   Medium-duty diesel vehicles (10,000 lbs. or less) that are either manufactured before model year 2011 or are 15 years or older.
+*   Vehicles powered exclusively by electricity.
+*   Certain off-road vehicles like ATVs, bulldozers, and cranes.
+
+### New Vehicles
+
+All new passenger vehicles sold and registered in Massachusetts must meet California's strict emissions standards. If a new car has 7,500 miles or less, it must have factory-installed, California-certified emission control systems.
+
+### Failing an Inspection
+
+If your vehicle fails the emissions test, you will receive a black R rejection sticker. If it fails the safety inspection or both, you will get a red R sticker. You have 60 days to make the necessary repairs and have the vehicle re-inspected. A failed safety inspection re-test within 60 days is free.
+
+It's important to note that a vehicle with an illuminated check engine light will typically fail the inspection.
+
+### Commercial Vehicles
+
+All commercial motor vehicles,trailers,and converter dollies are subject to the Massachusetts Commercial Motor Vehicle Inspection, which is equivalent to the annual federal DOT inspection.",
+MI,Emissions,Vehicle Emissions Testing,https://www.michigan.gov/sos/vehicle/registration,"Michigan does not require emissions testing for most vehicles. An emissions testing program that was in place in the Detroit area ended in 1995.
+
+While there are no routine emissions checks, some vehicles do require safety inspections in specific situations. These include:
+*   Vehicles with a salvage title.
+*   Vehicles being transferred from out of state.
+*   Limousines, taxicabs, and transportation network company vehicles that are five years or older.
+
+Additionally, law enforcement officers may conduct a vehicle inspection during a traffic stop if they believe a vehicle has defective equipment. These inspections can cover brakes, lights, tires, steering, exhaust, and other components.",
+MN,Emissions,Vehicle Emissions Testing,https://www.pca.state.mn.us/air/vehicle-emissions-testing,"Minnesota does not currently have a statewide mandate for vehicle emissions inspections for non-commercial vehicles. The state's previous emissions testing program, the Minnesota Vehicle Inspection Program (MVIP), ended in 1999. This was after the Twin Cities metropolitan area met federal air quality standards, and the state's air quality status was reclassified.
+
+However, there are some exceptions:
+
+*   **Out-of-state vehicles:** Vehicles being registered in Minnesota from out of state may need to meet federal emissions standards before registration is complete.
+*   **Clean Cars Minnesota:** Starting January 1, 2024, Minnesota adopted California's motor vehicle emissions standards. This rule applies to new passenger cars, light-duty trucks, and medium-duty vehicles sold in the state. Manufacturers must meet greenhouse gas emissions standards and Zero Emission Vehicle (ZEV) sales requirements.
+
+While regular emissions tests are not required for most drivers, the Minnesota Pollution Control Agency (MPCA) continues to monitor air pollution and encourages residents to take steps to reduce vehicle emissions.",
+MS,Emissions,Vehicle Emissions Testing,https://www.ms.gov/dfa/environmental-protection-agency/,"Mississippi does not have any vehicle emissions testing or smog check requirements. While the state previously required annual safety inspections, this is no longer the case.
+
+However, there are a few exceptions and related points to consider:
+
+*   **Window Tint:** If your vehicle has tinted windows, it must pass a safety inspection.
+*   **Vehicle Dealers:** Licensed car dealers are required to inspect every new and used vehicle they sell.
+*   **Salvage Vehicles:** Rebuilt salvage vehicles must undergo an inspection by the Mississippi Department of Public Safety.
+*   **Voluntary Inspections:** Even though not required, vehicle owners can still get a voluntary emissions test.
+
+While there are no mandated emissions tests, it's still recommended to maintain your vehicle's emissions control systems to protect the environment. Some insurance companies may also offer discounts for eco-friendly vehicles.",
+MO,Emissions,Vehicle Safety and Emissions Inspections,https://dor.mo.gov/motor-vehicle/vehicle-inspections.html,"In Missouri, most vehicles are required to undergo a safety inspection every two years. However, vehicles within their first five model years are exempt. Residents of St. Louis City, St. Louis County, St. Charles County, and Franklin County are also required to have their vehicles undergo a biennial emissions inspection.
+
+**Safety Inspection:**
+The safety inspection includes checking headlights, turn signals, the horn, brake system, steering mechanism, all window glass, and windshield wipers.
+
+**Emissions Inspection:**
+The emissions inspection is conducted by reading the vehicle's On-Board Diagnostic (OBD) system. If the vehicle's emissions are within the legal limits, it will pass the test.
+
+**Exemptions from Emissions Inspections:**
+The following vehicles are exempt from the emissions inspection requirement:
+*   New motor vehicles for the first four years following their model year of manufacture, with fewer than 40,000 miles at the first required biennial inspection.
+*   1995 and older gasoline-powered vehicles.
+*   1996 and older diesel-powered vehicles.
+*   Vehicles with a manufacturer's gross vehicle weight rating (GVWR) over 8,500 pounds.
+*   Vehicles driven fewer than 12,000 miles between biennial safety inspections.
+*   Vehicles powered by fuels other than gasoline, ethanol, or diesel.
+*   Vehicles with historic plates, school buses, shuttle buses, motorcycles, motortricycles, or street rods.
+
+**After the Inspection:**
+If your vehicle passes the inspection, you will receive a certificate of inspection and approval, which is required for registering or renewing your vehicle's registration. The certificate is valid for 60 days. If your vehicle fails, you will receive a report explaining why. You must have the vehicle repaired by a Missouri Recognized Repair Technician and re-tested."
+MT,Emissions,Vehicle Emissions Testing,https://www.49dollarmontanaregisteredagent.com/vehicle-registration/montana-vehicle-registration,"The state of Montana does not have any vehicle emissions test requirements. This is because the state does not have any areas that the federal government classifies as non-attainment for meeting the Clean Air Act's air quality regulations.
+
+While there are no mandatory emissions tests,Montana law does require that any air pollution control devices originally installed on a vehicle by the manufacturer must be in place and in operating condition. It is illegal to intentionally remove,alter,or otherwise render these devices inoperative.
+
+Even though emissions testing is not required,Montana vehicle owners can still voluntarily have their vehicles tested. There are also incentives for eco-friendly driving, and you can contact a local DMV office to learn more about them.",
+NE,Emissions,Vehicle Emissions Testing,https://www.dmv.nebraska.gov/,"Nebraska does not have a statewide vehicle emissions testing requirement. However, there are some exceptions and other vehicle inspection requirements to be aware of.
+
+### **Vehicle Inspections**
+
+While most Nebraska-registered vehicles do not require a smog check, they must undergo a vehicle inspection in certain situations. This inspection primarily focuses on verifying the Vehicle Identification Number (VIN) and the odometer reading.
+
+Inspections are generally required for:
+*   Vehicles brought into Nebraska from another state.
+*   Assembled vehicles.
+*   Vehicles with a salvage title being converted to a regular title.
+*   When applying for an assigned ID number.
+
+The inspection fee is typically $10.00.
+
+### **Emissions Testing in Specific Counties**
+
+Emissions testing is mandatory in Douglas and Sarpy counties, which include the Omaha and Bellevue areas. However, new vehicles, motorcycles, and diesel-powered vehicles are exempt from this requirement.
+
+### **Diesel Vehicles**
+
+There is a statewide regulation concerning visible emissions from diesel-powered vehicles. A diesel vehicle cannot discharge smoke of a certain density for ten consecutive seconds or longer.
+
+### **Safety Inspections for Transportation Network Companies**
+
+Vehicles used for transportation network companies (like Uber or Lyft) are required to undergo an initial safety inspection and subsequent annual inspections. These inspections cover a range of safety components including brakes, lights, steering, tires, and exhaust systems.",
+NV,Emissions,Vehicle Emissions Testing,https://www.dmv.nv.gov/,"In Nevada, vehicle emissions tests are required annually for most vehicles registered in the urban areas of Clark and Washoe counties.
+
+### Vehicles Requiring an Emissions Test:
+*   Passenger cars, trucks, RVs, and motor homes.
+*   Gasoline-powered vehicles, regardless of weight or size.
+*   Diesel-powered vehicles with a manufacturer's gross vehicle weight rating up to 14,000 pounds.
+*   Vehicles from the 1968 model year or newer.
+*   A new vehicle at its fourth registration is when its first test is required. Hybrid vehicles are exempt for the first five model years.
+
+### Exemptions from Emissions Testing:
+Several types of vehicles are exempt from emissions testing requirements:
+*   New vehicles for their first three registrations.
+*   Hybrid-electric vehicles for the first five model years.
+*   Vehicles from 1967 or older.
+*   Motorcycles and mopeds.
+*   Vehicles based in remote areas of Clark and Washoe counties, and all other Nevada counties.
+*   Diesel-powered vehicles with a manufacturer's gross vehicle weight over 14,000 lbs.
+*   Vehicles that run strictly on propane, compressed natural gas, or electricity.
+*   Vehicles registered as Classic Rod, Classic Vehicle, or Old Timer that are driven 5,000 miles or less per year.
+*   Vehicles registered as a Replica Vehicle.
+
+### Types of Emissions Tests:
+Nevada uses two primary types of emissions tests:
+*   **On-Board Diagnostics (OBDII) Test:** This test is for most gasoline-powered vehicles from the 1996 model year and newer. An analyzer is connected to the vehicle's OBD computer to check if the emission control systems are working correctly.
+*   **Two-Speed Idle Test:** This test is for gasoline-powered vehicles older than 1996 and for heavy-duty gasoline-powered vehicles from 1968 and later. The test measures emissions at both idle and at approximately 2,500 RPM.
+*   **Diesel Vehicles:** Light-duty diesel vehicles are tested on a dynamometer and undergo an opacity test.
+
+### Additional Information:
+*   Emissions tests are valid for 90 days. If you purchase a vehicle from a Nevada dealer, the test is valid for 180 days.
+*   If you are new to Nevada, you must register your vehicle within 30 days, and out-of-state smog tests are not accepted.
+*   If your vehicle fails the emissions test, it must be repaired and pass a second test to be eligible for registration. Waivers may be available if the vehicle still fails after repairs.
+*   You can find a list of licensed emissions testing stations on the Nevada DMV website.",
+NH,Emissions,Vehicle Safety and Emissions Inspections,https://www.nh.gov/safety/divisions/dmv/vehicle-services/inspections-emissions/,"In New Hampshire, all registered vehicles are required to undergo an annual safety inspection. For many vehicles, this inspection also includes an emissions test.
+
+### On-Board Diagnostics (OBD) Testing
+Since 2005, New Hampshire has implemented a statewide On-Board Diagnostics (OBD) test as part of the annual safety inspection. This test is for gasoline-fueled and diesel passenger vehicles that are 20 years old or newer and have a gross vehicle weight rating of 8500 lbs or less. The OBD system monitors the vehicle's emission control systems and helps to ensure the vehicle is running efficiently and with minimal harmful exhaust.
+
+If the OBD system detects a problem, it will illuminate the Check Engine or Service Engine Soon light on your dashboard. If this light is on your vehicle will not pass the inspection.
+
+### The Inspection Process
+All vehicles registered in New Hampshire must be inspected within 10 days of registration. After the initial inspection,vehicles must be re-inspected annually,no later than 10 days after the end of the owner's birth month.
+
+The inspection includes a check of various safety-related items,such as:
+* Brakes
+* Steering and suspension
+* Lights and reflectors
+* Tires and wheels
+* Exhaust system
+
+The emissions test itself is conducted by connecting a specialized machine to your vehicle's OBD port. This machine communicates with your vehicle's computer to check the status of the emission control systems.
+
+### Exemptions
+The only vehicles exempt from safety and emissions inspections are those owned by the federal government. Electric vehicles are exempt from the emissions inspection but must still undergo a safety inspection.
+
+### Failing an Inspection
+If your vehicle fails the OBD inspection you will be given a 60-day period to have the necessary repairs made and the vehicle re-tested. You may be eligible for an Economic Hardship Waiver if you cannot afford the emissions-related repairs.",
+NJ,Emissions,Vehicle Emissions Testing,https://www.state.nj.us/mvc/inspection/about.htm,"In New Jersey, most vehicles are required to undergo an emissions inspection every two years. New vehicles are exempt for five years. You can check the inspection sticker on your windshield to determine when your vehicle is due for inspection, and you may complete the inspection up to two months before the expiration date.
+
+### **What is checked during an inspection?**
+
+The inspection includes a check of the following:
+
+*   **Emissions:** An Onboard Diagnostics (OBD) test is performed on vehicles manufactured in 1996 and later to check for issues that could cause excessive emissions. Older vehicles may require a tailpipe emissions test.
+*   **Safety:** The inspection also includes a safety check of your vehicle's brakes, steering, suspension, tires, lights, signals, windshield, windows, horn, and mirrors.
+
+### **Exemptions**
+
+Some vehicles are exempt from emissions inspections, including:
+
+*   Gasoline-powered passenger vehicles model year 1995 and older with a GVWR of 8,500 pounds or less.
+*   Gasoline-powered passenger vehicles model year 2007 and older with a GVWR between 8,501 and 14,000 pounds.
+*   Gasoline-powered passenger vehicles model year 2013 and older with a GVWR of 14,001 pounds or more.
+*   Historic and collector vehicles.
+*   100% electric vehicles.
+*   Motorcycles and motorized bicycles.
+
+### **Failing an Inspection**
+
+If your vehicle fails the emissions test, you will need to have the necessary repairs made before it can be retested. You will receive an emissions repair form detailing the required repairs.",
+NM,Emissions,Vehicle Emissions Testing,https://www.mvd.newmexico.gov/vehicles-and-vessels/vehicle-registration-and-renewal/emissions-testing/,"In New Mexico, vehicle emissions testing is only required for vehicles registered or commuting in Bernalillo County. Generally, the state does not mandate periodic safety inspections for vehicles.
+
+Here's a breakdown of the emissions testing requirements in Bernalillo County:
+
+*   **Frequency:** Emissions tests are required every two years for most vehicles. An emissions test is also required when the vehicle's ownership changes.
+*   **Vehicles Subject to Testing:** All vehicles from the 1991 model year and newer, with a gross vehicle weight up to 10,000 lbs, must undergo an emissions test. This includes gas-electric hybrid vehicles.
+*   **Exemptions:**
+    *   Brand new vehicles are exempt from emissions testing for the first four years after their initial registration.
+    *   Dedicated electric vehicles and diesel-powered vehicles are exempt from emissions testing.
+    *   Vehicles older than 35 years are also exempt.
+*   **Testing Procedures:** The emissions test includes a check of the pollution control equipment (like the catalytic converter), a gas cap pressure test for vapor leaks, and an analysis of the exhaust pipe's emissions. For vehicles from 1996 and newer, an onboard diagnostic test is also performed.
+*   **New Residents:** If you are moving to New Mexico from another state, you will need to have a vehicle identification number (VIN) inspection.
+
+The state of New Mexico is also implementing new regulations, known as the Advanced Clean Cars II and Advanced Clean Trucks rules, to increase the availability of low and zero-emission vehicles.",
+NY,Emissions,Vehicle Safety and Emissions Inspections,https://dmv.ny.gov/inspection,"In New York State, most vehicles are required to undergo an annual safety and emissions inspection. These inspections are also required when ownership of a vehicle is transferred.
+
+### **Emissions Inspection Types**
+
+New York has two main types of emissions inspections:
+
+*   **On-Board Diagnostics (OBDII) Inspection:** This is the most common type of emissions test and is required for most gasoline-powered vehicles from model year 1996 or newer and diesel-powered vehicles from model year 1997 or newer, with a gross vehicle weight rating (GVWR) of 8,501 pounds or less. This test checks the vehicle's onboard computer system for any malfunctions that could increase emissions.
+
+*   **Low Enhanced Inspection:** This inspection is for vehicles that are not subject to the OBDII test and are not otherwise exempt. It applies to vehicles from model year 1996 and older, up to 25 model years old, and with a weight of 18,000 lbs. or less. This inspection includes a visual check of a vehicle's emissions control devices and a check of the gas cap.
+
+### **Exemptions from Emissions Inspections**
+
+Some vehicles are exempt from emissions inspections, including:
+*   Motorcycles
+*   Vehicles less than two model years old
+*   Vehicles more than 25 model years old
+*   Electric vehicles
+*   Vehicles with historical plates
+*   Diesel-powered vehicles that are model year 1996 or older and have a GVWR over 8,500 pounds
+
+### **Safety Inspection**
+
+In addition to the emissions inspection, all vehicles must undergo a safety inspection. This inspection covers a wide range of safety components, including:
+*   Brakes
+*   Tires
+*   Lights
+*   Seat belts
+*   Steering and suspension
+*   Windshield and wipers
+*   Horn
+*   Mirrors
+
+### **Inspection Process and Cost**
+
+Inspections must be performed at a DMV-licensed inspection station. The cost of the inspection varies depending on the vehicle and location, but generally ranges from $11 to $37. If your vehicle fails either the safety or emissions inspection, you must have it repaired and re-inspected.",
+NC,Emissions,Vehicle Emissions Inspections,https://www.ncdot.gov/dmv/title-registration/emissions-safety/Pages/emissions-inspection.aspx,"In North Carolina, most vehicles are required to undergo an annual safety inspection. In 19 of the state's 100 counties, an emissions inspection is also required.
+
+### **Counties Requiring Emissions Inspections:**
+The 19 counties that require emissions inspections are: Alamance, Buncombe, Cabarrus, Cumberland, Davidson, Durham, Forsyth, Franklin, Gaston, Guilford, Iredell, Johnston, Lincoln, Mecklenburg, New Hanover, Randolph, Rowan, Union, and Wake.
+
+### **Vehicles Requiring Emissions Inspections:**
+*   Gasoline-powered cars and light-duty trucks (less than 8,501 lbs. Gross Vehicle Weight Rating) that are model year 1996 or newer and registered in one of the 19 specified counties.
+*   Hybrid and plug-in hybrid vehicles with a gasoline engine also require an emissions inspection if registered in an emissions county.
+
+### **Exemptions from Emissions Inspections:**
+Several types of vehicles are exempt from the emissions inspection requirement:
+*   Vehicles that are 20 years old or older.
+*   Diesel-powered vehicles.
+*   Electric vehicles.
+*   Vehicles registered as farm vehicles.
+*   Vehicles with a Gross Vehicle Weight Rating (GVWR) greater than 8,500 pounds.
+*   Newer vehicles (within the most recent three model years) with fewer than 70,000 miles on the odometer.
+*   Antique vehicles (30 years old or older) with an antique automobile license plate are exempt from both safety and emissions inspections.
+
+### **Future Changes:**
+As of May/June 2026, the requirement for emissions testing is expected to be removed for 18 of the 19 counties, with Mecklenburg County being the only one to continue the program. This change is due to improvements in air quality. However, all counties will still require the annual safety inspection.
+
+### **Out-of-State Vehicles:**
+Out-of-state registered vehicles can be inspected in North Carolina. This is helpful for temporary residents like students or military personnel.",
+ND,Emissions,Vehicle Emissions Testing,https://www.dmv.nd.gov/,"North Dakota does not require emissions testing or smog checks for passenger vehicles.
+
+However, a general safety inspection is required for vehicles being registered in the state for the first time. This inspection covers various safety components of the vehicle, such as brakes, lights, horn, exhaust system, and tires. The state has not adopted California's more stringent vehicle emission regulations.
+
+While the state's Department of Environmental Quality does require emissions testing for some sources of air pollution, this does not apply to personal vehicles.",
+OH,Emissions,E-Check Information,https://www.epa.ohio.gov/divisions-and-offices/air-pollution-control/e-check/e-check-information,"In Ohio, vehicle emissions testing, known as E-Check, is required in seven counties to comply with the Clean Air Act. This program aims to control vehicle emissions and maintain national air quality standards.
+
+### **Counties Requiring E-Check**
+The following seven counties in Northeast Ohio require vehicle emissions testing:
+*   Cuyahoga
+*   Geauga
+*   Lake
+*   Lorain
+*   Medina
+*   Portage
+*   Summit
+
+### **Testing Frequency and Schedule**
+Vehicles registered in these counties must be tested every two years. The testing schedule is based on the vehicle's model year:
+*   **Even-numbered model years:** Tested in even-numbered calendar years.
+*   **Odd-numbered model years:** Tested in odd-numbered calendar years.
+
+### **Vehicle Requirements and Exemptions**
+*   **Vehicles Requiring Testing:** Generally, gasoline and diesel-fueled vehicles, including hybrids, with a gross vehicle weight rating of 10,000 pounds or less, that are between four and 25 years old, must be tested.
+*   **Exemptions:**
+    *   New vehicles are exempt for the first four model years.
+    *   Vehicles older than 25 years are permanently exempt.
+    *   Commercial vehicles with a gross vehicle weight rating over 10,000 pounds are exempt.
+
+### **Testing Process**
+Most vehicles undergo an Onboard Diagnostics (OBDII) test, which is a computer scan of the vehicle's emissions system. Some older vehicles may require a tailpipe emissions test. For your convenience, there are 21 self-service kiosks available 24/7.
+
+### **New Residents**
+New residents moving into an E-Check county have a couple of options to comply with the requirements. They can either have their vehicle's VIN inspected at a local BMV before the emissions test or purchase a voucher at a testing station to get their registration before completing the inspection.
+
+### **Potential Changes to the E-Check Program**
+It is worth noting that there are ongoing discussions about ending the E-Check program. The state's budget includes a provision to eliminate the program, but it requires approval from the U.S. Environmental Protection Agency (EPA). If approved, the program would end immediately in all seven participating counties.",
+OK,Emissions,Vehicle Emissions Testing,https://oklahoma.gov/service/sok/vehicle-registration.html,"Oklahoma does not currently have any vehicle emissions testing requirements. This means you are not required to get an emissions test to register your vehicle or renew your registration. The state of Oklahoma does not mandate safety inspections either.
+
+However, there are a few exceptions and other points to consider:
+
+*   **New Residents:** If you are a new resident of Oklahoma, your vehicle must pass a Vehicle Identification Number (VIN) inspection to be registered in the state. This is to ensure the vehicle is not stolen and rightfully belongs to you.
+*   **Voluntary Inspections:** While not required, the state encourages vehicle owners to have voluntary safety and emissions inspections to ensure their vehicles are safe and to protect the environment.
+*   **Tampering with Emissions Systems:** It is illegal to remove, disconnect, or disable any part of a vehicle's emissions control system.
+*   **Law Enforcement Inspections:** Law enforcement officers in Oklahoma can stop and inspect a vehicle if they have reasonable cause to believe it is unsafe or not equipped as required by law.
+
+Although the state does not require emissions testing, it does offer incentives for eco-friendly driving.",
+OR,Emissions,Vehicle Emissions Testing,https://www.oregon.gov/deq/Vehicle-Inspection/Pages/default.aspx,"In Oregon, vehicle emissions testing is required in the Portland and Medford metropolitan areas to comply with the federal Clean Air Act. The Oregon Department of Environmental Quality (DEQ) oversees the program.
+
+ ### **Testing Areas** 
+
+ * **Portland Area:** Testing is required for vehicles registered in the Portland-metro area, which includes portions of Multnomah, Clackamas, and Washington counties. 
+ * **Medford Area:** Testing is required for vehicles registered within the Medford-area DEQ boundaries. 
+
+ ### **Vehicles Requiring Testing** 
+
+ **Portland:** 
+ * All 1975 and newer gasoline-powered cars, trucks, vans, motor homes, and buses. 
+ * All 1975 and newer diesel-powered vehicles with a manufacturer's gross weight rating of 8,500 pounds or less. 
+ * Hybrid vehicles and those that run on alternative fuels are also required to be tested. 
+
+ **Medford:** 
+ * All gasoline-powered cars, trucks, vans, motor homes, and buses that are 20 years old or less. 
+ * All diesel-powered vehicles 20 years old or less with a manufacturer's gross weight rating of 8,500 pounds or less. 
+ * Hybrid vehicles and those that run on alternative fuels are also required to be tested. 
+
+ ### **Exemptions** 
+
+ The following vehicles are exempt from testing in both the Portland and Medford areas: 
+ * Newer model year vehicles. 
+ * Vehicles legally registered outside of the VIP testing boundaries. 
+ * Heavy-duty diesel vehicles. 
+ * Motorcycles, mopeds, golf carts, tractors, and all-terrain vehicles. 
+ * Fully electric vehicles. 
+
+ ### **Testing Process** 
+
+ The emissions test includes checking the vehicle's on-board diagnostic (OBD) system, a visual inspection of the emissions control components, and a gas cap test. If your vehicle is due for an inspection, you will receive a notice from the Oregon DMV or DEQ. You can get your vehicle tested at a DEQ Clean Air Station or a DEQ Too service provider. 
+
+ ### **Fees** 
+
+ As of late 2024, the fee for a certificate of compliance is $25 in the Portland area and $20 in the Medford area.",
+PA,Emissions,Vehicle Emissions Inspection Program,https://www.drivecleanpa.state.pa.us/,"In Pennsylvania, vehicle emissions inspections are a key part of the state's plan to maintain clean air. The program is administered by the Pennsylvania Departments of Transportation (PennDOT) and Environmental Protection (DEP).
+
+### Who Needs an Emissions Inspection?
+
+Whether your vehicle requires an emissions inspection depends on the county in which it is registered. Generally, gasoline-powered cars, vans, and light-duty trucks with a model year of 1975 or newer, and a gross vehicle weight of 9,000 lbs. or less, registered in certain counties, must undergo an emissions test. Your vehicle registration card will indicate if an emissions inspection is required.
+
+### Inspection Frequency and Types
+
+The emissions inspection is required annually and is typically performed at the same time as your yearly safety inspection. The type of emissions test your vehicle requires depends on its age and weight:
+
+*   **1996 and newer vehicles:** These vehicles typically require an On-Board Diagnostic (OBD) I/M check and a gas cap test.
+*   **1975-1995 vehicles:** These vehicles generally require a visual anti-tampering check of emissions components and a gas cap test.
+*   **1996 and newer vehicles (8,501-9,000 lbs. GVWR):** These vehicles require a two-speed idle emissions analyzer test, a gas cap test, and a visual anti-tampering check.
+
+### Exemptions
+
+Some vehicles are exempt from emissions testing, including:
+
+*   Vehicles driven less than 5,000 miles in the 12 months preceding the inspection, provided they have been owned by the same person for at least a year.
+*   New vehicles being registered for the first time with less than 5,000 miles on the odometer.
+*   Motorcycles.
+*   Electric vehicles.
+*   Vehicles registered as classics, antiques, collectibles, street rods, or specially constructed.
+*   Diesel-powered vehicles are not currently subject to emissions inspections in Pennsylvania.
+
+### Failing an Inspection
+
+If your vehicle fails the emissions test, you must have the necessary repairs made and the vehicle re-inspected. If the re-inspection is performed at the same location within 30 days, it is free of charge. In some cases, you may be able to obtain an emissions waiver if your vehicle has failed two OBD checks and you have spent at least $450 on qualifying repairs.",
+RI,Emissions,Vehicle Safety and Emissions Inspections,https://www.dmv.ri.gov/inspections-emissions/,"In Rhode Island, most vehicles are subject to a safety and emissions inspection every two years. This is to ensure that vehicles on the road are safe and environmentally clean.
+
+### Key Requirements:
+*   **Vehicles Requiring Inspection:** Most gasoline and diesel-powered vehicles with a gross vehicle weight rating (GVWR) of 8,500 lbs or less are required to have a safety and emissions inspection every two years. This includes passenger cars and light-duty trucks.
+*   **New Vehicles:** New vehicles are exempt from inspection for the first two years or 24,000 miles, whichever comes first.
+*   **Used Vehicles:** When you buy a used car, it must have a valid Rhode Island inspection sticker. If purchased from a licensed Rhode Island dealer, the dealer is required to provide a new sticker at the time of sale. If you buy a used car from an out-of-state dealer or in a private sale, you must have it inspected within five days of registration.
+*   **New Residents:** If you move to Rhode Island, you must register your vehicle within 30 days and have it pass a safety and emissions inspection within five days of registration.
+
+### The Inspection Process:
+The inspection includes both a safety check and an emissions test. The emissions test may be an onboard diagnostics (OBD) test or a tailpipe test, depending on the vehicle's age and type. The safety inspection includes checks of brakes, steering, suspension, and lights.
+
+### Exemptions:
+*   **Age:** Vehicles that are 25 years old or older are not failed if they do not pass the emissions test, but they still must undergo a safety inspection.
+*   **Antique Vehicles:** Vehicles registered as antiques with antique license plates are exempt from both safety and emissions testing.
+*   **Electric Vehicles:** Fully electric vehicles are exempt from the emissions inspection but are still required to pass a safety inspection every two years.
+
+### Failing an Inspection:
+If your vehicle fails the inspection,it must be repaired and re-inspected. If you spend $700 dollars or more on emissions-related repairs and the vehicle still doesn't pass you may be eligible for a waiver.",
+SC,Emissions,Vehicle Emissions Testing,https://www.scdmvonline.com/,"South Carolina does not require emissions testing for vehicles. The state meets all of the federal government's air quality standards. While there is no mandatory emissions testing, vehicle owners can voluntarily have their vehicles tested.
+
+Previously, South Carolina did require annual vehicle safety inspections, but this program was discontinued in 1995. There was an attempt to reinstate vehicle inspections in 2017-2018, but the bill did not pass.
+
+Looking ahead, a bill was introduced in 2023 that would prohibit the sale of passenger motor vehicles manufactured after January 1, 2035, unless they produce zero emissions. The Department of Administration is analyzing the steps needed to comply with this and will submit a report to the General Assembly by the end of 2024.",
+SD,Emissions,Vehicle Emissions Testing,https://dor.sd.gov/individuals/motor-vehicle/title-registration/,"The state of South Dakota does not have any vehicle emissions test requirements. This means that vehicles registered in South Dakota are not required to undergo smog checks or other emissions inspections. The state is noted to have good air quality.
+
+While there are no mandatory emissions tests, there are some vehicle inspections required in specific cases:
+
+*   **Reconstructed, assembled, or kit vehicles:** These require a comprehensive Level 1 inspection to ensure they are safe and roadworthy.
+*   **Salvage or recovered stolen vehicles:** These need a Level 2 inspection to verify they are safe for the road.
+*   **Commercial vehicles:** These are subject to various inspections,including safety,emissions,and weight and size checks.
+
+Even though emissions testing is not required for most drivers the state offers incentives for environmentally friendly driving. Vehicle owners can voluntarily have their emissions tested.",
+TN,Emissions,Vehicle Emissions Testing,https://www.tn.gov/environment/program-areas/apc-air-pollution-control/vehicle-inspection-program.html,"As of January 14, 2022, vehicle emissions testing is no longer required in Hamilton, Rutherford, Sumner, Williamson, and Wilson counties. However, Davidson County continues to require vehicle emissions testing.
+
+For those in counties where testing is still required, here are the general requirements:
+
+*   **Vehicles that require testing:** Gasoline and diesel vehicles weighing less than 10,500 lbs and manufactured in or after 1975 are subject to emissions testing. This includes salvaged, homemade, and rebuilt vehicles.
+*   **Exemptions:** Motorcycles, vehicles with antique registrations, and vehicles made before 1975 are exempt from emissions testing. New vehicles are also exempt for their first registration.
+*   **Testing Procedure:** The state uses an On-Board Diagnostic (OBDII) test for vehicles made in 1996 or later. To ensure you pass, make sure your Check Engine light is not on and that your vehicle has had its regularly scheduled maintenance.
+*   **Out-of-State Exemptions:** If your vehicle is out of the testing area when your registration is due for renewal you may be able to apply for an exemption.",
+TX,Emissions,Vehicle Emissions Testing,https://www.txdmv.gov/motorists/register-your-vehicle,"As of 2025, Texas has updated its vehicle inspection laws. Here's a breakdown of the current emissions requirements:
+
+### **Safety Inspections**
+
+As of January 1, 2025, most Texas drivers are no longer required to get an annual safety inspection for their non-commercial vehicles. Instead, a yearly fee of $7.50 is paid at the time of vehicle registration. For new cars, the initial fee is $16.75, which covers the first two years.
+
+### **Emissions Testing**
+
+While the statewide safety inspection is no longer required for most vehicles, emissions testing is still mandatory in 17 of the most populous counties. These counties are:
+
+*   Brazoria
+*   Collin
+*   Dallas
+*   Denton
+*   El Paso
+*   Ellis
+*   Fort Bend
+*   Galveston
+*   Harris
+*   Johnson
+*   Kaufman
+*   Montgomery
+*   Parker
+*   Rockwall
+*   Tarrant
+*   Travis
+*   Williamson
+
+Bexar County will also require emissions testing starting in 2026.
+
+### **Vehicles Requiring Emissions Tests**
+
+In the counties listed above, gasoline-powered vehicles that are between 2 and 24 years old must undergo an annual emissions test.
+
+### **Exemptions from Emissions Testing**
+
+The following vehicles are exempt from emissions testing:
+
+*   Vehicles that are less than two years old.
+*   Vehicles that are 25 years old or older.
+*   Diesel-powered vehicles.
+*   Motorcycles.
+*   Electric and hybrid vehicles.
+
+### **Types of Emissions Tests**
+
+*   **On-Board Diagnostic (OBDII) Test:** This test is for vehicles made in or after 1996 and checks the vehicle's on-board computer system.
+*   **Two-Speed Idle Test:** This test is for vehicles made in 1995 or earlier and measures emissions from the tailpipe while the vehicle is idling at two different speeds.
+
+### **Waivers**
+
+An individual vehicle waiver may be available for vehicle owners who have spent a certain amount on emissions-related repairs but are still unable to pass the emissions test. The specific amount is $600, or $450 in El Paso.",
+UT,Emissions,Vehicle Emissions Testing,https://dmv.utah.gov/register/inspections,"In Utah, vehicle emissions testing is required in five of the state's 29 counties: Cache, Davis, Salt Lake, Utah, and Weber. While most safety inspections for personal vehicles were eliminated in 2018, emissions testing remains a requirement for registration in these counties.
+
+### **General Requirements by County:**
+
+*   **Salt Lake, Davis, and Weber Counties:**
+    *   Vehicles less than six years old require an emissions test every two years.
+    *   Vehicles with even-numbered model years are tested in even-numbered years, and those with odd-numbered model years are tested in odd-numbered years.
+    *   Vehicles six years old and older require annual emissions inspections.
+*   **Utah County:**
+    *   Gasoline-powered vehicles follow similar rules to Salt Lake County, with vehicles under six years old needing a test every two years and older vehicles (newer than 1967) requiring annual testing.
+    *   Diesel vehicles with model years from 1998 to 2020 require an annual emissions inspection.
+*   **Cache County:**
+    *   Vehicles six years old or newer do not require an emissions inspection.
+    *   Vehicles older than six years (up to model year 1996) require a biennial emissions check.
+
+### **Exemptions from Emissions Testing:**
+
+Several vehicle types are exempt from emissions testing. These commonly include:
+*   New vehicles for the first two model years.
+*   Vehicles from model year 1967 or older.
+*   Electric vehicles.
+*   Motorcycles.
+*   Farm vehicles and off-highway vehicles.
+*   Vintage and custom vehicles.
+*   Certain diesel vehicles, depending on the county and Gross Vehicle Weight Rating (GVWR).
+
+### **Out-of-State Deferrals and Waivers:**
+
+*   **Out-of-State Deferrals:** If your vehicle is temporarily located out of state for legitimate reasons like work or school, you may be eligible for an emissions deferral. If the vehicle is in a jurisdiction with emissions testing, you must have it tested there.
+*   **Waivers:** In some cases, a vehicle that has failed at least two emissions inspections and has undergone emissions-related repairs may qualify for a waiver. These are handled on a case-by-case basis.
+
+It is recommended to check with the specific county's vehicle emissions program for the most up-to-date and detailed information.",
+VT,Emissions,Vehicle Safety and Emissions Inspections,https://dmv.vermont.gov/registrations/inspection-requirements,"In Vermont, all registered vehicles are required to have an annual safety and emissions inspection. If you have a vehicle that is not currently inspected in Vermont, you must have it inspected within 15 days of registering it.
+
+The annual inspection includes an emissions test for all non-exempt vehicles. For vehicles that are 16 model years old or newer, an on-board diagnostic (OBD) systems inspection is required.
+
+Some key aspects of the emissions requirements include:
+
+*   **Zero-Emission Vehicle (ZEV) Mandate:** Vermont has adopted California's ZEV standards. These standards aim for 100% of new passenger vehicles sold in Vermont to be zero-emission by 2035. However, the enforcement of these requirements was recently paused.
+*   **Inspection Failure:** If a vehicle fails its emissions test, it must be repaired and re-tested to pass. Vermont no longer offers conditional passes for failed inspections.
+*   **Exemptions:** Newer models and electric vehicles may be exempt from emissions testing.
+*   **What is checked:** The inspection includes checking for an illuminated Check Engine light and ensuring the exhaust system and catalytic converter are functioning correctly."

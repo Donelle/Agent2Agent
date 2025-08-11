@@ -2,7 +2,8 @@
   "profiles": {
     "DatasetCreator": {
       "commandName": "Project",
-      "commandLineArgs": "--input c:\\Tmp --verbose --clear-existing"
+      "dotnetRunMessages": true,
+      "commandLineArgs": "--verbose"
     }
   }
 }

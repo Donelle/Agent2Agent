@@ -1,6 +1,7 @@
 using A2A;
 
 using Agent2Agent.AgentA.Plugins;
+using Agent2Agent.AgentA.Services;
 
 using Microsoft.Extensions.Http.Resilience;
 using Microsoft.SemanticKernel;
@@ -17,31 +18,36 @@ public static class Dependencies
 		services.AddLogging(o => o.AddDebug().SetMinimumLevel(LogLevel.Trace));
 		services.AddHttpClient();
 		services.AddControllers();
+		services.AddStackExchangeRedisCache(options =>
+		{
+			options.Configuration = configuration["Redis:ConnectionString"];
+			options.InstanceName = "AgentA";
+		});
 
 		services.AddHttpClient("A2AClient", (provider, client) =>
 		{
 			var config = provider.GetRequiredService<IConfiguration>();
 			client.Timeout = TimeSpan.FromSeconds(120);
 		})
-			.RemoveAllResilienceHandlers()
-			.AddStandardResilienceHandler(options =>
+		.RemoveAllResilienceHandlers()
+		.AddStandardResilienceHandler(options =>
+		{
+			options.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
 			{
-				options.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
-				{
-					SamplingDuration = TimeSpan.FromSeconds(240),
-					Name = "AgentACircuitBreaker"
-				};
-				options.AttemptTimeout = new HttpTimeoutStrategyOptions
-				{
-					Timeout = TimeSpan.FromSeconds(120),
-					Name = "AgentAAttemptTimeout",
-				};
-				options.TotalRequestTimeout = new HttpTimeoutStrategyOptions
-				{
-					Timeout = TimeSpan.FromSeconds(120),
-					Name = "AgentATimeout"
-				};
-			});
+				SamplingDuration = TimeSpan.FromSeconds(240),
+				Name = "AgentACircuitBreaker"
+			};
+			options.AttemptTimeout = new HttpTimeoutStrategyOptions
+			{
+				Timeout = TimeSpan.FromSeconds(120),
+				Name = "AgentAAttemptTimeout",
+			};
+			options.TotalRequestTimeout = new HttpTimeoutStrategyOptions
+			{
+				Timeout = TimeSpan.FromSeconds(120),
+				Name = "AgentATimeout"
+			};
+		});
 
 		// Add A2AClient with configuration
 		services.AddSingleton<IA2AClient>(sp =>
@@ -52,15 +58,17 @@ public static class Dependencies
 		});
 
 		services.AddSingleton<CustomerAdvocatePlugin>();
+		services.AddSingleton<IConversationService, ConversationService>();
 
 		services.AddTransient(sp =>
 		{
-			var kernel = Kernel.CreateBuilder()
+			var builder = Kernel.CreateBuilder()
 					.AddOpenAIChatCompletion(
 						configuration["OpenAI:ModelId"] ?? string.Empty, 
 						configuration["OpenAI:ApiKey"] ?? string.Empty
 			);
-			kernel.Plugins.AddFromObject(sp.GetRequiredService<CustomerAdvocatePlugin>(), "CustomerAdvocate");
+			builder.Plugins.AddFromObject(sp.GetRequiredService<CustomerAdvocatePlugin>(), "CustomerAdvocate");
+			var kernel = builder.Build();
 
 			return new ChatCompletionAgent
 			{
@@ -74,10 +82,11 @@ public static class Dependencies
             Do not provide any other information if it is not related to automotive inquiries.
             All other information is out of your scope and you should not answer it.
             """,
-				Kernel = kernel.Build(),
-				 Arguments = new KernelArguments(new OpenAIPromptExecutionSettings { 
-					 FunctionChoiceBehavior = FunctionChoiceBehavior.Auto() 
-				 })
+				Kernel = kernel,
+			  LoggerFactory = sp.GetRequiredService<ILoggerFactory>(),
+				Arguments = new KernelArguments(new OpenAIPromptExecutionSettings { 
+					 FunctionChoiceBehavior = FunctionChoiceBehavior.Required([kernel.Plugins.GetFunction("CustomerAdvocate", "answer_vehicle_inquiry")])
+				})
 			};
 		});
 	}

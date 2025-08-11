@@ -26,4 +26,9 @@ public class VehicleRegistrationRecord
     public string Title { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
     public string SourceUrl { get; set; } = string.Empty;
+
+	public override string ToString()
+	{
+		return $"State: {State}, DocumentType: {DocumentType}, Title: {Title}, Content: {Content}, SourceUrl: {SourceUrl}";
+	}
 }

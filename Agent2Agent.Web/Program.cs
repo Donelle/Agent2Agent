@@ -19,39 +19,37 @@ builder.Services.AddSignalR(o =>
 });
 
 // Add HttpClient for AgentA service
-#pragma warning disable EXTEXP0001 
-	builder.Services.AddHttpClient<IChatAgentService, ChatAgentService>((provider, client) =>
+builder.Services.AddHttpClient<IChatAgentService, ChatAgentService>((provider, client) =>
+{
+	var config = provider.GetRequiredService<IConfiguration>();
+	client.BaseAddress = new Uri(config["AgentA"] ?? string.Empty);
+	client.Timeout = TimeSpan.FromSeconds(120);
+})
+.RemoveAllResilienceHandlers()
+.AddStandardResilienceHandler(options =>
+{
+	options.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
 	{
-		var config = provider.GetRequiredService<IConfiguration>();
-		client.BaseAddress = new Uri(config["AgentA"]);
-		client.Timeout = TimeSpan.FromSeconds(120);
-	})
-	.RemoveAllResilienceHandlers()
-	.AddStandardResilienceHandler(options =>
+		SamplingDuration = TimeSpan.FromSeconds(240),
+		Name = "WebAppCircuitBreaker"
+	};
+	options.AttemptTimeout = new HttpTimeoutStrategyOptions
 	{
-		options.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
-		{
-			SamplingDuration = TimeSpan.FromSeconds(240),
-			Name = "WebAppCircuitBreaker"
-		};
-		options.AttemptTimeout = new HttpTimeoutStrategyOptions
-		{
-			Timeout = TimeSpan.FromSeconds(120),
-			Name = "WebAppAttemptTimeout",
-		};
-		options.TotalRequestTimeout = new HttpTimeoutStrategyOptions
-		{
-			Timeout = TimeSpan.FromSeconds(120),
-			Name = "WebAppTimeout"
-		};
-		options.Retry = new HttpRetryStrategyOptions
-		{
-			MaxRetryAttempts = 2,
-			Delay = TimeSpan.FromSeconds(2),
-			Name = "WebAppRetry",
-		};
-	});
-#pragma warning restore EXTEXP0001 
+		Timeout = TimeSpan.FromSeconds(120),
+		Name = "WebAppAttemptTimeout",
+	};
+	options.TotalRequestTimeout = new HttpTimeoutStrategyOptions
+	{
+		Timeout = TimeSpan.FromSeconds(120),
+		Name = "WebAppTimeout"
+	};
+	options.Retry = new HttpRetryStrategyOptions
+	{
+		MaxRetryAttempts = 2,
+		Delay = TimeSpan.FromSeconds(2),
+		Name = "WebAppRetry",
+	};
+});
 
 
 var app = builder.Build();

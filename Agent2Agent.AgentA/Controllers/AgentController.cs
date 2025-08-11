@@ -1,7 +1,4 @@
-using System.Linq;
-using System.Text;
-
-using A2A;
+using Agent2Agent.AgentA.Services;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel;
@@ -16,67 +13,30 @@ namespace Agent2Agent.AgentA.Controllers
 	public class AgentController : ControllerBase
 	{
 		private readonly ILogger<AgentController> _logger;
+		private readonly IConversationService _conversationService;
 
-		public AgentController(ILogger<AgentController> logger)
+		public AgentController(ILogger<AgentController> logger, IConversationService service)
 		{
 			_logger = logger;
+			_conversationService = service;
 		}
 
 		[HttpPost("chat")]
-		public async Task<IActionResult> Post([FromBody] string message, [FromServices] ChatCompletionAgent agent)
+		public async Task<IActionResult> Post([FromBody] ChatMessage message, [FromServices] ChatCompletionAgent agent)
 		{
-			if (string.IsNullOrWhiteSpace(message))
+			if (message == null || string.IsNullOrWhiteSpace(message?.Content))
 			{
 				return BadRequest("Message cannot be empty.");
 			}
 
-			var response = new StringBuilder();
+			var response = await _conversationService.SendMessageAsync(
+				new ChatMessageContent(AuthorRole.User, message.Content) { AuthorName = message.SessionId }, agent, HttpContext.RequestAborted);
 
-			try
-			{
-				await foreach (var result in agent.InvokeAsync(new ChatMessageContent(AuthorRole.User, message), cancellationToken: HttpContext.RequestAborted))
-				{
-					if (result.Message is ChatMessageContent chatResponse)
-					{
-						response.Append(chatResponse.Content);
-					}
-					else
-					{
-						// Handle other types of results if necessary
-						_logger.LogWarning("Received unexpected message type: {MessageType}", result.Message.GetType());
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Task failed with unexpected error.");
-			}
-
-			return Ok(response.ToString());
+			return !string.IsNullOrEmpty(response)
+				? Ok(response)
+				: BadRequest("Failed to get a valid response.");
 		}
-
-
-		[HttpPost("upload-file")]
-		public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
-		{
-			if (file == null || file.Length == 0)
-			{
-				return BadRequest("No file uploaded.");
-			}
-
-			var filePath = Path.Combine("UploadedFiles", file.FileName);
-
-			using (var stream = new FileStream(filePath, FileMode.Create))
-			{
-				await file.CopyToAsync(stream);
-			}
-
-			// Notify chat participants about the uploaded file
-			// Example: ChatLogic.NotifyFileUpload(file.FileName);
-
-			return Ok(new { Status = "File uploaded successfully", FileName = file.FileName });
-		}
-
-		public record ChatMessage(string User, string Content);
 	}
+
+	public record ChatMessage(string SessionId, string Content);
 }

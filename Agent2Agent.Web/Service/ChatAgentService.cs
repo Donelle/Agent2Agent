@@ -5,11 +5,13 @@ namespace Agent2Agent.Web.Service;
 
 public interface IChatAgentService
 {
-		Task<string> SendMessageAsync(string message);
+		Task<string> SendMessageAsync(string sessionId, string message);
 }
 
 internal class ChatAgentService : IChatAgentService
 {
+	public record ChatMessage(string SessionId, string Content);
+
 	HttpClient _httpClient;
 	ILogger<ChatAgentService> _logger;
 
@@ -19,13 +21,13 @@ internal class ChatAgentService : IChatAgentService
 		_logger = logger;
 	}
 
-	public async Task<string> SendMessageAsync(string message)
+	public async Task<string> SendMessageAsync(string sessionId, string content)
 	{
 		try
 		{
 			// Call AgentA's chat endpoint
 			var jsonContent = new StringContent(
-					JsonSerializer.Serialize(message),
+					JsonSerializer.Serialize(new ChatMessage(sessionId, content)),
 					Encoding.UTF8,
 					"application/json"
 			);

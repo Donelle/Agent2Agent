@@ -4,7 +4,7 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<NoWarn>$(NoWarn);EXTEXP0001</NoWarn>
+		<NoWarn>$(NoWarn);EXTEXP0001;SKEXP0001</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,6 +19,8 @@
 	<ItemGroup>
 		<PackageReference Include="A2A.AspNetCore" Version="0.1.0-preview.2" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0-preview.6.25358.103" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.8" />
 		<PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.59.0" />
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.59.0" />
 	</ItemGroup>

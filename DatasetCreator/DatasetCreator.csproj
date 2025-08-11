@@ -25,6 +25,9 @@
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+	<None Update="Data\sample_registrations.csv">  
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
