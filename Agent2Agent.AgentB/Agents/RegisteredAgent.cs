@@ -47,7 +47,7 @@ internal class RegisteredAgent
 			var jsonPayload = JsonSerializer.Serialize(new AgentRegistryNotification(state, details));
 			var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-			_logger.LogInformation("Sending notification to agent {Name}: {Payload}", _details.Name, jsonPayload);
+			_logger.LogInformation("Sending notification to agent {Name}", _details.Name);
 
 			var response = await retryPolicy.ExecuteAsync(async () => await _httpClient.PostAsync(_notification.Uri, content, cancellationToken));
 			if (response.IsSuccessStatusCode)

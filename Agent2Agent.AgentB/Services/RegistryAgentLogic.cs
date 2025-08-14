@@ -15,17 +15,17 @@ public interface IAgentLogicInvoker
 internal class RegistryAgentLogic : IAgentLogicInvoker
 {
 	private readonly ILogger<RegistryAgentLogic> _logger;
-	private readonly Agent2AgentManager _orchestration;
+	private readonly AgentRegistryManager _manager;
 	private readonly A2AClientOptions _clientOptions;
 	private ITaskManager _taskManager = null!;
 
 	public RegistryAgentLogic(
 		IOptions<A2AClientOptions> options, 
-		Agent2AgentManager orchestration, 
+		AgentRegistryManager manager,
 		ILogger<RegistryAgentLogic> logger)
 	{
 		_logger = logger;
-		_orchestration = orchestration;
+		_manager = manager;
 		_clientOptions = options.Value;
 	}
 
@@ -73,7 +73,7 @@ internal class RegistryAgentLogic : IAgentLogicInvoker
 		await _taskManager.UpdateStatusAsync(task.Id, TaskState.Working, null, cancellationToken: token);
 		var input = task.History?.Last().Parts.First().AsTextPart().Text;
 
-		var response = _orchestration.ProcessMessage(input ?? string.Empty, token);
+		var response = _manager.ProcessMessage(input ?? string.Empty, token);
 		var result = new Message { Role = MessageRole.Agent, Parts = [new TextPart { Text = response ?? "No response" }] };
 
 		_logger.LogInformation("Task {TaskId} completed.", task.Id);

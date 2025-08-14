@@ -1,9 +1,8 @@
 using A2A;
 
-using Microsoft.Extensions.Http.Resilience;
-
 using Agent2Agent.AgentB.Agents;
 using Agent2Agent.AgentB.Configurations;
+using System.Threading.Channels;
 
 namespace Agent2Agent.AgentB.Extensions;
 
@@ -28,6 +27,8 @@ public static class Dependencies
 			return taskManager;
 		});
 
-		services.AddTransient<Agent2AgentManager>();
+		services.AddTransient<AgentRegistryManager>();
+		services.AddSingleton(sp => Channel.CreateUnbounded<AgentEvent>());
+		services.AddHostedService<AgentEventQueueService>();
 	}
 }
