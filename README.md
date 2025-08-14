@@ -54,7 +54,7 @@ This repository demonstrates a multi-agent proof-of-concept using Microsoft Sema
    ```
 3. Start Redis using Docker Compose:
    ```bash
-   docker compose up -d redis
+   docker-compose -f docker_compose.yaml up -d
    ```
    This will launch a Redis server using the provided `docker_compose.yaml` file.
 4. Load vehicle data into Redis using DatasetCreator:

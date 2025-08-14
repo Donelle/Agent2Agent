@@ -19,12 +19,15 @@ This tool is part of the larger Agent2Agent ecosystem:
 flowchart TD
     DatasetCreator[DatasetCreator] --> Redis[(Redis Vector Store)]
     Redis --> AgentC[KnowledgeGraphAgent]
-    AgentC --> AgentB[RegistryAgent]
-    AgentB --> AgentA[RegistrationAdvocateAgent]
-    AgentA --> Web[Blazor Web Frontend]
+   
     
     DatasetCreator -.-> |Populates| Redis
     AgentC -.-> |Queries| Redis
+
+    Web[Blazor Web Frontend] --> Query[User Query] 
+    Query --> AgentA[CustomerAdvocateAgent]
+    AgentA -.-> |Queries| AgentC
+    AgentC --> AgentA
 ```
 
 ## Features
@@ -214,7 +217,7 @@ dotnet restore
 dotnet build
 
 # Run with sample data
-dotnet run -- --input "./Data" --verbose
+dotnet run --verbose
 ```
 
 ## Troubleshooting
@@ -247,7 +250,6 @@ Enable verbose logging to troubleshoot issues:
 dotnet run -- --verbose
 ```
 
-Log files are written to: `./Logs/DatasetCreator-{timestamp}.log`
 
 ## Performance Considerations
 
@@ -261,8 +263,7 @@ Log files are written to: `./Logs/DatasetCreator-{timestamp}.log`
 The project includes sample vehicle registration data in the `Data/` directory:
 
 - `sample_registrations.csv`: Example CSV with vehicle registration information
-- `sample_forms.pdf`: Example PDF documents with registration procedures
-- `state_requirements.csv`: Sample data showing different state requirements
+
 
 ## Contributing
 
