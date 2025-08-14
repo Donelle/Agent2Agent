@@ -11,19 +11,23 @@ This repository demonstrates a multi-agent proof-of-concept using Microsoft Sema
   Blazor Server web interface (WebFrontend) where users interact with agents.
 
 - **Agent2Agent.AgentA**
-  **RegistrationAdvocateAgent** – Semantic Kernel agent exposing `/api/agent/chat`.
+  **CustomerAdvocateAgent** – Semantic Kernel agent exposing `/api/agent/chat`.
   - Hosts a `ChatCompletionAgent` named "RegistrationAdvocate".
   - Registers plugins for inter-agent calls to ChatResponder and InternetSearch.
 
 - **Agent2Agent.AgentB**
-  **RegistryAgent** – A2A server for agent registration and discovery.
+  **RegistryAgent** – A2A server for agent registration, discovery, and inter-agent communication.
+  - Exposes `/tasks` and `/.well-known/agent.json` endpoints for A2A protocol.
+  - Registers and manages agent metadata, and delegates queries to KnowledgeGraphAgent and InternetSearchAgent as needed.
 
 - **Agent2Agent.AgentC**
   **KnowledgeGraphAgent** – A2A server for knowledge graph queries.
+  - Exposes `/tasks` and `/.well-known/agent.json` endpoints for A2A protocol.
   - Uses Redis for vector storage and embeddings.
 
 - **Agent2Agent.AgentD**
   **InternetSearchAgent** – A2A server for internet search.
+  - Exposes `/tasks` and `/.well-known/agent.json` endpoints for A2A protocol.
   - Planned: Redis caching and external search API integration.
 
 - **Agent2Agent.ServiceDefaults**  
@@ -37,9 +41,8 @@ This repository demonstrates a multi-agent proof-of-concept using Microsoft Sema
 ## Prerequisites
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
-- Redis instance running (default connection: `localhost:6379`)
+- Docker (for running Redis via Docker Compose)
 - OpenAI API key configured in each agent’s `appsettings.json`
-
 
 ## Getting Started
 
@@ -49,13 +52,22 @@ This repository demonstrates a multi-agent proof-of-concept using Microsoft Sema
    dotnet restore
    dotnet build
    ```
-3. Start Redis (if not running).
-4. Launch the orchestrator (runs all services and agents):
+3. Start Redis using Docker Compose:
+   ```bash
+   docker compose up -d redis
+   ```
+   This will launch a Redis server using the provided `docker_compose.yaml` file.
+4. Load vehicle data into Redis using DatasetCreator:
+   ```bash
+   dotnet run --project DatasetCreator
+   ```
+   See [`DatasetCreator/README.md`](DatasetCreator/README.md) for details and advanced options.
+5. Launch the orchestrator (runs all services and agents):
    ```bash
    dotnet run --project Agent2Agent.AppHost
    ```
-5. Open the web frontend in your browser:
-   `https://localhost:5000`
+6. Open the web frontend in your browser:
+   https://localhost:5000
 
 ## Documentation
 

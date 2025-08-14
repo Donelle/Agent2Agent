@@ -1,6 +1,6 @@
 ﻿# Agent2Agent.AgentB - Agent Registry
 
-Agent2Agent.AgentB implements the **RegistryAgent**, a key component of the Agent2Agent proof-of-concept system. This agent is responsible for handling agent registration and discovery, facilitating inter-agent communication through the Agent-to-Agent (A2A) protocol.
+Agent2Agent.AgentB implements the **RegistryAgent**, a key component of the Agent2Agent proof-of-concept system. This agent is responsible for agent registration, discovery, and inter-agent communication through the Agent-to-Agent (A2A) protocol.
 
 ## Purpose
 
@@ -11,13 +11,15 @@ The RegistryAgent (AgentB) is designed to:
 
 ## Architecture Role
 
-Within the Agent2Agent ecosystem, AgentB serves as the conversational logic processor:
+Within the Agent2Agent ecosystem, AgentB serves as the conversational logic processor and A2A endpoint for `/tasks` and `/.well-known/agent.json`:
 
 ```mermaid
 flowchart TD
     User[User Query] --> Web[Blazor Web Frontend]
     Web --> AgentA[RegistrationAdvocateAgent]
     AgentA --> AgentB[RegistryAgent]
+    AgentB --> AgentC[KnowledgeGraphAgent]
+    AgentB --> AgentD[InternetSearchAgent]
 ```
 
 ## Core Features
@@ -51,16 +53,17 @@ Agent2Agent.AgentB/
 │   ├── IAgent.cs                       # Interface for agent logic
 │   └── Agent2AgentManager.cs           # Manages inter-agent communication
 ├── Services/
-│   └── ChatResponderAgentLogic.cs      # Core conversational logic implementation
+│   └── RegistryAgentLogic.cs           # Core agent registry and communication logic
 └── GlobalUsing.cs                      # Global namespace imports
 ```
 
 ### Key Components
 
-#### **ChatResponderAgentLogic**
-The main orchestrator for handling conversational queries:
+#### **RegistryAgentLogic**
+The main orchestrator for handling agent registration and inter-agent queries:
 
 - Processes incoming A2A messages.
+- Handles agent registration and discovery.
 - Delegates tasks to the KnowledgeBaseAgent and InternetSearchAgent.
 - Aggregates and refines responses for the RegistrationAdvocateAgent.
 
@@ -97,8 +100,8 @@ Create an `appsettings.json` file with the following configuration:
     }
   },
   "AgentCard": {
-    "Name": "ChatResponderAgent",
-    "Description": "Handles conversational logic and coordinates inter-agent communication",
+    "Name": "RegistryAgent",
+    "Description": "Handles agent registration, discovery, and coordinates inter-agent communication",
     "Version": "1.0.0"
   }
 }

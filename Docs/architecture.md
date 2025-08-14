@@ -19,16 +19,16 @@ This document provides a high-level overview of the Agent2Agent proof-of-concept
 - **Agent2Agent.AgentA (RegistrationAdvocateAgent)**  
   A Semantic Kernel–driven agent exposing `/api/agent/chat`.  
   - Hosts a `ChatCompletionAgent` named "RegistrationAdvocate".  
-  - Registers `ChatResponderAgentPlugin` and `InternetSearchAgentPlugin`.  
-  - Invokes AgentB and AgentD via A2AClient to enrich responses on vehicle registration topics.  
+  - Registers `RegistryAgentPlugin` and `InternetSearchAgentPlugin`.
+  - Invokes AgentB (RegistryAgent) and AgentD (InternetSearchAgent) via A2AClient to enrich responses on vehicle registration topics.
   - Restricts replies to vehicle registration and related queries.
 
-- **Agent2Agent.AgentB (ChatResponderAgent)**  
-  The A2A server hosting vehicle registration assistant logic.  
-  - Configured via `builder.Services.AddA2AServer` with AgentCard settings and `builder.Services.AddA2AClient` for KnowledgeGraphAgent.  
-  - Registers `ChatResponderAgentLogic` as `IAgentLogicInvoker` and `KnowledgeGraphAgentPlugin` in DI.  
-  - Hosts a Semantic Kernel `ChatCompletionAgent` named **VehicleRegistrationAssistant**.  
-  - Maps A2A endpoints using `app.MapA2AWellKnown()` and `app.MapA2AEndpoint()`.  
+- **Agent2Agent.AgentB (RegistryAgent)**
+  The A2A server hosting agent registration, discovery, and inter-agent communication.
+  - Configured via `builder.Services.AddA2AServer` with AgentCard settings and `builder.Services.AddA2AClient` for KnowledgeGraphAgent.
+  - Registers `RegistryAgentLogic` as `IAgentLogicInvoker` and `KnowledgeGraphAgentPlugin` in DI.
+  - Hosts a Semantic Kernel `ChatCompletionAgent` named **VehicleRegistrationAssistant**.
+  - Maps A2A endpoints using `app.MapA2AWellKnown()` and `app.MapA2AEndpoint()`.
   - Uses A2A client to invoke KnowledgeGraphAgent for factual enrichment.
 
 - **Agent2Agent.AgentC (KnowledgeGraphAgent)**
@@ -49,9 +49,16 @@ This document provides a high-level overview of the Agent2Agent proof-of-concept
     - Integrate Redis caching for search results.
     - Connect to external search APIs for live data.
 
-- **Agent2Agent.ServiceDefaults**  
-  Shared library for common bootstrapping routines.  
+- **Agent2Agent.ServiceDefaults**
+  Shared library for common bootstrapping routines.
   - Provides extensions for OpenAPI, exception handling, caching, and default endpoint mapping.
+
+- **DatasetCreator**
+  Data ingestion tool for KnowledgeGraphAgent.
+  - Processes CSV and PDF files containing vehicle registration data.
+  - Generates OpenAI embeddings for semantic search.
+  - Populates Redis vector store with knowledge chunks, metadata, and embeddings.
+  - Supports batch updates and schema compatibility with AgentC.
 
 ---
 
@@ -60,17 +67,20 @@ This document provides a high-level overview of the Agent2Agent proof-of-concept
 ```mermaid
 flowchart TD
   subgraph Orchestrator
-    AppHost[AppHost]
+    AppHost[AppHost<br/>- Launches/monitors all agents<br/>- Health checks]
   end
   subgraph Web
-    WebFrontend[WebFrontend]
+    WebFrontend[WebFrontend<br/>- Blazor Server<br/>- User chat UI<br/>- Calls /api/agent/chat]
   end
   subgraph Agents
-    AgentA[RegistrationAdvocateAgent]
-    AgentB[ChatResponderAgent]
-    AgentC[KnowledgeGraphAgent]
-    AgentD[InternetSearchAgent]
+    AgentA[RegistrationAdvocateAgent<br/>- POST /api/agent/chat<br/>- Plugins: ChatResponder, InternetSearch]
+    AgentB[RegistryAgent<br/>- POST /tasks<br/>- GET /.well-known/agent.json]
+    AgentC[KnowledgeGraphAgent<br/>- POST /tasks<br/>- GET /.well-known/agent.json]
+    AgentD[InternetSearchAgent<br/>- POST /tasks<br/>- GET /.well-known/agent.json]
   end
+  DatasetCreator[DatasetCreator<br/>- Populates Redis<br/>- CSV/PDF ingestion]
+  Redis[(Redis Vector Store<br/>- Embeddings<br/>- Knowledge Chunks)]
+  ExtAPI[(ExternalSearchAPI)]
 
   AppHost -- launches & health-checks --> WebFrontend
   AppHost -- launches & health-checks --> AgentA
@@ -78,17 +88,19 @@ flowchart TD
   AppHost -- launches & health-checks --> AgentC
   AppHost -- launches & health-checks --> AgentD
 
-  WebFrontend -- HTTP --> AgentA
+  WebFrontend -- HTTP: /api/agent/chat --> AgentA
 
-  AgentA -- A2AClient --> AgentB
-  AgentA -- A2AClient --> AgentD
+  AgentA -- A2AClient: /tasks --> AgentB
+  AgentA -- A2AClient: /tasks --> AgentD
 
-  AgentB -- A2AClient --> AgentC
-  AgentB -- A2AClient --> AgentD
+  AgentB -- A2AClient: /tasks --> AgentC
+  AgentB -- A2AClient: /tasks --> AgentD
 
-  AgentC -- Redis Vector Store --> Redis[(Redis)]
+  AgentC -- Redis Vector Search --> Redis
   AgentD -- Redis Cache --> Redis
-  AgentD -- External Search API --> ExtAPI[(ExternalSearchAPI)]
+  AgentD -- External Search API --> ExtAPI
+
+  DatasetCreator -- Populates --> Redis
 
   AgentA -- references --> ServiceDefaults
   AgentB -- references --> ServiceDefaults
@@ -103,25 +115,37 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-  User->>A: POST /api/agent/chat { text }
-  A->>B: POST /chat/respond { text }
-  B->>C: POST /kg/query { concepts }
+  participant User
+  participant Web as WebFrontend
+  participant A as RegistrationAdvocateAgent
+  participant B as RegistryAgent
+  participant C as KnowledgeGraphAgent
+  participant D as InternetSearchAgent
+  participant Redis as Redis
+  participant DatasetCreator
+  participant ExtAPI as ExternalSearchAPI
+
+  DatasetCreator->>Redis: Ingest CSV/PDF, generate embeddings, store knowledge chunks
+  User->>Web: Enters query
+  Web->>A: POST /api/agent/chat { text }
+  A->>B: POST /tasks { text }
+  B->>C: POST /tasks { concepts }
   alt KG has data
     C-->>B: 200 { facts }
   else KG missing data
     C-->>B: 204 No Content
-    B->>D: POST /search/query { text }
+    B->>D: POST /tasks { text }
     alt Cache hit
       D-->>B: 200 { cachedResults }
     else Cache miss
-      D->>ExternalSearchAPI: GET /?q={text}
-      ExternalSearchAPI-->>D: 200 { searchResults }
-      D-->Cache: SET key, value, TTL
+      D->>ExtAPI: GET /?q={text}
+      ExtAPI-->>D: 200 { searchResults }
+      D-->Redis: SET key, value, TTL
       D-->>B: 200 { searchResults }
     end
   end
   B-->>A: 200 { reply }
-  A-->>User: 200 { combined reply }
+  A-->>Web: 200 { combined reply }
 ```
 
 ---

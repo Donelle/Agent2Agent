@@ -2,36 +2,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Host Launch (Hot Reload)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "dotnet",
-            "args": [
-                "watch",
-                "--project",
-                "${workspaceFolder}/Agent2Agent.AppHost/Agent2Agent.AppHost.csproj",
-                "--verbose"
-            ],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "https://localhost:17229;http://localhost:15220",
-                "DOTNET_ENVIRONMENT": "Development",
-                "ASPIRE_ALLOW_UNSECURED_TRANSPORT": "true",
-                "ASPIRE_DASHBOARD_OTLP_ENDPOINT_URL": "https://localhost:21208",
-                "ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL": "https://localhost:22151"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
             "name": "Host Launch",
             "type": "coreclr",
             "request": "launch",

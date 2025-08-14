@@ -19,7 +19,7 @@ This tool is part of the larger Agent2Agent ecosystem:
 flowchart TD
     DatasetCreator[DatasetCreator] --> Redis[(Redis Vector Store)]
     Redis --> AgentC[KnowledgeGraphAgent]
-    AgentC --> AgentB[ChatResponderAgent]
+    AgentC --> AgentB[RegistryAgent]
     AgentB --> AgentA[RegistrationAdvocateAgent]
     AgentA --> Web[Blazor Web Frontend]
     

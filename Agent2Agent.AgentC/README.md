@@ -1,5 +1,6 @@
 ﻿# Agent2Agent.AgentC - KnowledgeGraphAgent
 
+
 A .NET 9 ASP.NET Core web service implementing the **KnowledgeGraphAgent** in the Agent2Agent proof-of-concept system. This agent serves as an intelligent knowledge base that provides contextual information about vehicle registration topics using vector similarity search and AI-powered responses.
 
 ## Purpose
@@ -11,25 +12,26 @@ The KnowledgeGraphAgent (AgentC) is a specialized AI agent that:
 - **Generates contextual responses** by combining retrieved knowledge with OpenAI's language models
 - **Provides factual grounding** for conversational AI interactions about vehicle registration
 
-## Architecture Role
+## Architecture
 
-Within the Agent2Agent ecosystem, AgentC serves as the knowledge foundation:
+Within the Agent2Agent ecosystem, AgentC serves as the knowledge foundation for semantic search and factual grounding.
+
+### Sequence Diagram
 
 ```mermaid
-flowchart TD
-    DatasetCreator[DatasetCreator] -.-> |Populates| Redis[(Redis Vector Store)]
-    Redis --> AgentC[KnowledgeGraphAgent]
-    AgentC --> AgentB[ChatResponderAgent]
-    AgentB --> AgentA[RegistrationAdvocateAgent]
-    AgentA --> Web[Blazor Web Frontend]
-    
-    User[User Query] --> Web
-    Web --> AgentA
-    AgentA --> AgentB
-    AgentB --> AgentC
-    AgentC -.-> |Vector Search| Redis
-    Redis -.-> |Retrieved Chunks| AgentC
-    AgentC --> |Contextualized Response| AgentB
+sequenceDiagram
+    participant User
+    participant Web as WebFrontend
+    participant A as CustomerAdvocateAgent
+    participant C as KnowledgeGraphAgent
+    participant Redis as RedisVectorStore
+
+    User->>Web: Enters query
+    Web->>A: POST /api/agent/chat { text }
+    A->>C: POST /tasks { concepts }
+    C->>Redis: Vector search for relevant knowledge
+    C-->>A: 200 { facts }
+    A-->>Web: 200 { combined reply }
 ```
 
 ## Core Features
@@ -75,7 +77,6 @@ Agent2Agent.AgentC/
 #### **KnowledgeGraphAgentLogic**
 The main orchestrator that implements `IAgentLogicInvoker`:
 
-**Implementation Details:**
 - Extracts text from incoming A2A messages
 - Delegates knowledge search to `FactStoreService`
 - Uses Semantic Kernel's `ChatCompletionAgent` for response generation
@@ -85,7 +86,6 @@ The main orchestrator that implements `IAgentLogicInvoker`:
 #### **FactStoreService**
 Manages knowledge base interactions:
 
-**Key Features:**
 - Integrates embedding generation with vector search
 - Configurable similarity threshold (0.78) for relevance filtering
 - Top-K retrieval (25) for comprehensive context
@@ -93,6 +93,7 @@ Manages knowledge base interactions:
 
 #### **RedisVectorStoreProvider**
 Handles Redis Stack operations with these technical specifications:
+
 - **Vector Dimensions**: 1536 (OpenAI text-embedding-3-small)
 - **Distance Metric**: Cosine similarity
 - **Index Algorithm**: FLAT for optimal recall
@@ -101,6 +102,7 @@ Handles Redis Stack operations with these technical specifications:
 
 #### **OpenAIEmbeddingProvider**
 Generates vector embeddings:
+
 - Default model: `text-embedding-3-small`
 - Configurable via `OpenAI:EmbeddingModel` setting
 - Robust error handling for API failures
@@ -114,11 +116,9 @@ Generates vector embeddings:
 - **OpenAI** (2.2.0): Direct OpenAI API client
 - **A2Adotnet.Server**: A2A protocol implementation
 
-## Configuration
+## Configurations
 
-### Required Settings
-
-Create an `appsettings.json` file with the following configuration:
+### appsettings.json Example
 
 ```json
 {
@@ -128,18 +128,46 @@ Create an `appsettings.json` file with the following configuration:
       "Microsoft.AspNetCore": "Warning"
     }
   },
-  "Redis": {
-    "ConnectionString": "localhost:6379"
-  },
+  "AllowedHosts": "*",
   "OpenAI": {
-    "ModelId": "gpt-4o-mini",
-    "ApiKey": "<your-openai-api-key>",
-    "EmbeddingModel": "text-embedding-3-small"
+    "ApiKey": "Agent2Agent AgentA API",
+    "ModelId": "o4-mini",
+    "EmbeddingModel": "text-embedding-ada-002"
+  },
+  "Redis": {
+    "ConnectionString": "127.0.0.1:6379"
+  },
+  "Agents": {
+    "RegistryAgentUrl": "http://localhost:5129/a2a"
   },
   "AgentCard": {
-    "Name": "KnowledgeGraphAgent",
-    "Description": "Provides knowledge base search and contextual responses for vehicle registration information",
-    "Version": "1.0.0"
+    "Name": "Vehicle Registration Agent",
+    "Description": "This agent can assist with vehicle registration tasks.",
+    "Url": "http://localhost:5012/a2a",
+    "Version": "1.0.0",
+    "Provider": {
+      "Organization": "Made by Nerddy"
+    },
+    "Capabilities": {
+      "Streaming": false,
+      "PushNotifications": false
+    },
+    "Authentication": null,
+    "DefaultInputModes": [ "text" ],
+    "DefaultOutputModes": [ "text" ],
+    "Skills": [
+      {
+        "Id": "knowledgebase",
+        "Name": "get_vehicle_information_from_knowledge_base",
+        "Description": "Retrieves vehicle information from a vehicle knowledge base. The knowledge base contains detailed information about various vehicle models, specifications, and regulations.",
+        "Examples": [
+          "What is a vehicle registration?",
+          "How is a vehicle registration structured?",
+          "What is the purpose of a vehicle registration?",
+          "What information is typically included in a vehicle registration?"
+        ]
+      }
+    ]
   }
 }
 ```
@@ -178,9 +206,7 @@ Hash Fields:
 
 ## API Endpoints
 
-### A2A Protocol Endpoints
-
-The agent exposes standard A2A endpoints:
+### OpenAPI & A2A Endpoints
 
 - **GET** `/.well-known/agent.json` - Agent capability discovery
 - **POST** `/tasks` - Create new knowledge query task
@@ -192,27 +218,20 @@ The agent exposes standard A2A endpoints:
 - **GET** `/health` - Application health check
 - **GET** `/alive` - Liveness probe
 
-## Performance Characteristics
-
-### Vector Search Performance
-- **Query Latency**: Typically 10-50ms for similarity search
-- **Throughput**: Can handle 100+ concurrent queries
-- **Accuracy**: Cosine similarity threshold of 0.78 for relevance filtering
-- **Index Size**: Supports millions of document chunks
-
-### Memory Usage
-- **Base Memory**: ~100-200MB for application
-- **Redis Memory**: Scales with document count (~4KB per chunk)
-- **Embedding Cache**: Temporary storage for query embeddings
-
 ## Development
 
 ### Building and Running
 
+> **Note:**
+> Redis must be configured and running on your system before starting the agent.
+> If you prefer to use Docker containers, you can start Redis and other dependencies using the provided `docker_compose.yml` in the root directory:
+> ```bash
+> docker compose -f docker_compose.yml up -d
+> ```
+
 ```bash
 # Prerequisites
 dotnet --version  # Ensure .NET 9 SDK
-redis-server --version  # Ensure Redis Stack
 
 # Build the project
 dotnet build
@@ -226,62 +245,48 @@ dotnet run --urls="http://localhost:5012;https://localhost:7288"
 
 ### Testing the Agent
 
-```bash
-# Check agent availability
-curl http://localhost:5012/.well-known/agent.json
+**Sample Query**
 
-# Test knowledge query
+```bash
 curl -X POST http://localhost:5012/tasks \
   -H "Content-Type: application/json" \
   -d '{
-    "id": "test-query",
     "message": {
-      "role": "user", 
-      "parts": [{"type": "text", "text": "vehicle registration process"}]
+      "role": "user",
+      "parts": [
+        { "type": "text", "text": "What is a vehicle registration?" }
+      ]
     }
   }'
 ```
 
-## Integration Points
+**Sample Response**
+```json
+{
+  "status": "Completed",
+  "result": {
+    "answer": "A vehicle registration is an official record of a vehicle with a government authority, typically including details such as the owner's name, address, vehicle identification number (VIN), and license plate number. It is required to legally operate a vehicle on public roads."
+  }
+}
+```
 
-### With DatasetCreator
+### Integration Points
+
+#### With DatasetCreator
 - **Data Ingestion**: Receives pre-processed knowledge chunks with embeddings
 - **Schema Compatibility**: Uses identical Redis schema for seamless integration
 - **Metadata Alignment**: Preserves document structure and source attribution
 
-### With ChatResponderAgent (AgentB)
-- **Query Processing**: Receives natural language queries about vehicle registration
-- **Context Provision**: Returns relevant knowledge chunks for response generation
-- **Fallback Handling**: Indicates when no relevant information is found
 
-### With RegistrationAdvocateAgent (AgentA)
-- **Indirect Integration**: Accessed via AgentB for knowledge enrichment
-- **Response Enhancement**: Provides factual grounding for user interactions
+#### With RegistryAgent (AgentB)
+- **Service Registration**: AgentC interacts with AgentB only to register itself for agent discovery.
+- **Discovery**: This allows CustomerAdvocateAgent (AgentA) and other agents to discover and communicate with AgentC via the A2A protocol.
+- **No Query Routing**: AgentB does not forward or process knowledge queries for AgentC.
 
-## Troubleshooting
-
-### Common Issues
-
-**Vector Search Returns No Results**
-```
-Symptoms: All queries return "No relevant information found"
-Causes: Empty Redis index, incorrect embedding model, threshold too high
-Solution: Verify data ingestion, check embedding compatibility, adjust similarity threshold
-```
-
-**High Response Latency**
-```
-Symptoms: Slow query responses (>500ms)
-Causes: Redis performance, large result sets, OpenAI API delays
-Solution: Optimize Redis configuration, tune topK parameter, monitor API performance
-```
-
-**Memory Growth**
-```
-Symptoms: Increasing memory usage over time
-Causes: Embedding caching, connection leaks, large response buffers
-Solution: Review caching strategy, check connection disposal, monitor GC performance
-```
+#### With CustomerAdvocateAgent (AgentA)
+- **Direct Consumer**: AgentA (CustomerAdvocateAgent) is the primary consumer of AgentC's knowledge services.
+- **Flow**: AgentA discovers AgentC via AgentB and sends knowledge queries directly to AgentC using the A2A protocol.
+- **Purpose**: AgentC provides factual context and knowledge grounding for user queries handled by AgentA.
 
 ## Related Documentation
 
@@ -293,6 +298,7 @@ Solution: Review caching strategy, check connection disposal, monitor GC perform
   - [Connect to the Server](https://redis.io/docs/latest/develop/clients/dotnet/connect/)
   - [Index and query Vectors](https://redis.io/docs/latest/develop/clients/dotnet/vecsearch/)
   - [Vector search concepts](https://redis.io/docs/latest/develop/ai/search-and-query/vectors/)
+
 ---
 
 **Note**: This agent is specifically designed for the Agent2Agent proof-of-concept and implements the A2A protocol for inter-agent communication. For production use, consider implementing additional security, monitoring, and scalability features.
