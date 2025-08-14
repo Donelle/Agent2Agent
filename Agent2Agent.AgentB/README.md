@@ -1,14 +1,13 @@
-﻿# Agent2Agent.AgentB - ChatResponderAgent
+﻿# Agent2Agent.AgentB - Agent Registry
 
-Agent2Agent.AgentB implements the **ChatResponderAgent**, a key component of the Agent2Agent proof-of-concept system. This agent is responsible for handling conversational logic and acts as an intermediary between the RegistrationAdvocateAgent and other specialized agents, such as the KnowledgeGraphAgent and InternetSearchAgent.
+Agent2Agent.AgentB implements the **RegistryAgent**, a key component of the Agent2Agent proof-of-concept system. This agent is responsible for handling agent registration and discovery, facilitating inter-agent communication through the Agent-to-Agent (A2A) protocol.
 
 ## Purpose
 
-The ChatResponderAgent (AgentB) is designed to:
+The RegistryAgent (AgentB) is designed to:
 
-- **Process conversational queries**: Handles user queries routed from the RegistrationAdvocateAgent.
-- **Coordinate inter-agent communication**: Delegates tasks to the KnowledgeGraphAgent and InternetSearchAgent.
-- **Generate intelligent responses**: Combines responses from multiple agents to provide coherent and contextually relevant answers.
+- **Agent Registration and Discovery**: Handle registration of agents and facilitate discovery through the Agent-to-Agent (A2A) protocol.
+
 
 ## Architecture Role
 
@@ -18,9 +17,7 @@ Within the Agent2Agent ecosystem, AgentB serves as the conversational logic proc
 flowchart TD
     User[User Query] --> Web[Blazor Web Frontend]
     Web --> AgentA[RegistrationAdvocateAgent]
-    AgentA --> AgentB[ChatResponderAgent]
-    AgentB --> AgentC[KnowledgeGraphAgent]
-    AgentB --> AgentD[InternetSearchAgent]
+    AgentA --> AgentB[RegistryAgent]
 ```
 
 ## Core Features

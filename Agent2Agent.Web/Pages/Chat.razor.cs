@@ -19,7 +19,7 @@ public partial class Chat
 
 	[Inject] IChatAgentService ChatAgentService { get; set; } = default!;
 
-	private IJSObjectReference? _module;
+	private IJSObjectReference _module = default!;
 	private MarkdownPipeline _pipeline = default!;
 	private List<KeyValuePair<MesageType, string>> messages = new();
 	private string threadId = Guid.NewGuid().ToString();
@@ -29,9 +29,18 @@ public partial class Chat
 
 	protected override async Task OnInitializedAsync()
 	{
-		_module = await JS.InvokeAsync<IJSObjectReference>("import", $"./Pages/{nameof(Chat)}.razor.js");
+		_module = await JS.InvokeAsync<IJSObjectReference>("import", $"./Pages/{nameof(Chat)}.razor.js")!;
 		_pipeline = new MarkdownPipelineBuilder().DisableHtml().UseAdvancedExtensions().Build();
 		await base.OnInitializedAsync();
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (isProcessing)
+		{
+			// Scroll to the latest message
+			await _module.InvokeVoidAsync("ScrollToBottom", "thread-top");
+		}
 	}
 
 	private void ToggleMessageArea()
@@ -56,9 +65,6 @@ public partial class Chat
 			currentMessage = string.Empty;
 			isProcessing = true; 
 			StateHasChanged();
-
-			// Scroll to the latest message
-			await _module!.InvokeVoidAsync("ScrollToBottom", "thread-top");
 
 			try
 			{

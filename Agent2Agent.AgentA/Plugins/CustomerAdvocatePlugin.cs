@@ -2,17 +2,11 @@
 
 using A2A;
 
-using Microsoft.SemanticKernel;
-
 namespace Agent2Agent.AgentA.Plugins;
 
 internal class CustomerAdvocatePlugin(IA2AClient client, ILogger<CustomerAdvocatePlugin> logger)
 {
-
-	[KernelFunction("answer_vehicle_inquiry")]
-	[Description("Primary handler for all automotive-related inquiries, including support, products, services, and vehicle registration. This function should be called for any prompt related to automotive topics.")]
-	public async Task<string> FetchAsync(
-		[Description("The vehicle inquiry")] string inquiry, CancellationToken cancellationToken)
+	public async Task<string> FetchAsync([Description("The vehicle inquiry")] string inquiry, CancellationToken cancellationToken)
 	{
 		var response = string.Empty;
 

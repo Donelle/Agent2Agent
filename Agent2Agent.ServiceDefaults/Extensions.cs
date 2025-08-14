@@ -1,9 +1,15 @@
+using System.Text.Json;
+
+using A2A;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Http.Resilience;
 using Microsoft.Extensions.Logging;
+
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
@@ -15,115 +21,157 @@ namespace Microsoft.Extensions.Hosting;
 // To learn more about using this project, see https://aka.ms/dotnet/aspire/service-defaults
 public static class Extensions
 {
-    private const string HealthEndpointPath = "/health";
-    private const string AlivenessEndpointPath = "/alive";
+	private const string HealthEndpointPath = "/health";
+	private const string AlivenessEndpointPath = "/alive";
 
-    public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
-    {
-        builder.Configuration.AddEnvironmentVariables();
+	public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+	{
+		builder.Configuration.AddEnvironmentVariables();
 
-		    builder.ConfigureOpenTelemetry();
+		builder.ConfigureOpenTelemetry();
 
-        builder.AddDefaultHealthChecks();
+		builder.AddDefaultHealthChecks();
 
-        builder.Services.AddServiceDiscovery();
+		builder.Services.AddServiceDiscovery();
 
-        builder.Services.ConfigureHttpClientDefaults(http =>
-        {
-            // Turn on resilience by default
-            http.AddStandardResilienceHandler();
+		builder.Services.ConfigureHttpClientDefaults(http =>
+		{
+			// Turn on resilience by default
+			http.AddStandardResilienceHandler();
 
-            // Turn on service discovery by default
-            http.AddServiceDiscovery();
-        });
+			// Turn on service discovery by default
+			http.AddServiceDiscovery();
+		});
 
-		    // Uncomment the following to restrict the allowed schemes for service discovery.
-		    // builder.Services.Configure<ServiceDiscoveryOptions>(options =>
-		    // {
-		    //     options.AllowedSchemes = ["https"];
-		    // });
-		
-		    return builder;
-    }
+		// Uncomment the following to restrict the allowed schemes for service discovery.
+		// builder.Services.Configure<ServiceDiscoveryOptions>(options =>
+		// {
+		//     options.AllowedSchemes = ["https"];
+		// });
 
-    public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
-    {
-        builder.Logging.AddOpenTelemetry(logging =>
-        {
-            logging.IncludeFormattedMessage = true;
-            logging.IncludeScopes = true;
-        });
+		return builder;
+	}
 
-        builder.Services.AddOpenTelemetry()
-            .WithMetrics(metrics =>
-            {
-                metrics.AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation()
-                    .AddRuntimeInstrumentation();
-            })
-            .WithTracing(tracing =>
-            {
-                tracing.AddSource(builder.Environment.ApplicationName)
-                    .AddAspNetCoreInstrumentation(tracing =>
-                        // Exclude health check requests from tracing
-                        tracing.Filter = context =>
-                            !context.Request.Path.StartsWithSegments(HealthEndpointPath)
-                            && !context.Request.Path.StartsWithSegments(AlivenessEndpointPath)
-                    )
-                    // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
-                    //.AddGrpcClientInstrumentation()
-                    .AddHttpClientInstrumentation();
-            });
+	public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+	{
+		builder.Logging.AddOpenTelemetry(logging =>
+		{
+			logging.IncludeFormattedMessage = true;
+			logging.IncludeScopes = true;
+		});
 
-        builder.AddOpenTelemetryExporters();
+		builder.Services.AddOpenTelemetry()
+				.WithMetrics(metrics =>
+				{
+					metrics.AddAspNetCoreInstrumentation()
+									.AddHttpClientInstrumentation()
+									.AddRuntimeInstrumentation();
+				})
+				.WithTracing(tracing =>
+				{
+					tracing.AddSource(builder.Environment.ApplicationName)
+									.AddAspNetCoreInstrumentation(tracing =>
+											// Exclude health check requests from tracing
+											tracing.Filter = context =>
+													!context.Request.Path.StartsWithSegments(HealthEndpointPath)
+													&& !context.Request.Path.StartsWithSegments(AlivenessEndpointPath)
+									)
+									// Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
+									//.AddGrpcClientInstrumentation()
+									.AddHttpClientInstrumentation();
+				});
 
-        return builder;
-    }
+		builder.AddOpenTelemetryExporters();
 
-    private static TBuilder AddOpenTelemetryExporters<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
-    {
-        var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+		return builder;
+	}
 
-        if (useOtlpExporter)
-        {
-            builder.Services.AddOpenTelemetry().UseOtlpExporter();
-        }
+	private static TBuilder AddOpenTelemetryExporters<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+	{
+		var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
-        // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
-        //if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
-        //{
-        //    builder.Services.AddOpenTelemetry()
-        //       .UseAzureMonitor();
-        //}
+		if (useOtlpExporter)
+		{
+			builder.Services.AddOpenTelemetry().UseOtlpExporter();
+		}
 
-        return builder;
-    }
+		// Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
+		//if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
+		//{
+		//    builder.Services.AddOpenTelemetry()
+		//       .UseAzureMonitor();
+		//}
 
-    public static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
-    {
-        builder.Services.AddHealthChecks()
-            // Add a default liveness check to ensure app is responsive
-            .AddCheck("self", () => HealthCheckResult.Healthy(), ["live"]);
+		return builder;
+	}
 
-        return builder;
-    }
+	public static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+	{
+		builder.Services.AddHealthChecks()
+				// Add a default liveness check to ensure app is responsive
+				.AddCheck("self", () => HealthCheckResult.Healthy(), ["live"]);
 
-    public static WebApplication MapDefaultEndpoints(this WebApplication app)
-    {
-        // Adding health checks endpoints to applications in non-development environments has security implications.
-        // See https://aka.ms/dotnet/aspire/healthchecks for details before enabling these endpoints in non-development environments.
-        if (app.Environment.IsDevelopment())
-        {
-            // All health checks must pass for app to be considered ready to accept traffic after starting
-            app.MapHealthChecks(HealthEndpointPath);
+		return builder;
+	}
 
-            // Only health checks tagged with the "live" tag must pass for app to be considered alive
-            app.MapHealthChecks(AlivenessEndpointPath, new HealthCheckOptions
-            {
-                Predicate = r => r.Tags.Contains("live")
-            });
-        }
+	public static WebApplication MapDefaultEndpoints(this WebApplication app)
+	{
+		// Adding health checks endpoints to applications in non-development environments has security implications.
+		// See https://aka.ms/dotnet/aspire/healthchecks for details before enabling these endpoints in non-development environments.
+		if (app.Environment.IsDevelopment())
+		{
+			// All health checks must pass for app to be considered ready to accept traffic after starting
+			app.MapHealthChecks(HealthEndpointPath);
 
-        return app;
-    }
+			// Only health checks tagged with the "live" tag must pass for app to be considered alive
+			app.MapHealthChecks(AlivenessEndpointPath, new HealthCheckOptions
+			{
+				Predicate = r => r.Tags.Contains("live")
+			});
+		}
+
+		return app;
+	}
+
+	public static TBuilder AddAgentRegistration<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+	{
+		builder.Services.AddHttpClient("A2AClient", (provider, client) =>
+		{
+			var config = provider.GetRequiredService<IConfiguration>();
+			client.Timeout = TimeSpan.FromSeconds(120);
+		})
+		.RemoveAllResilienceHandlers()
+		.AddStandardResilienceHandler(options =>
+		{
+			options.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
+			{
+				SamplingDuration = TimeSpan.FromSeconds(240),
+				Name = "AgentCircuitBreaker"
+			};
+			options.AttemptTimeout = new HttpTimeoutStrategyOptions
+			{
+				Timeout = TimeSpan.FromSeconds(120),
+				Name = "AgentAttemptTimeout",
+			};
+			options.TotalRequestTimeout = new HttpTimeoutStrategyOptions
+			{
+				Timeout = TimeSpan.FromSeconds(120),
+				Name = "AgentTimeout"
+			};
+		});
+
+		builder.Services.AddSingleton<IA2AClient>(sp =>
+		{
+			var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+			var configuration = sp.GetRequiredService<IConfiguration>();
+			return new A2AClient(new Uri(configuration["Agents:RegistryAgentUrl"] ?? string.Empty),
+				httpClientFactory.CreateClient("A2AClient"));
+		});
+
+		builder.Services.AddOptions<AgentCard>().Bind(builder.Configuration.GetSection(nameof(AgentCard)));
+
+		builder.Services.AddHostedService<AgentRegistrationService>();
+
+		return builder;
+	}
 }

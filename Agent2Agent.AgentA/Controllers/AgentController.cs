@@ -14,11 +14,13 @@ namespace Agent2Agent.AgentA.Controllers
 	{
 		private readonly ILogger<AgentController> _logger;
 		private readonly IConversationService _conversationService;
+		private readonly IAgentCacheProvider _cacheProvider;
 
-		public AgentController(ILogger<AgentController> logger, IConversationService service)
+		public AgentController(ILogger<AgentController> logger, IConversationService service, IAgentCacheProvider cacheProvider)
 		{
 			_logger = logger;
 			_conversationService = service;
+			_cacheProvider = cacheProvider;
 		}
 
 		[HttpPost("chat")]
@@ -35,6 +37,31 @@ namespace Agent2Agent.AgentA.Controllers
 			return !string.IsNullOrEmpty(response)
 				? Ok(response)
 				: BadRequest("Failed to get a valid response.");
+		}
+
+		[HttpPost("notify")]
+		public IActionResult Notify([FromBody] AgentRegistryNotification notification)
+		{
+			if (notification == null || notification.Agents.Length == 0)
+			{
+				_logger.LogWarning("Received empty notification or no agents specified. {@Data}", notification);
+				return BadRequest("Notification details are required.");
+			}
+
+			foreach (var agent in notification.Agents)
+			{
+				if (notification.State == AgentRegistryState.Registered)
+					_cacheProvider.AddAgent(agent);
+				else if (notification.State == AgentRegistryState.NotRegistered)
+					_cacheProvider.RemoveAgent(agent.Name);
+				else if (notification.State == AgentRegistryState.RegistrationFailed)
+				{
+					_cacheProvider.RemoveAgent(agent.Name); // Remove agent if its in our cache
+					_logger.LogWarning("Agent registration failed for {AgentName}", agent.Name);
+				}
+			}
+
+			return Ok();
 		}
 	}
 

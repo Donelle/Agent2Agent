@@ -4,6 +4,8 @@ using A2A.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.AddAgentRegistration();
+
 // Register dependencies
 builder.Services.AddAgentDependencies(builder.Configuration);
 

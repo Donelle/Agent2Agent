@@ -19,20 +19,7 @@ public static class Dependencies
 			configuration.GetSection("AgentCard").Bind(options);
 		});
 
-		// Add A2AClient with configuration
-		foreach (var agentName in new[] { Agent2AgentManager.KnowledgeAgentName, Agent2AgentManager.InternetAgentName })
-		{
-			SetResiliencePolicies(services, agentName);
-
-			services.AddKeyedSingleton<IA2AClient>(agentName, (sp, _) =>
-			{
-				var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-				return new A2AClient(new Uri(configuration[$"Agents:{agentName}"] ?? string.Empty), 
-					httpClientFactory.CreateClient(agentName));
-			});
-		}
-
-		services.AddSingleton<IAgentLogicInvoker, OrchestrationAgentLogic>();
+		services.AddSingleton<IAgentLogicInvoker, RegistryAgentLogic>();
 		services.AddSingleton<ITaskManager>(sp =>
 		{
 			var taskManager = new TaskManager();
@@ -41,37 +28,6 @@ public static class Dependencies
 			return taskManager;
 		});
 
-		services.AddTransient<KnowledgeBaseAgent>();
-		services.AddTransient<InternetSearchAgent>();
 		services.AddTransient<Agent2AgentManager>();
-	}
-
-	static void SetResiliencePolicies(IServiceCollection services, string agentName)
-	{
-		services.AddHttpClient(agentName, (provider, client) =>
-		{
-			var config = provider.GetRequiredService<IConfiguration>();
-			client.Timeout = TimeSpan.FromSeconds(120);
-			client.BaseAddress = new Uri(config[$"Agents:{agentName}"] ?? string.Empty);
-		})
-		.RemoveAllResilienceHandlers()
-		.AddStandardResilienceHandler(options =>
-		{
-			options.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
-			{
-				SamplingDuration = TimeSpan.FromSeconds(240),
-				Name = $"{agentName}CircuitBreaker"
-			};
-			options.AttemptTimeout = new HttpTimeoutStrategyOptions
-			{
-				Timeout = TimeSpan.FromSeconds(120),
-				Name = $"{agentName}AttemptTimeout",
-			};
-			options.TotalRequestTimeout = new HttpTimeoutStrategyOptions
-			{
-				Timeout = TimeSpan.FromSeconds(120),
-				Name = $"{agentName}Timeout"
-			};
-		});
 	}
 }

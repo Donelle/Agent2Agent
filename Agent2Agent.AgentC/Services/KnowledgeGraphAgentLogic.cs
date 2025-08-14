@@ -82,6 +82,8 @@ internal class KnowledgeGraphAgentLogic : IAgentLogicInvoker
 
 		try
 		{
+			_logger.LogInformation("Searching the knowledge base for query: {UserInput}", userInput);
+
 			var result = await _factStore.SearchKnowledgeBaseAsync(userInput ?? string.Empty, token);
 			if (result.Count > 0)
 			{

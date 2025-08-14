@@ -1,105 +1,124 @@
-﻿using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
+﻿using System.Collections.Concurrent;
+using System.Text.Json;
 
 namespace Agent2Agent.AgentB.Agents;
 
-
-/// <summary>
-/// Manages the orchestration of the chat between the Knowledge Graph Agent (AgentC) 
-/// and the Internet Search Agent (AgentD).
-/// </summary>
-/// <remarks>
-/// The group chat manager's methods are called in a specific order for each round of the conversation:
-///		1. ShouldTerminate: Determines if the group chat should end based on the following conditions:
-///		- If the last message is from the user, the chat continues.
-///		- If the last message is from the Internet Agent, the chat can terminate.
-///		- If the last message indicates that the Knowledge Graph Agent did find information, the chat can terminate.
-///		- If the last message indicates that the Knowledge Graph Agent did not find any information, the chat continues.
-///		2. FilterResults: Called only if the chat is terminating, to summarize or process the final results of the conversation.
-///		3. SelectNextAgent: If the chat is not terminating, selects the next agent to respond in the conversation by the following logic:
-///		- If the last message was from the user, the Knowledge Graph Agent is selected to respond.
-///		- If the last message was from the Knowledge Graph Agent, the Internet Search Agent is selected to respond.
-/// </remarks>
 internal class Agent2AgentManager
 {
-	public const string KnowledgeAgentName = "KnowledgeGraphAgent";
-	public const string InternetAgentName = "InternetSearchAgent";
-
 	private readonly ILogger<Agent2AgentManager> _logger;
-	private readonly Dictionary<string, IAgent> _agents; 
+	private readonly ConcurrentDictionary<string, RegisteredAgent> _agents;
+	private readonly IHttpClientFactory _factory;
 
-	public Agent2AgentManager(KnowledgeBaseAgent knowledgeBaseAgent, InternetSearchAgent internetSearchAgent, ILogger<Agent2AgentManager> logger)
+	public Agent2AgentManager(IHttpClientFactory factory, ILogger<Agent2AgentManager> logger)
 	{
 		_logger = logger;
-		_agents = new Dictionary<string, IAgent>
+		_agents = new();
+		_factory = factory;
+	}
+
+	/// <summary>
+	/// Processes the specified input message and returns the result.
+	/// </summary>
+	/// <param name="input">The input message to be processed. Cannot be null or empty.</param>
+	/// <param name="cancellationToken">A token to monitor for cancellation requests. If the operation is canceled, the method will terminate early.</param>
+	/// <returns>A string representing the processed result of the input message. The exact format and content of the result        
+	/// depend on the processing logic.</returns>
+	public string ProcessMessage(string input, CancellationToken cancellationToken)
+	{
+		var message = JsonSerializer.Deserialize<AgentRegistryMessage>(input);
+		if (message == null)
 		{
-			{ KnowledgeAgentName, knowledgeBaseAgent },
-			{ InternetAgentName, internetSearchAgent }
+			_logger.LogInformation("Message is invalid");
+			return "Message is invalid";
+		}
+
+		return message.Action switch
+		{
+			AgentRegistryAction.Register => Register(message.AgentDetail, message.AgentNotification, cancellationToken),
+			AgentRegistryAction.Unregister => Unregister(message.AgentDetail.Name, cancellationToken),
+			_ => "Unknown state"
 		};
 	}
 
-	public async Task<string> InvokeAsync(string userInput, CancellationToken cancellationToken)
+	private string Unregister(string name, CancellationToken cancellationToken)
 	{
-		ChatHistory history = new ChatHistory(userInput, AuthorRole.User);
-
-		for (int i = 0; i <= 2; i++)
+		if (string.IsNullOrEmpty(name))
 		{
-			if (cancellationToken.IsCancellationRequested)
-			{
-				_logger.LogInformation("Operation cancelled by user.");
-				return string.Empty;
-			}
-
-			if (ShouldTerminate(history))
-			{
-				_logger.LogInformation("Terminating chat as per logic.");
-				return FilterResults(history);
-			}
-
-			var nextAgentName = SelectNextAgent(history);
-			var result = await _agents[nextAgentName].InvokeAsync(userInput, cancellationToken);
-			history.Add(new ChatMessageContent(AuthorRole.Assistant, result) { AuthorName = nextAgentName });
+			_logger.LogInformation("Agent name is missing.");
+			return "Agent name is required.";
 		}
 
-		return "No response was found from the assistant";
-	}
-
-	public string FilterResults(ChatHistory history)
-	{
-		var summary = "No response was found from the assistant";
-		var lastMessage = history.LastOrDefault(a => a.Role == AuthorRole.Assistant);
-		return lastMessage?.Content ?? summary;
-	}
-
-	public string SelectNextAgent(ChatHistory history)
-	{
-		var lastMessage = history.Last();
-		if (lastMessage.Role == AuthorRole.User)
+		if (_agents.ContainsKey(name))
 		{
-			// If the last message was from the user, select the Knowledge Graph Agent to respond.
-			return KnowledgeAgentName;
+			_agents.TryRemove(name, out RegisteredAgent agent);
+			if (agent != null)
+			{
+				_ = Task.Run(async () =>
+				{
+					try
+					{
+						// Notify all registered agents of the new agent
+						var agents = _agents.Values.ToArray();
+						foreach (var agent in agents)
+							await agent.InvokeAsync(AgentRegistryState.NotRegistered, [agent.Details], cancellationToken);
+					}
+					catch (Exception ex)
+					{
+						_logger.LogError(ex, "Error occurred in the notification task.");
+					}
+				}, cancellationToken);
+			}
+
+			_logger.LogInformation("Unregistered agent {Name}.", name);
+			return $"Unregistered agent {name}.";
 		}
 
-		return lastMessage.AuthorName == KnowledgeAgentName
-			? InternetAgentName
-			: KnowledgeAgentName;
+		_logger.LogInformation("Agent with name {Name} does not exist.", name);
+		return $"Agent with name {name} does not exist.";
 	}
 
-	public bool ShouldTerminate(ChatHistory history)
+	private string Register(AgentDetails agentDetails, AgentNotification? notification, CancellationToken cancellationToken)
 	{
-		// If the last message is from the user, we do not terminate yet we 
-		// wait for the next agent's response.
-		var lastMessage = history.Last();
-		if (lastMessage.Role == AuthorRole.User)
-			return false;
+		if (agentDetails == null || string.IsNullOrEmpty(agentDetails.Name))
+		{
+			_logger.LogInformation("Agent name is missing.");
+			return "Agent name is required.";
+		}
 
-		// if the last message is from the Internet Agent we can terminate the chat
-		if (lastMessage.AuthorName == InternetAgentName)
-			return true;
+		if (_agents.ContainsKey(agentDetails.Name))
+		{
+			_logger.LogInformation("Agent with name {Name} already exists.", agentDetails.Name);
+			return $"Agent with name {agentDetails.Name} already exists.";
+		}
 
-		// Check to see if the last message indicates that the Knowledge Graph Agent did not find any information.
-		var notFoundMessage = "I couldn't find any relevant information in the knowledge base.";
-		return !lastMessage.Content?.Contains(notFoundMessage, StringComparison.OrdinalIgnoreCase) ?? false;
+		var newAgent = new RegisteredAgent(agentDetails, notification, _factory.CreateClient(), _logger);
+		_ = Task.Run(async () =>
+		{
+			try
+			{
+				// Notify all registered agents of the new agent
+				var agents = _agents.Values.ToArray();
+				for(int i = 0; i < agents.Length; i++)
+				{
+					if (cancellationToken.IsCancellationRequested)
+						return;
+					// Notify existing agents of the new agent
+					await agents[i].InvokeAsync(AgentRegistryState.Registered, [ newAgent.Details ], cancellationToken);
+				}
+
+				// Notify the new agent of existing agents
+				await newAgent.InvokeAsync(AgentRegistryState.Registered, agents.Select(a => a.Details).ToArray(), cancellationToken);
+
+				_agents.TryAdd(agentDetails.Name, newAgent);
+				_logger.LogInformation("Registered agent {Name}.", agentDetails.Name);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error occurred in the notification task.");
+			}
+		}, cancellationToken);
+
+		return "Notifications processed";
 	}
 }
 

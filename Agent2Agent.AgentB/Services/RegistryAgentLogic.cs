@@ -12,17 +12,17 @@ public interface IAgentLogicInvoker
 	void Attach(ITaskManager taskManager);
 }
 
-internal class OrchestrationAgentLogic : IAgentLogicInvoker
+internal class RegistryAgentLogic : IAgentLogicInvoker
 {
-	private readonly ILogger<OrchestrationAgentLogic> _logger;
+	private readonly ILogger<RegistryAgentLogic> _logger;
 	private readonly Agent2AgentManager _orchestration;
 	private readonly A2AClientOptions _clientOptions;
 	private ITaskManager _taskManager = null!;
 
-	public OrchestrationAgentLogic(
+	public RegistryAgentLogic(
 		IOptions<A2AClientOptions> options, 
 		Agent2AgentManager orchestration, 
-		ILogger<OrchestrationAgentLogic> logger)
+		ILogger<RegistryAgentLogic> logger)
 	{
 		_logger = logger;
 		_orchestration = orchestration;
@@ -71,9 +71,9 @@ internal class OrchestrationAgentLogic : IAgentLogicInvoker
 		_logger.LogInformation("Processing task: {TaskId}", task.Id);
 
 		await _taskManager.UpdateStatusAsync(task.Id, TaskState.Working, null, cancellationToken: token);
-		var userInput = task.History?.Last().Parts.First().AsTextPart().Text;
+		var input = task.History?.Last().Parts.First().AsTextPart().Text;
 
-		var response = await _orchestration.InvokeAsync(userInput ?? string.Empty, token);
+		var response = _orchestration.ProcessMessage(input ?? string.Empty, token);
 		var result = new Message { Role = MessageRole.Agent, Parts = [new TextPart { Text = response ?? "No response" }] };
 
 		_logger.LogInformation("Task {TaskId} completed.", task.Id);

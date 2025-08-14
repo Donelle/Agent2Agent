@@ -16,18 +16,14 @@ This repository demonstrates a multi-agent proof-of-concept using Microsoft Sema
   - Registers plugins for inter-agent calls to ChatResponder and InternetSearch.
 
 - **Agent2Agent.AgentB**
-  **ChatResponderAgent** – A2A server for conversational logic.
-  - Exposes endpoints for chat response.
-  - Uses A2AClient to query KnowledgeGraphAgent and InternetSearchAgent.
+  **RegistryAgent** – A2A server for agent registration and discovery.
 
 - **Agent2Agent.AgentC**
   **KnowledgeGraphAgent** – A2A server for knowledge graph queries.
-  - Handles `/kg/query` via Semantic Kernel.
   - Uses Redis for vector storage and embeddings.
 
 - **Agent2Agent.AgentD**
   **InternetSearchAgent** – A2A server for internet search.
-  - Handles `/search/query` using Semantic Kernel and plugins.
   - Planned: Redis caching and external search API integration.
 
 - **Agent2Agent.ServiceDefaults**  

@@ -77,6 +77,7 @@ internal class InternetSearchAgentLogic : IAgentLogicInvoker
 
 		try
 		{
+			_logger.LogInformation("Searching the internet for query: {UserInput}", userInput);
 			await foreach (var result in _agent.InvokeAsync(new ChatMessageContent(AuthorRole.User, userInput), cancellationToken: token))
 			{
 				if (result.Message is ChatMessageContent chatResponse)
