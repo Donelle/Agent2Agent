@@ -23,7 +23,8 @@ This architecture features four agents, each with a distinct responsibility. The
   - Manages agent registration and discovery for the A2A protocol.
   - Hosts a Semantic Kernel `ChatCompletionAgent` named **VehicleRegistrationAssistant**.
   - Registers `RegistryAgentLogic` as `IAgentLogicInvoker` and `KnowledgeGraphAgentPlugin` for kernel functions.
-  - Delegates queries to KnowledgeGraphAgent (AgentC) for factual enrichment and InternetSearchAgent (AgentD) for fallback.
+  - Delegates queries to KnowledgeGraphAgent (AgentC) for factual enrichment.
+  - If KnowledgeGraphAgent returns no data, CustomerAdvocateAgent (AgentA) directly invokes InternetSearchAgent (AgentD) for fallback.
   - Aggregates and refines responses for upstream agents.
 
 ### Agent C: KnowledgeGraphAgent (A2A Server)

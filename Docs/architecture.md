@@ -133,18 +133,17 @@ sequenceDiagram
   alt KG has data
     C-->>B: 200 { facts }
   else KG missing data
-    C-->>B: 204 No Content
-    B->>D: POST /tasks { text }
+    C-->>A: 204 No Content
+    A->>D: POST /tasks { text }
     alt Cache hit
-      D-->>B: 200 { cachedResults }
+      D-->>A: 200 { cachedResults }
     else Cache miss
       D->>ExtAPI: GET /?q={text}
       ExtAPI-->>D: 200 { searchResults }
       D-->Redis: SET key, value, TTL
-      D-->>B: 200 { searchResults }
+      D-->>A: 200 { searchResults }
     end
   end
-  B-->>A: 200 { reply }
   A-->>Web: 200 { combined reply }
 ```
 
