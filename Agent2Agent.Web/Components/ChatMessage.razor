@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Components
+
+
+<div class="thread-message @MessageClass">
+    @if (MessageType == MessageType.User)
+    {
+        <div class="@(MessageClass + "-content")">
+            @MessageContent
+        </div>
+    }
+    else
+    {
+        <AgentMessage MessageContent="@MessageContent" />
+    }
+</div>
+
+@code {
+    [Parameter] public MessageType MessageType { get; set; }
+    [Parameter] public string MessageContent { get; set; } = string.Empty;
+
+    private string MessageClass => MessageType == MessageType.User ? "thread-user-message" : "thread-agent-message";
+}

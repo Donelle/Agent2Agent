@@ -1,0 +1,20 @@
+.thread-user-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    &-content {
+        max-width: 100%;
+        word-break: break-word;
+        font-size: 14px; 
+        line-height: 1.4;
+        background-color: #d9f7be; 
+        color: #666; 
+        padding: 10px 20px;
+        border-radius: 20px;
+        border-top-right-radius: 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}

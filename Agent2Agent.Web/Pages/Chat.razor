@@ -6,27 +6,16 @@
         <div class="thread-top">
             <div class="container items-center">
                 <div class="row">
-                    @if (messages.Count > 0)
+                    @foreach (var message in messages)
                     {
-                        foreach (var message in messages)
-                        {
-                            var messageClass = message.Key == MesageType.User ? "thread-user-message" : "thread-agent-message";
-                            <div class="thread-message @messageClass">
-                                <div class=@(messageClass + "-content")>
-                                    @if (message.Key == MesageType.User)
-                                    {
-                                        @message.Value
-                                    }
-                                    else
-                                    {
-                                        @MarkdownFragment(message.Value);
-                                    }
-                                </div>
-                            </div>
-                        }
+                        <ChatMessage MessageType="@message.Key" MessageContent="@message.Value" />
                     }
                     <div class="thinking-indicator" style="display: @(isProcessing ? "flex" : "none")">
-                        <span></span><span></span><span></span> <span></span><h6>Thinking</h6>
+                        <span></span>
+                        <span></span>
+                        <span></span> 
+                        <span></span>
+                        <h6>Thinking</h6>
                     </div>
                 </div>
             </div>
@@ -35,7 +24,7 @@
          <!-- Floating Action Button -->
         <div class="fab-container">
             <button class="fab-button @(isMessageAreaVisible ? "spin-back" : "spin")" @onclick="ToggleMessageArea">
-                <Icon Name="IconName.KeyboardFill" Size="IconSize.x2" Color="IconColor.White" />
+                <Icon Name="IconName.KeyboardFill" Size="IconSize.x2" Color="IconColor.None" />
             </button>
         </div>
 
@@ -52,15 +41,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- TODO: Add upload functionality 
-                <div  class="row">
-                    <div class="input-icons">
-                        <button class="icon-button">
-                            <Icon Name="IconName.Plus" Size="IconSize.x2" Color="IconColor.White" />
-                        </button>
-                    </div>
-                </div>
-                -->
             </div>
         </div>
     </div>

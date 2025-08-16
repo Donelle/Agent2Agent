@@ -18,38 +18,41 @@ builder.Services.AddSignalR(o =>
   o.EnableDetailedErrors = true;
 });
 
-// Add HttpClient for AgentA service
-builder.Services.AddHttpClient<IChatAgentService, ChatAgentService>((provider, client) =>
-{
-	var config = provider.GetRequiredService<IConfiguration>();
-	client.BaseAddress = new Uri(config["AgentA"] ?? string.Empty);
-	client.Timeout = TimeSpan.FromSeconds(120);
-})
-.RemoveAllResilienceHandlers()
-.AddStandardResilienceHandler(options =>
-{
-	options.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
-	{
-		SamplingDuration = TimeSpan.FromSeconds(240),
-		Name = "WebAppCircuitBreaker"
-	};
-	options.AttemptTimeout = new HttpTimeoutStrategyOptions
-	{
-		Timeout = TimeSpan.FromSeconds(120),
-		Name = "WebAppAttemptTimeout",
-	};
-	options.TotalRequestTimeout = new HttpTimeoutStrategyOptions
-	{
-		Timeout = TimeSpan.FromSeconds(120),
-		Name = "WebAppTimeout"
-	};
-	options.Retry = new HttpRetryStrategyOptions
-	{
-		MaxRetryAttempts = 2,
-		Delay = TimeSpan.FromSeconds(2),
-		Name = "WebAppRetry",
-	};
-});
+ // Add HttpClient for AgentA service
+ builder.Services.AddHttpClient<IChatAgentService, ChatAgentService>((provider, client) =>
+ {
+ 	var config = provider.GetRequiredService<IConfiguration>();
+ 	client.BaseAddress = new Uri(config["AgentA"] ?? string.Empty);
+ 	client.Timeout = TimeSpan.FromSeconds(120);
+ })
+ .RemoveAllResilienceHandlers()
+ .AddStandardResilienceHandler(options =>
+ {
+ 	options.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
+ 	{
+ 		SamplingDuration = TimeSpan.FromSeconds(240),
+ 		Name = "WebAppCircuitBreaker"
+ 	};
+ 	options.AttemptTimeout = new HttpTimeoutStrategyOptions
+ 	{
+ 		Timeout = TimeSpan.FromSeconds(120),
+ 		Name = "WebAppAttemptTimeout",
+ 	};
+ 	options.TotalRequestTimeout = new HttpTimeoutStrategyOptions
+ 	{
+ 		Timeout = TimeSpan.FromSeconds(120),
+ 		Name = "WebAppTimeout"
+ 	};
+ 	options.Retry = new HttpRetryStrategyOptions
+ 	{
+ 		MaxRetryAttempts = 2,
+ 		Delay = TimeSpan.FromSeconds(2),
+ 		Name = "WebAppRetry",
+ 	};
+ });
+ 
+ // In-memory chat history for the lifetime of the app
+ builder.Services.AddSingleton<IChatHistoryService, ChatHistoryService>();
 
 
 var app = builder.Build();
