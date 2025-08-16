@@ -1,27 +1,21 @@
 using Agent2Agent.Web.Service;
-
-using Markdig;
+using Agent2Agent.Web.Shared;
 
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+
 
 namespace Agent2Agent.Web.Pages;
 
 public partial class Chat
 {
-	enum MesageType
-	{
-		User,
-		Agent
-	}
-
 	[Inject] IChatAgentService ChatAgentService { get; set; } = default!;
+	[Inject] IChatHistoryService ChatHistory { get; set; } = default!;
 
 	private IJSObjectReference _module = default!;
-	private MarkdownPipeline _pipeline = default!;
-	private List<KeyValuePair<MesageType, string>> messages = new();
+
+	private List<KeyValuePair<MessageType, string>> messages = new();
 	private string threadId = Guid.NewGuid().ToString();
 	private string currentMessage = string.Empty;
 	private bool isProcessing;
@@ -30,23 +24,49 @@ public partial class Chat
 	protected override async Task OnInitializedAsync()
 	{
 		_module = await JS.InvokeAsync<IJSObjectReference>("import", $"./Pages/{nameof(Chat)}.razor.js")!;
-		_pipeline = new MarkdownPipelineBuilder().DisableHtml().UseAdvancedExtensions().Build();
+
+		// Try to reuse existing thread id stored in sessionStorage (persists across browser refreshes)
+		try
+		{
+			var existing = await _module.InvokeAsync<string>("getThreadId");
+			if (!string.IsNullOrEmpty(existing))
+			{
+				threadId = existing;
+			}
+			else
+			{
+				await _module.InvokeVoidAsync("setThreadId", threadId);
+			}
+		}
+		catch
+		{
+			// ignore JS interop/session storage failures
+		}
+
+		// Load in-memory history for this thread (exists while app is running)
+		ChatHistory.EnsureThreadExists(threadId);
+		var hist = ChatHistory.GetMessages(threadId);
+		foreach (var entry in hist)
+		{
+			messages.Add(new(entry.IsUser ? MessageType.User : MessageType.Agent, entry.Content));
+		}
+
 		await base.OnInitializedAsync();
 	}
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		if (isProcessing)
+		if (!firstRender)
 		{
 			// Scroll to the latest message
 			await _module.InvokeVoidAsync("ScrollToBottom", "thread-top");
 		}
 	}
-
+	
 	private void ToggleMessageArea()
-    {
-        isMessageAreaVisible = !isMessageAreaVisible;
-    }
+	{
+		isMessageAreaVisible = !isMessageAreaVisible;
+	}
 
 	private async Task HandleKeyUp(KeyboardEventArgs e)
 	{
@@ -61,33 +81,29 @@ public partial class Chat
 		if (!string.IsNullOrEmpty(currentMessage))
 		{
 			var messageToSend = currentMessage;
-			messages.Add(new(MesageType.User, messageToSend));
+			messages.Add(new(MessageType.User, messageToSend));
+			ChatHistory.AddMessage(threadId, new ChatMessageEntry(true, messageToSend));
 			currentMessage = string.Empty;
-			isProcessing = true; 
+			isProcessing = true;
 			StateHasChanged();
 
 			try
 			{
-				var response = await ChatAgentService.SendMessageAsync(threadId, messageToSend);	
-				messages.Add(new(MesageType.Agent, response));
+				var response = await ChatAgentService.SendMessageAsync(threadId, messageToSend);
+				messages.Add(new(MessageType.Agent, response));
+				ChatHistory.AddMessage(threadId, new ChatMessageEntry(false, response));
 			}
 			catch (Exception ex)
 			{
-				messages.Add(new(MesageType.Agent, $"Error: {ex.Message}"));
+				var err = $"Error: {ex.Message}";
+				messages.Add(new(MessageType.Agent, err));
+				ChatHistory.AddMessage(threadId, new ChatMessageEntry(false, err));
 			}
 			finally
 			{
-				isProcessing = false; 
+				isProcessing = false;
 				StateHasChanged();
 			}
 		}
-	}
-
-	public RenderFragment MarkdownFragment(string input)
-	{
-		return (RenderTreeBuilder b) =>
-		{
-			Markdig.Blazor.Markdown.RenderToFragment(input, b, _pipeline);
-		};
 	}
 }
