@@ -2,8 +2,12 @@
 description: Reads all changes happened in the commit
 ---
 
-Read all the changes happened in the current commit or specified commit and summarize them.
-If a commit id is specified, it will be used to retrieve the commit information. Perform the following steps:
+Read all the changes happened in the current commit, specified commit, or staged changes and then summarize them.
+- If a commit id is specified, it will be used to retrieve the commit information.
+- If staged changes are present, they will be included in the summary.
+- Only include commits after HEAD
+
+Perform the following steps:
 
 1. Create a title message representing the changes made in the commit.
 2. Create a summary of the changes made in the commit in bullet points.

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.Extensions.Logging;
 
 
 namespace Agent2Agent.AgentA.Controllers
@@ -62,6 +63,33 @@ namespace Agent2Agent.AgentA.Controllers
 			}
 
 			return Ok();
+		}
+
+		[HttpPost("clear/{sessionId}")]
+		public async Task<IActionResult> ClearThread([FromRoute] string sessionId)
+		{
+			if (string.IsNullOrWhiteSpace(sessionId))
+			{
+				return BadRequest("sessionId is required.");
+			}
+
+			try
+			{
+				var removed = await _conversationService.ClearThreadAsync(sessionId, HttpContext.RequestAborted);
+				if (!removed)
+				{
+					// Nothing to remove
+					return NotFound();
+				}
+
+				// Also remove any cached agent info for this session if needed (no-op here)
+				return Ok();
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Failed to clear conversation thread for session {SessionId}", sessionId);
+				return StatusCode(500, "Failed to clear conversation thread.");
+			}
 		}
 	}
 

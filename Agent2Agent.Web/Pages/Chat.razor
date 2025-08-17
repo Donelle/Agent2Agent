@@ -3,17 +3,35 @@
 
 <div class="flex-col w-full h-full flex">
     <div class="thread">
+        
+        <!-- New Conversation Button -->
+        @if(_chatHistory.GetMessages(_threadId).Count > 0)
+        {
+            <div class="col-12 d-flex justify-content-end mb-2">
+                <Button 
+                    @ref="@_newConversationButton"
+                    Color="ButtonColor.Primary"
+                    LoadingText="Loading..."
+                    Disabled="@_isProcessing"
+                    @onclick="@StartNewConversation">
+                    New Conversation
+                </Button>
+            </div>
+        }
+       
+
+        <!-- Chat Messages -->
         <div class="thread-top">
             <div class="container items-center">
                 <div class="row">
-                    @foreach (var message in messages)
+                    @foreach (var message in _messages)
                     {
                         <ChatMessage MessageType="@message.Key" MessageContent="@message.Value" />
                     }
-                    <div class="thinking-indicator" style="display: @(isProcessing ? "flex" : "none")">
+                    <div class="thinking-indicator" style="display: @(_isProcessing ? "flex" : "none")">
                         <span></span>
                         <span></span>
-                        <span></span> 
+                        <span></span>
                         <span></span>
                         <h6>Thinking</h6>
                     </div>
@@ -23,20 +41,20 @@
 
          <!-- Floating Action Button -->
         <div class="fab-container">
-            <button class="fab-button @(isMessageAreaVisible ? "spin-back" : "spin")" @onclick="ToggleMessageArea">
+            <button class="fab-button @(_isMessageAreaVisible ? "spin-back" : "spin")" @onclick="@ToggleMessageArea">
                 <Icon Name="IconName.KeyboardFill" Size="IconSize.x2" Color="IconColor.None" />
             </button>
         </div>
 
          <!-- Message Area -->
-        <div class="thread-bottom" style="display: @(isMessageAreaVisible ? "block" : "none")">
+        <div class="thread-bottom" style="display: @(_isMessageAreaVisible ? "block" : "none")">
             <div class="container">
                 <div class="thread-bottom-container justify-content-center">
                     <div class="thread-bottom-input-container">
                         <div class="thread-bottom-input-content">
-                            <input class="thread-bottom-placeholder-input"
-                                   @bind="currentMessage"
-                                   @onkeyup="HandleKeyUp"
+                            <input class="thread-bottom-input"
+                                   @bind="@_currentMessage"
+                                   @onkeyup="@HandleKeyUp"
                                    placeholder="Type a message..." />
                         </div>
                     </div>

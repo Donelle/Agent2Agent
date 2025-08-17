@@ -11,6 +11,7 @@ public interface IChatHistoryService
     List<ChatMessageEntry> GetMessages(string sessionId);
     void AddMessage(string sessionId, ChatMessageEntry message);
     void EnsureThreadExists(string sessionId);
+    void ClearThread(string sessionId);
 }
 
 public class ChatHistoryService : IChatHistoryService
@@ -39,5 +40,13 @@ public class ChatHistoryService : IChatHistoryService
     public void EnsureThreadExists(string sessionId)
     {
         _store.GetOrAdd(sessionId, _ => new List<ChatMessageEntry>());
+    }
+
+    public void ClearThread(string sessionId)
+    {
+        if (string.IsNullOrEmpty(sessionId))
+            return;
+
+        _store.TryRemove(sessionId, out _);
     }
 }
