@@ -1,3 +1,14 @@
 {
     "dotnet.preferVisualStudioCodeFileSystemWatcher": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[csharp]": {
+        "editor.maxTokenizationLineLength": 2500,
+        "editor.formatOnType": true,
+        "editor.inlineSuggest.suppressSuggestions": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    }
 }

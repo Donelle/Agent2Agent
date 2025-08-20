@@ -1,83 +1,91 @@
-# Agent2Agent Proof-of-Concept
+# Agent2Agent — Proof of Concept
 
-This repository demonstrates a multi-agent proof-of-concept using Microsoft Semantic Kernel and ASP.NET Core Minimal APIs. It features a registration advocacy agent, conversational agent, knowledge graph agent, and internet search agent, all coordinated by an orchestrator and served through a Blazor web frontend.
+This repository contains a proof-of-concept multi-agent system built with Microsoft Semantic Kernel and ASP.NET Core. It demonstrates agent-to-agent (A2A) registration, discovery, inter-agent task delegation, and a Blazor web frontend for user interaction.
 
-## Project Structure
+## Quick architecture summary
 
-- **Agent2Agent.AppHost**  
-  The orchestrator that launches and monitors all agents and the WebFrontend, coordinating their lifecycle and health.
+- Orchestrator (AppHost) launches and health-checks agents and the Web frontend.
+- Agent A (Customer Advocate) — user-facing semantic agent (POST /api/agent/chat).
+- Agent B (Registry) — manages agent registration/discovery; A2A endpoints (`/tasks`, `/.well-known/agent.json`).
+- Agent C (Knowledge Graph) — vector search and factual grounding (Redis + embeddings).
+- Agent D (Internet Search) — external search and caching.
+- DatasetCreator — ingests CSV/PDF, creates embeddings, populates Redis for Agent C.
 
-- **Agent2Agent.Web**  
-  Blazor Server web interface (WebFrontend) where users interact with agents.
+## Project structure (high level)
 
-- **Agent2Agent.AgentA**
-  **CustomerAdvocateAgent** – Semantic Kernel agent exposing `/api/agent/chat`.
-  - Hosts a `ChatCompletionAgent` named "RegistrationAdvocate".
-  - Registers plugins for inter-agent calls to ChatResponder and InternetSearch.
-
-- **Agent2Agent.AgentB**
-  **RegistryAgent** – A2A server for agent registration, discovery, and inter-agent communication.
-  - Exposes `/tasks` and `/.well-known/agent.json` endpoints for A2A protocol.
-  - Registers and manages agent metadata, and delegates queries to KnowledgeGraphAgent and InternetSearchAgent as needed.
-
-- **Agent2Agent.AgentC**
-  **KnowledgeGraphAgent** – A2A server for knowledge graph queries.
-  - Exposes `/tasks` and `/.well-known/agent.json` endpoints for A2A protocol.
-  - Uses Redis for vector storage and embeddings.
-
-- **Agent2Agent.AgentD**
-  **InternetSearchAgent** – A2A server for internet search.
-  - Exposes `/tasks` and `/.well-known/agent.json` endpoints for A2A protocol.
-  - Planned: Redis caching and external search API integration.
-
-- **Agent2Agent.ServiceDefaults**  
-  Shared library for OpenAPI, error handling, caching, and default endpoint mapping.
-  All agents and services reference this for consistent middleware and integrations.
-
-- **DatasetCreator**
-  Imports CSV and PDF datasets into Redis for the KnowledgeGraphAgent containing sample data about
-  vehicle registration information.
+- Agent2Agent.AppHost — orchestrator and entry point.
+- Agent2Agent.Web — Blazor Server web UI (chat frontend).
+- Agent2Agent.AgentA — Customer Advocate agent (POST /api/agent/chat).
+- Agent2Agent.AgentB — Registry agent (A2A server).
+- Agent2Agent.AgentC — Knowledge Graph agent (vector store + embeddings).
+- Agent2Agent.AgentD — Internet Search agent (external search + caching).
+- Agent2Agent.ServiceDefaults — shared bootstrap/middleware/extensions.
+- DatasetCreator — data ingestion and embedding pipeline.
+- Docs/ — architecture and agent role documentation.
 
 ## Prerequisites
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download)
-- Docker (for running Redis via Docker Compose)
-- OpenAI API key configured in each agent’s `appsettings.json`
+- .NET 9 SDK
+- Docker (to run Redis via docker-compose)
+- OpenAI API key (or other embedding/chat provider) configured in each agent's appsettings
 
-## Getting Started
+## Getting started (local development)
 
-1. Clone this repository.
-2. Restore and build all projects:
-   ```bash
-   dotnet restore
-   dotnet build
-   ```
-3. Start Redis using Docker Compose:
-   ```bash
-   docker-compose -f docker_compose.yaml up -d
-   ```
-   This will launch a Redis server using the provided `docker_compose.yaml` file.
-4. Load vehicle data into Redis using DatasetCreator:
-   ```bash
-   dotnet run --project DatasetCreator
-   ```
-   See [`DatasetCreator/README.md`](DatasetCreator/README.md) for details and advanced options.
-5. Launch the orchestrator (runs all services and agents):
-   ```bash
-   dotnet run --project Agent2Agent.AppHost
-   ```
-6. Open the web frontend in your browser:
-   https://localhost:5000
+1. Clone repository
+2. Restore and build
+```bash
+dotnet restore
+dotnet build
+```
 
-## Documentation
+3. Start Redis via Docker Compose (uses `docker_compose.yaml`)
+```bash
+docker-compose -f docker_compose.yaml up -d
+```
 
-- [`Docs/architecture.md`](Docs/architecture.md): System architecture, diagrams, and startup sequence.
-- [`Docs/agents.md`](Docs/agents.md): Agent roles, endpoints, and sequence diagrams.
+4. (Optional) Ingest sample data into Redis
+```bash
+dotnet run --project DatasetCreator
+```
+See [`DatasetCreator/README.md`](DatasetCreator/README.md:1) for options and sample data formats.
+
+5. Launch the orchestrator (starts AppHost, Web, and configured agents)
+```bash
+dotnet run --project Agent2Agent.AppHost
+```
+
+6. Open the Web frontend in your browser (default)
+https://localhost:5000
+If custom URLs are configured in `launchSettings.json`, use those instead.
+
+
+## How the system works (short)
+
+- The Web frontend sends user queries to AgentA.
+- AgentA uses Semantic Kernel chat completion to craft responses and may invoke other agents for factual enrichment.
+- AgentB (Registry) provides discovery and delegates tasks to AgentC (KnowledgeGraph) and AgentD (InternetSearch) as needed.
+- DatasetCreator populates Redis so AgentC can answer fact-based queries through semantic vector search.
+
+## Documentation and further reading
+
+- [`Docs/architecture.md`](Docs/architecture.md:1) — architecture overview, diagrams, startup sequence.
+- [`Docs/agents.md`](Docs/agents.md:1) — agent roles, endpoints, and sequences.
+- Agent-specific READMEs: [`Agent2Agent.AgentA/README.md`](Agent2Agent.AgentA/README.md:1), [`Agent2Agent.AgentB/README.md`](Agent2Agent.AgentB/README.md:1), etc.
+- A2A Spec: https://a2aproject.github.io/A2A/v0.2.5/
+- Microsoft Semantic Kernel: https://learn.microsoft.com/en-us/semantic-kernel/
+
+## Troubleshooting (common)
+
+- OpenAI errors: verify API key, model id, and network access.
+- Redis: ensure docker container is running and connection string matches.
+- Inter-agent calls: ensure agents are running and reachable; check logs for plugin/DI registration errors.
 
 ## Contributing
 
-Contributions are welcome. Please raise issues or pull requests against this proof-of-concept.
+Contributions welcome. Open issues or PRs and include tests or usage notes where relevant.
 
 ## License
 
-This project is released under the MIT License.
+MIT
+
+---
